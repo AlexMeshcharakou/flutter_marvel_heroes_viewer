@@ -7,11 +7,10 @@ part of 'character.dart';
 // **************************************************************************
 
 Character _$CharacterFromJson(Map<String, dynamic> json) => Character(
-      id: json['id'] as String,
+      id: json['id'] as int,
       name: json['name'] as String,
       description: json['description'] as String,
-      thumbnail: json['thumbnail'] as String,
-      comics: json['comics'] as String,
+      thumbnail: json['thumbnail'] as Map<String, dynamic>,
     );
 
 Map<String, dynamic> _$CharacterToJson(Character instance) => <String, dynamic>{
@@ -19,5 +18,14 @@ Map<String, dynamic> _$CharacterToJson(Character instance) => <String, dynamic>{
       'name': instance.name,
       'description': instance.description,
       'thumbnail': instance.thumbnail,
-      'comics': instance.comics,
+    };
+
+Thumbnail _$ThumbnailFromJson(Map<String, dynamic> json) => Thumbnail(
+      json['path'] as String,
+      json['extension'] as String,
+    );
+
+Map<String, dynamic> _$ThumbnailToJson(Thumbnail instance) => <String, dynamic>{
+      'path': instance.path,
+      'extension': instance.extension,
     };
