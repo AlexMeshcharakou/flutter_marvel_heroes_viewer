@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:marvel/model/character.dart';
+import 'package:marvel/services/app_routes.dart';
 
 import 'package:marvel/services/network_service.dart';
 
@@ -31,47 +33,71 @@ class HomePage extends StatelessWidget {
             );
           }
           return Padding(
-            padding: const EdgeInsets.all(8.0),
+            padding: const EdgeInsets.all(2.0),
             child: ListView(
               children: (snapshot.data as List<dynamic>)
+                  .where((element) =>
+                      element.thumbnail['path'] !=
+                      'http://i.annihil.us/u/prod/marvel/i/mg/b/40/image_not_available')
+                  .where((element) => element.description.isNotEmpty)
                   .map(
                     (character) => Container(
-                      margin: const EdgeInsets.symmetric(vertical: 5),
-                      decoration: BoxDecoration(
-                        color: Colors.grey,
-                        border: Border.all(color: Colors.black, width: 3),
-                        borderRadius: const BorderRadius.only(
-                            topRight: Radius.circular(15),
-                            bottomRight: Radius.circular(15)),
-                      ),
-                      child: ListTile(
-                        isThreeLine: false,
-                        contentPadding: const EdgeInsets.symmetric(
-                            horizontal: 0.5, vertical: 0),
-                        title: Image.network(
-                          character.thumbnail['path'].toString() +
-                              '/landscape_medium.'+
-                              character.thumbnail['extension'].toString(),
-                          width: 150,
-                          height: 90,
-                        ),
-                        trailing: Container(
-                          padding: const EdgeInsets.symmetric(
-                              vertical: 5, horizontal: 5),
-                          width: 250,
-                          height: 150,
-                          child: Column(
-                            children: [
-                              Text(
-                                character.name,
-                                textAlign: TextAlign.center,
-                                style: const TextStyle(
-                                    fontSize: 18,
-                                    fontWeight: FontWeight.bold,
-                                    color: Colors.red),
+                      height: 102,
+                      padding: const EdgeInsets.symmetric(vertical: 1),
+                      child: Card(
+                        elevation: 10,
+                        child: Container(
+                          color: Colors.blue[50],
+                          child: ListTile(
+                            onTap: () {
+                              Navigator.pushNamed(
+                                context,
+                                AppRoutes.secondPage,
+                                arguments: Character(
+                                    id: character.id,
+                                    name: character.name,
+                                    description: character.description,
+                                    thumbnail: character.thumbnail),
+                              );
+                            },
+                            isThreeLine: false,
+                            contentPadding: const EdgeInsets.symmetric(
+                                horizontal: 1, vertical: 1),
+                            title: Image.network(
+                              character.thumbnail['path'].toString() +
+                                  '/landscape_small.' +
+                                  character.thumbnail['extension'].toString(),
+                            ),
+                            trailing: Container(
+                              padding: const EdgeInsets.symmetric(
+                                  vertical: 1, horizontal: 1),
+                              width: 270,
+                              height: 80,
+                              child: Column(
+                                children: [
+                                  Expanded(
+                                    child: Container(
+                                      padding: const EdgeInsets.symmetric(
+                                          vertical: 1),
+                                      width: 250,
+                                      height: 27,
+                                      child: Text(
+                                        character.name,
+                                        textAlign: TextAlign.center,
+                                        style: const TextStyle(
+                                            fontSize: 20,
+                                            fontWeight: FontWeight.bold,
+                                            color: Colors.red),
+                                      ),
+                                    ),
+                                  ),
+                                  Text(
+                                    character.id.toString(),
+                                    style: const TextStyle(fontSize: 10),
+                                  )
+                                ],
                               ),
-                              Text(character.id.toString())
-                            ],
+                            ),
                           ),
                         ),
                       ),
