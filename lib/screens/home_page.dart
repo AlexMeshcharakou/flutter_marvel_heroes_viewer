@@ -36,10 +36,10 @@ class HomePage extends StatelessWidget {
             padding: const EdgeInsets.all(2.0),
             child: ListView(
               children: (snapshot.data as List<dynamic>)
-                  .where((element) =>
-                      element.thumbnail['path'] !=
+                  .where((character) =>
+                      character.thumbnail['path'] !=
                       'http://i.annihil.us/u/prod/marvel/i/mg/b/40/image_not_available')
-                  .where((element) => element.description.isNotEmpty)
+                  .where((character) => character.description.isNotEmpty)
                   .map(
                     (character) => Container(
                       height: 102,
@@ -48,57 +48,7 @@ class HomePage extends StatelessWidget {
                         elevation: 10,
                         child: Container(
                           color: Colors.blue[50],
-                          child: ListTile(
-                            onTap: () {
-                              Navigator.pushNamed(
-                                context,
-                                AppRoutes.secondPage,
-                                arguments: Character(
-                                    id: character.id,
-                                    name: character.name,
-                                    description: character.description,
-                                    thumbnail: character.thumbnail),
-                              );
-                            },
-                            isThreeLine: false,
-                            contentPadding: const EdgeInsets.symmetric(
-                                horizontal: 1, vertical: 1),
-                            title: Image.network(
-                              character.thumbnail['path'].toString() +
-                                  '/landscape_small.' +
-                                  character.thumbnail['extension'].toString(),
-                            ),
-                            trailing: Container(
-                              padding: const EdgeInsets.symmetric(
-                                  vertical: 1, horizontal: 1),
-                              width: 270,
-                              height: 80,
-                              child: Column(
-                                children: [
-                                  Expanded(
-                                    child: Container(
-                                      padding: const EdgeInsets.symmetric(
-                                          vertical: 1),
-                                      width: 250,
-                                      height: 27,
-                                      child: Text(
-                                        character.name,
-                                        textAlign: TextAlign.center,
-                                        style: const TextStyle(
-                                            fontSize: 20,
-                                            fontWeight: FontWeight.bold,
-                                            color: Colors.red),
-                                      ),
-                                    ),
-                                  ),
-                                  Text(
-                                    character.id.toString(),
-                                    style: const TextStyle(fontSize: 10),
-                                  )
-                                ],
-                              ),
-                            ),
-                          ),
+                          child: MyListTile(context, character),
                         ),
                       ),
                     ),
@@ -107,6 +57,57 @@ class HomePage extends StatelessWidget {
             ),
           );
         },
+      ),
+    );
+  }
+
+  ListTile MyListTile(BuildContext context, character) {
+    return ListTile(
+      onTap: () {
+        Navigator.pushNamed(
+          context,
+          AppRoutes.secondPage,
+          arguments: Character(
+              id: character.id,
+              name: character.name,
+              description: character.description,
+              thumbnail: character.thumbnail),
+        );
+      },
+      isThreeLine: false,
+      contentPadding: const EdgeInsets.symmetric(horizontal: 1, vertical: 1),
+      title: Image.network(
+        character.thumbnail['path'].toString() +
+            '/landscape_small.' +
+            character.thumbnail['extension'].toString(),
+      ),
+      trailing: Container(
+        padding: const EdgeInsets.symmetric(vertical: 1, horizontal: 1),
+        width: 270,
+        height: 80,
+        child: Column(
+          children: [
+            Expanded(
+              child: Container(
+                padding: const EdgeInsets.symmetric(vertical: 1),
+                width: 250,
+                height: 27,
+                child: Text(
+                  character.name,
+                  textAlign: TextAlign.center,
+                  style: const TextStyle(
+                      fontSize: 20,
+                      fontWeight: FontWeight.bold,
+                      color: Colors.red),
+                ),
+              ),
+            ),
+            Text(
+              character.id.toString(),
+              style: const TextStyle(fontSize: 10),
+            )
+          ],
+        ),
       ),
     );
   }
