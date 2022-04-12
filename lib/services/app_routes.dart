@@ -1,5 +1,4 @@
 class AppRoutes {
-  static const homePage = '/';
-  static const secondPage = '/secondPage';
-  static const thirdPage = '/thirdPage';
+  static const heroesPage = '/';
+  static const detailPage = '/detailPage';
 }

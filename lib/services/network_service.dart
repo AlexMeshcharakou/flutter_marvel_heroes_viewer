@@ -2,26 +2,54 @@ import 'package:http/http.dart' as http;
 import 'dart:convert';
 
 import 'package:marvel/model/character.dart';
-
-const _uri =
-    'https://gateway.marvel.com:443/v1/public/characters?modifiedSince=2016-03-05T13%3A17%3A50-0500&limit=100&ts=2&apikey=c1bba7288e4f2f4f744591622a48412b&hash=bab03858fdeab2fe461725bad8d65904';
+import 'package:marvel/model/series.dart';
 
 class NetworkService {
-  Future<List<Character>?> get() async {
+  final String publicKey = 'c1bba7288e4f2f4f744591622a48412b';
+  final String hash = 'bab03858fdeab2fe461725bad8d65904';
+
+  Future<List<Character>?> getCharacters() async {
     final response = await http.get(
-      Uri.parse(_uri),
+      Uri.parse(
+          'https://gateway.marvel.com:443/v1/public/characters?limit=20&ts=2&apikey=$publicKey&hash=$hash'),
     );
     if (response.statusCode != 200) {
       return null;
     }
-    final Map<String, dynamic> responseMap = jsonDecode(response.body);
-    final Map<String, dynamic> data = responseMap['data'];
-    List<dynamic> body = data['results'];
-    List<Character> characters = body
+    final Map<String, dynamic> apiResponse = jsonDecode(response.body);
+    final apiResponseData = ApiResponse.fromJson(apiResponse);
+    final result = apiResponseData.data.results;
+    List<Character>? characters = result
         .map(
-          (item) => Character.fromJson(item),
+          (item) => Character(
+              id: item.id,
+              name: item.name,
+              description: item.description,
+              thumbnail: item.thumbnail),
         )
         .toList();
     return characters;
+  }
+
+  Future<List<Series>?> getAllSeries(String characterId) async {
+    final response = await http.get(
+      Uri.parse(
+          'https://gateway.marvel.com:443/v1/public/characters/$characterId/series?ts=2&apikey=$publicKey&hash=$hash'),
+    );
+    if (response.statusCode != 200) {
+      return null;
+    }
+    final Map<String, dynamic> seriesResponse = jsonDecode(response.body);
+    final seriesResponseData = SeriesResponse.fromJson(seriesResponse);
+    final data = seriesResponseData.data;
+    List<Series>? allSeries = data.results
+        .map(
+          (item) => Series(
+              title: item.title,
+              description: item.description,
+              thumbnail: item.thumbnail),
+        )
+        .toList();
+    return allSeries;
   }
 }
