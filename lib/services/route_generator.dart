@@ -9,16 +9,16 @@ class RouteGenerator {
     switch (settings.name) {
       case AppRoutes.heroesPage:
         return MaterialPageRoute(
-          builder: (context) => const HeroesPage(),
+          builder: (context) =>  HeroesPage(),
         );
       case AppRoutes.detailPage:
-        final args = settings.arguments as Character;
+      //   final args = settings.arguments as Character;
         return MaterialPageRoute(
           builder: (context) => DetailsPage(
-            id: args.id,
-            name: args.name,
-            thumbnail: args.thumbnail,
-            description: args.description,
+      //       id: args.id,
+      //       name: args.name,
+      //       thumbnail: args.thumbnail,
+      //       description: args.description,
           ),
         );
     }
