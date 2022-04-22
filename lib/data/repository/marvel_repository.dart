@@ -1,7 +1,6 @@
-import 'package:marvel/services/marvel_api_provider.dart';
-
-import '../model/character.dart';
-import '../model/series.dart';
+import 'package:marvel/data/model/character.dart';
+import 'package:marvel/data/model/series.dart';
+import 'package:marvel/data/repository/marvel_api_provider.dart';
 
 class MarvelRepository {
   final MarvelApiProvider _marvelApiProvider = MarvelApiProvider();

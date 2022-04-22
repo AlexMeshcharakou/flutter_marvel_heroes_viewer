@@ -31,7 +31,7 @@ Character _$CharacterFromJson(Map<String, dynamic> json) => Character(
       title: json['title'] as String?,
       id: json['id'] as int,
       name: json['name'] as String,
-      description: json['description'] as String,
+      description: json['description'] ?? 'description is unavailable',
       thumbnail: Thumbnail.fromJson(json['thumbnail'] as Map<String, dynamic>),
     );
 

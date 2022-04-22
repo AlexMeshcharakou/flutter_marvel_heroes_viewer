@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:marvel/bloc/marvel_bloc.dart';
-import 'package:marvel/services/marvel_repository.dart';
+import 'package:marvel/data/repository/marvel_repository.dart';
 import 'package:marvel/widgets/details_widget.dart';
 
 

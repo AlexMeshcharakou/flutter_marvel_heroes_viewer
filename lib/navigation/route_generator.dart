@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:marvel/model/character.dart';
+import 'package:marvel/navigation/app_routes.dart';
 import 'package:marvel/screens/details_page.dart';
-import 'package:marvel/services/app_routes.dart';
 import 'package:marvel/screens/heroes_page.dart';
 
 class RouteGenerator {

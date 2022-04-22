@@ -1,25 +1,25 @@
 import 'dart:async';
 import 'dart:math';
 
-import 'package:http/http.dart' as http;
 import 'dart:convert';
+import 'package:dio/dio.dart';
 
-import 'package:marvel/model/character.dart';
-import 'package:marvel/model/series.dart';
+import 'package:marvel/data/model/character.dart';
+import 'package:marvel/data/model/series.dart';
 
 class MarvelApiProvider {
   final String publicKey = 'c1bba7288e4f2f4f744591622a48412b';
   final String hash = 'bab03858fdeab2fe461725bad8d65904';
 
+  Dio dio = Dio();
+
   Future<List<Character>> getCharacters() async {
-    final response = await http.get(
-      Uri.parse(
-          'https://gateway.marvel.com:443/v1/public/characters?limit=20&ts=2&apikey=$publicKey&hash=$hash'),
-    );
+    final response = await dio.get(
+        'https://gateway.marvel.com:443/v1/public/characters?limit=20&ts=2&apikey=$publicKey&hash=$hash');
     if (response.statusCode != 200) {
       return Future.error(e);
     }
-    final Map<String, dynamic> apiResponse = jsonDecode(response.body);
+    final Map<String, dynamic> apiResponse = response.data;
     final apiResponseData = ApiResponse.fromJson(apiResponse);
     final result = apiResponseData.data.results;
     List<Character> characters = result
@@ -35,16 +35,14 @@ class MarvelApiProvider {
   }
 
   Future<List<Series>> getSeries(int characterId) async {
-   print(characterId);
-    final response = await http.get(
-      Uri.parse(
-          'https://gateway.marvel.com:443/v1/public/characters/$characterId/series?ts=2&apikey=$publicKey&hash=$hash'),
-    );
+    print(characterId);
+    final response = await dio.get(
+        'https://gateway.marvel.com:443/v1/public/characters/$characterId/series?ts=2&apikey=$publicKey&hash=$hash');
     print(response.statusCode);
     if (response.statusCode != 200) {
       return Future.error(e);
     }
-    final Map<String, dynamic> seriesResponse = jsonDecode(response.body);
+    final Map<String, dynamic> seriesResponse = jsonDecode(response.data);
     final seriesResponseData = SeriesResponse.fromJson(seriesResponse);
     final data = seriesResponseData.data;
     List<Series>? allSeries = data.results

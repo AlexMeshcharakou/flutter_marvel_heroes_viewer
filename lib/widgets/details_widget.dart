@@ -2,27 +2,20 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:marvel/bloc/marvel_bloc.dart';
 import 'package:marvel/bloc/marvel_state.dart';
+import 'package:marvel/data/model/character.dart';
+import 'package:marvel/data/model/series.dart';
 
 class DetailsWidget extends StatelessWidget {
   const DetailsWidget({Key? key}) : super(key: key);
 
-
-  String _createThumbnailUrl(character) {
-    if (character != null) {
-      return character.thumbnail.path +
-          '/landscape_xlarge.' +
-          character.thumbnail.extension;
-    }
-    return ''; // what better to return?
+  String _createThumbnailUrl(Character character) {
+    return character.thumbnail.path +
+        '/landscape_xlarge.' +
+        character.thumbnail.extension;
   }
 
-  String _createThumbnailUrlSeries(item) {
-    if (item != null) {
-      return item.thumbnail.path +
-          '/portrait_medium.' +
-          item.thumbnail.extension;
-    }
-    return ''; // what better to return?
+  String _createThumbnailUrlSeries(Series item) {
+    return item.thumbnail.path + '/portrait_medium.' + item.thumbnail.extension;
   }
 
   @override
@@ -92,7 +85,7 @@ class DetailsWidget extends StatelessWidget {
                     itemCount: state.loadedAllSeries.length,
                     itemBuilder: (BuildContext context, int index) {
                       final item = state.loadedAllSeries[index];
-                     print(item);
+                      print(item);
                       return Column(
                         children: [
                           Expanded(

@@ -3,19 +3,17 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:marvel/bloc/marvel_bloc.dart';
 import 'package:marvel/bloc/marvel_event.dart';
 import 'package:marvel/bloc/marvel_state.dart';
-import 'package:marvel/services/app_routes.dart';
+import 'package:marvel/data/model/character.dart';
+import 'package:marvel/navigation/app_routes.dart';
+import 'package:marvel/widgets/my_image.dart';
 
 class ListCharacters extends StatelessWidget {
   const ListCharacters({Key? key}) : super(key: key);
 
-
-  String _createThumbnailUrl(item) {
-    if (item != null) {
-      return item.thumbnail.path +
-          '/landscape_medium.' +
-          item.thumbnail.extension;
-    }
-    return ''; // what better to return?
+  String _createThumbnailUrl(Character item) {
+    return item.thumbnail.path +
+        '/landscape_medium.' +
+        item.thumbnail.extension;
   }
 
   @override
@@ -36,11 +34,10 @@ class ListCharacters extends StatelessWidget {
                 height: 100,
                 child: GestureDetector(
                   onTap: () {
-                MarvelBloc marvelBloc = context.read<MarvelBloc>();
-                marvelBloc.add(DetailsLoadEvent(item.id));
-                Navigator.pushNamed(context, AppRoutes.detailPage);
-                print(item.id);
-                },
+                    MarvelBloc marvelBloc = context.read<MarvelBloc>();
+                    marvelBloc.add(DetailsLoadEvent(item.id));
+                    Navigator.pushNamed(context, AppRoutes.detailPage);
+                  },
                   child: Card(
                     shape: const RoundedRectangleBorder(
                       borderRadius: BorderRadius.all(
@@ -57,13 +54,12 @@ class ListCharacters extends StatelessWidget {
                               topLeft: Radius.circular(6),
                               bottomLeft: Radius.circular(6),
                             ),
-                            child: Image.network(
+                            child: MyImage(
                               _createThumbnailUrl(item),
-                              fit: BoxFit.fitWidth,
                             ),
                           ),
                         ),
-                         Expanded(
+                        Expanded(
                           flex: 6,
                           child: Padding(
                             padding: const EdgeInsets.only(left: 15.0),

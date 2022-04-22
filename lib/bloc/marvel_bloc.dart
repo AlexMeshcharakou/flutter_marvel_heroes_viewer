@@ -1,10 +1,9 @@
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:marvel/bloc/marvel_event.dart';
 import 'package:marvel/bloc/marvel_state.dart';
-import 'package:marvel/model/character.dart';
-import 'package:marvel/services/marvel_repository.dart';
-
-import '../model/series.dart';
+import 'package:marvel/data/model/character.dart';
+import 'package:marvel/data/model/series.dart';
+import 'package:marvel/data/repository/marvel_repository.dart';
 
 class MarvelBloc extends Bloc<MarvelEvent, MarvelState> {
   final MarvelRepository marvelRepository;

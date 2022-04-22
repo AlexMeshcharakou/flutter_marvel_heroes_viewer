@@ -1,6 +1,5 @@
-import 'package:marvel/model/character.dart';
-import 'package:marvel/model/series.dart';
-
+import 'package:marvel/data/model/character.dart';
+import 'package:marvel/data/model/series.dart';
 
 abstract class MarvelState  {}
 
