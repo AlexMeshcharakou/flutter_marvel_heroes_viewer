@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:marvel/bloc/marvel_bloc.dart';
-import 'package:marvel/bloc/marvel_event.dart';
+import 'package:marvel/bloc/heroes_bloc.dart';
 import 'package:marvel/bloc/marvel_state.dart';
 import 'package:marvel/data/model/character.dart';
 import 'package:marvel/navigation/app_routes.dart';
@@ -18,7 +17,7 @@ class ListCharacters extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return BlocBuilder<MarvelBloc, MarvelState>(
+    return BlocBuilder<HeroesBloc, MarvelState>(
       builder: (context, state) {
         if (state is DataLoadingState) {
           return const Center(
@@ -34,9 +33,12 @@ class ListCharacters extends StatelessWidget {
                 height: 100,
                 child: GestureDetector(
                   onTap: () {
-                    MarvelBloc marvelBloc = context.read<MarvelBloc>();
-                    marvelBloc.add(DetailsLoadEvent(item.id));
-                    Navigator.pushNamed(context, AppRoutes.detailPage);
+                    Navigator.pushNamed(context, AppRoutes.detailPage,
+                        arguments: Character(
+                            id: item.id,
+                            name: item.name,
+                            description: item.description,
+                            thumbnail: item.thumbnail));
                   },
                   child: Card(
                     shape: const RoundedRectangleBorder(

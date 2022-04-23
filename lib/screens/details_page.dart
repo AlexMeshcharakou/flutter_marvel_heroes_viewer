@@ -1,31 +1,46 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:marvel/bloc/marvel_bloc.dart';
+import 'package:marvel/bloc/details_bloc.dart';
+import 'package:marvel/bloc/marvel_event.dart';
+import 'package:marvel/data/model/character.dart';
 import 'package:marvel/data/repository/marvel_repository.dart';
 import 'package:marvel/widgets/details_widget.dart';
 
-
 class DetailsPage extends StatelessWidget {
   final marvelRepository = MarvelRepository();
+  final int id;
+  final String name;
+  final String description;
+  final Thumbnail thumbnail;
 
-  DetailsPage({Key? key}) : super(key: key);
-
+  DetailsPage(
+      {Key? key,
+      required this.id,
+      required this.name,
+      required this.description,
+      required this.thumbnail})
+      : super(key: key);
 
   @override
   Widget build(BuildContext context) {
-    return BlocProvider<MarvelBloc>(
-      create: (context) => MarvelBloc(marvelRepository),
+    return BlocProvider<DetailsBloc>(
+      create: (context) =>
+          DetailsBloc(marvelRepository)..add(DetailsLoadEvent(id)),
       child: Scaffold(
-          appBar: AppBar(
-            centerTitle: true,
-            title: const Text(
-              'Second',
-              style: TextStyle(
-                color: Colors.white,
-                fontSize: 24,
-              ),
+        appBar: AppBar(
+          centerTitle: true,
+          title: Text(
+            name,
+            style: const TextStyle(
+              color: Colors.white,
+              fontSize: 24,
             ),
-          ), body: const DetailsWidget(),
+          ),
+        ),
+        body: DetailsWidget(
+          description: description,
+          thumbnail: thumbnail,
+        ),
       ),
     );
   }

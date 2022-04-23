@@ -5,11 +5,11 @@ import 'package:marvel/data/model/character.dart';
 import 'package:marvel/data/model/series.dart';
 import 'package:marvel/data/repository/marvel_repository.dart';
 
-class MarvelBloc extends Bloc<MarvelEvent, MarvelState> {
+class HeroesBloc extends Bloc<MarvelEvent, MarvelState> {
   final MarvelRepository marvelRepository;
    // late List<Character> loadedCharacters;
 
-  MarvelBloc(this.marvelRepository)
+  HeroesBloc(this.marvelRepository)
       : super(CharactersLoadedState(loadedCharacters: [])) {
     on<CharactersLoadEvent>(
           (event, emit) async {
@@ -23,17 +23,17 @@ class MarvelBloc extends Bloc<MarvelEvent, MarvelState> {
         }
       },
     );
-    on<DetailsLoadEvent>(
-          (event, emit) async {
-        emit(DataLoadingState());
-        try {
-          final List<Series> _loadedDetailList =
-          await marvelRepository.getAllSeries(event.characterId);
-          emit(DetailsLoadedState(loadedAllSeries: _loadedDetailList));
-        } catch (e) {
-          emit(MarvellErrorState());
-        }
-      },
-    );
+    // on<DetailsLoadEvent>(
+    //       (event, emit) async {
+    //     emit(DataLoadingState());
+    //     try {
+    //       final List<Series> _loadedDetailList =
+    //       await marvelRepository.getAllSeries(event.characterId);
+    //       emit(DetailsLoadedState(loadedAllSeries: _loadedDetailList));
+    //     } catch (e) {
+    //       emit(MarvellErrorState());
+    //     }
+    //   },
+    // );
   }
 }

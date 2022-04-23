@@ -1,17 +1,21 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:marvel/bloc/marvel_bloc.dart';
+import 'package:marvel/bloc/details_bloc.dart';
 import 'package:marvel/bloc/marvel_state.dart';
 import 'package:marvel/data/model/character.dart';
 import 'package:marvel/data/model/series.dart';
+import 'package:marvel/widgets/my_image.dart';
 
 class DetailsWidget extends StatelessWidget {
-  const DetailsWidget({Key? key}) : super(key: key);
+  final String description;
+  final Thumbnail thumbnail;
 
-  String _createThumbnailUrl(Character character) {
-    return character.thumbnail.path +
-        '/landscape_xlarge.' +
-        character.thumbnail.extension;
+  const DetailsWidget(
+      {Key? key, required this.description, required this.thumbnail})
+      : super(key: key);
+
+  String _createThumbnailUrl(Thumbnail thumbnail) {
+    return thumbnail.path + '/landscape_xlarge.' + thumbnail.extension;
   }
 
   String _createThumbnailUrlSeries(Series item) {
@@ -20,7 +24,7 @@ class DetailsWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return BlocBuilder<MarvelBloc, MarvelState>(
+    return BlocBuilder<DetailsBloc, MarvelState>(
       builder: (context, state) {
         if (state is DataLoadingState) {
           return const Center(
@@ -45,22 +49,22 @@ class DetailsWidget extends StatelessWidget {
                           alignment: Alignment.topCenter,
                           child: Padding(
                             padding: const EdgeInsets.all(10.0),
-                            child: Image.network(''
-                                // _createThumbnailUrl(character),
-                                ),
+                            child: MyImage(
+                              _createThumbnailUrl(thumbnail),
+                            ),
                           ),
                         ),
-                        const Expanded(
+                        Expanded(
                           flex: 6,
                           child: SizedBox(
                             width: 280,
                             height: 100,
                             child: Padding(
-                              padding: EdgeInsets.all(5.0),
+                              padding: const EdgeInsets.all(5.0),
                               child: SingleChildScrollView(
                                 scrollDirection: Axis.vertical,
                                 child: Text(
-                                  ' character.description',
+                                  description,
                                   textAlign: TextAlign.justify,
                                 ),
                               ),
@@ -71,12 +75,11 @@ class DetailsWidget extends StatelessWidget {
                     ),
                   ),
                 ),
-                const Padding(
-                  padding: EdgeInsets.only(top: 15),
-                  child: Text(
-                    'SERIES',
-                    style: TextStyle(fontSize: 20),
-                  ),
+                Padding(
+                  padding: const EdgeInsets.only(top: 15),
+                  child: (state.loadedAllSeries.isNotEmpty)
+                      ? const Text('SERIES', style: TextStyle(fontSize: 20))
+                      : const SizedBox.shrink(),
                 ),
                 SizedBox(
                   height: 230,
@@ -85,16 +88,15 @@ class DetailsWidget extends StatelessWidget {
                     itemCount: state.loadedAllSeries.length,
                     itemBuilder: (BuildContext context, int index) {
                       final item = state.loadedAllSeries[index];
-                      print(item);
                       return Column(
                         children: [
                           Expanded(
                             flex: 9,
                             child: Padding(
                               padding: const EdgeInsets.all(5.0),
-                              child: Image.network(
-                                  _createThumbnailUrlSeries(item),
-                                  fit: BoxFit.contain),
+                              child: MyImage(
+                                _createThumbnailUrlSeries(item),
+                              ),
                             ),
                           ),
                           SizedBox(

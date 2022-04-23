@@ -1,7 +1,6 @@
 import 'dart:async';
 import 'dart:math';
 
-import 'dart:convert';
 import 'package:dio/dio.dart';
 
 import 'package:marvel/data/model/character.dart';
@@ -35,14 +34,12 @@ class MarvelApiProvider {
   }
 
   Future<List<Series>> getSeries(int characterId) async {
-    print(characterId);
     final response = await dio.get(
         'https://gateway.marvel.com:443/v1/public/characters/$characterId/series?ts=2&apikey=$publicKey&hash=$hash');
-    print(response.statusCode);
     if (response.statusCode != 200) {
       return Future.error(e);
     }
-    final Map<String, dynamic> seriesResponse = jsonDecode(response.data);
+    final Map<String, dynamic> seriesResponse = response.data;
     final seriesResponseData = SeriesResponse.fromJson(seriesResponse);
     final data = seriesResponseData.data;
     List<Series>? allSeries = data.results
@@ -53,7 +50,6 @@ class MarvelApiProvider {
               thumbnail: item.thumbnail),
         )
         .toList();
-    print(allSeries);
     return allSeries;
   }
 }

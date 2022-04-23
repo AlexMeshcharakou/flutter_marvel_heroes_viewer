@@ -44,6 +44,11 @@ class Character {
 
   factory Character.fromJson(Map<String, dynamic> json) =>
       _$CharacterFromJson(json);
+
+  @override
+  String toString() {
+    return 'Character{id: $id, name: $name, title: $title, description: $description, thumbnail: $thumbnail}';
+  }
 }
 
 @JsonSerializable()
