@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:marvel/navigation/route_generator.dart';
-import 'package:marvel/screens/heroes_page.dart';
+
+import 'presentation/navigation/route_generator.dart';
+import 'presentation/screens/heroes_page.dart';
 
 void main() {
   runApp(

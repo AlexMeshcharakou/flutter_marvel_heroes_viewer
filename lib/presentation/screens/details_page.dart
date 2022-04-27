@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:marvel/bloc/details_bloc.dart';
-import 'package:marvel/bloc/marvel_event.dart';
+import 'package:marvel/bloc/details_event.dart';
 import 'package:marvel/data/model/character.dart';
 import 'package:marvel/data/repository/marvel_repository.dart';
-import 'package:marvel/widgets/details_widget.dart';
+import 'package:marvel/presentation/widgets/details_widget.dart';
 
 class DetailsPage extends StatelessWidget {
   final marvelRepository = MarvelRepository();
@@ -25,7 +25,7 @@ class DetailsPage extends StatelessWidget {
   Widget build(BuildContext context) {
     return BlocProvider<DetailsBloc>(
       create: (context) =>
-          DetailsBloc(marvelRepository)..add(DetailsLoadEvent(id)),
+          DetailsBloc(marvelRepository)..add(LoadDetailsEvent(id)),
       child: Scaffold(
         appBar: AppBar(
           centerTitle: true,

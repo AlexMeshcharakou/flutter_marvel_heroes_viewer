@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:marvel/data/model/character.dart';
-import 'package:marvel/navigation/app_routes.dart';
-import 'package:marvel/screens/details_page.dart';
-import 'package:marvel/screens/heroes_page.dart';
+import 'package:marvel/presentation/navigation/app_routes.dart';
+import 'package:marvel/presentation/screens/details_page.dart';
+import 'package:marvel/presentation/screens/heroes_page.dart';
 
 class RouteGenerator {
   static Route<dynamic>? generateRoute(RouteSettings settings) {

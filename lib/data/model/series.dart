@@ -10,8 +10,7 @@ class SeriesResponse {
     required this.data,
   });
 
-  factory SeriesResponse.fromJson(Map<String, dynamic> json) =>
-      _$SeriesResponseFromJson(json);
+  factory SeriesResponse.fromJson(Map<String, dynamic> json) => _$SeriesResponseFromJson(json);
 }
 
 @JsonSerializable()
@@ -22,8 +21,7 @@ class SeriesResponseData {
     required this.results,
   });
 
-  factory SeriesResponseData.fromJson(Map<String, dynamic> json) =>
-      _$SeriesResponseDataFromJson(json);
+  factory SeriesResponseData.fromJson(Map<String, dynamic> json) => _$SeriesResponseDataFromJson(json);
 }
 
 @JsonSerializable()
@@ -32,7 +30,6 @@ class Series {
   final dynamic description;
   final ThumbnailSeries thumbnail;
 
-  //
   Series({
     required this.title,
     required this.description,
@@ -52,6 +49,5 @@ class ThumbnailSeries {
     required this.extension,
   });
 
-  factory ThumbnailSeries.fromJson(Map<String, dynamic> json) =>
-      _$ThumbnailSeriesFromJson(json);
+  factory ThumbnailSeries.fromJson(Map<String, dynamic> json) => _$ThumbnailSeriesFromJson(json);
 }

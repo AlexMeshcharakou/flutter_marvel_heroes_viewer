@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:marvel/bloc/heroes_bloc.dart';
-import 'package:marvel/bloc/marvel_event.dart';
+import 'package:marvel/bloc/heroes_event.dart';
 import 'package:marvel/data/repository/marvel_repository.dart';
-import 'package:marvel/widgets/list_characters.dart';
+import 'package:marvel/presentation/widgets/list_characters.dart';
 
 class HeroesPage extends StatelessWidget {
   final marvelRepository = MarvelRepository();
@@ -14,7 +14,7 @@ class HeroesPage extends StatelessWidget {
   Widget build(BuildContext context) {
     return BlocProvider<HeroesBloc>(
       create: (context) =>
-          HeroesBloc(marvelRepository)..add(CharactersLoadEvent()),
+          HeroesBloc(marvelRepository)..add(LoadCharactersEvent()),
       child: Scaffold(
         appBar: AppBar(
           centerTitle: true,

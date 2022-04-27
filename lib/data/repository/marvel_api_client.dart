@@ -6,7 +6,7 @@ import 'package:dio/dio.dart';
 import 'package:marvel/data/model/character.dart';
 import 'package:marvel/data/model/series.dart';
 
-class MarvelApiProvider {
+class MarvelApiClient {
   final String publicKey = 'c1bba7288e4f2f4f744591622a48412b';
   final String hash = 'bab03858fdeab2fe461725bad8d65904';
 
@@ -16,7 +16,7 @@ class MarvelApiProvider {
     final response = await dio.get(
         'https://gateway.marvel.com:443/v1/public/characters?limit=20&ts=2&apikey=$publicKey&hash=$hash');
     if (response.statusCode != 200) {
-      return Future.error(e);
+      return Future.error("network error");
     }
     final Map<String, dynamic> apiResponse = response.data;
     final apiResponseData = ApiResponse.fromJson(apiResponse);
