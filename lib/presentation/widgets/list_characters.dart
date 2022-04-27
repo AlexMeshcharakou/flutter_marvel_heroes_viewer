@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:marvel/bloc/heroes_bloc.dart';
-import 'package:marvel/bloc/heroes_state.dart';
+import 'package:marvel/bloc/heroes_page_state.dart';
 import 'package:marvel/data/model/character.dart';
 import 'package:marvel/presentation/navigation/app_routes.dart';
 import 'package:marvel/presentation/widgets/my_image.dart';
@@ -15,18 +15,18 @@ class ListCharacters extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return BlocBuilder<HeroesBloc, HeroesState>(
+    return BlocBuilder<HeroesBloc, HeroesPageState>(
       builder: (context, state) {
-        if (state is DataLoadingState) {
+        if (state.loading == true) {
           return const Center(
             child: CircularProgressIndicator(),
           );
         }
-        if (state is CharactersLoadedState) {
+        if (state.loading == false && state.characters != null) {
           return ListView.builder(
-            itemCount: state.characters.length,
+            itemCount: state.characters?.length,
             itemBuilder: (BuildContext context, int index) {
-              final item = state.characters[index];
+              final item = state.characters![index];
               return SizedBox(
                 height: 100,
                 child: GestureDetector(
@@ -41,7 +41,7 @@ class ListCharacters extends StatelessWidget {
             },
           );
         }
-        if (state is HeroesErrorState) {
+        if (state.loading == false && state.error != null) {
           return const Center(
             child: Text('ERROR'),
           );

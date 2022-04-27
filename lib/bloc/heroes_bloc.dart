@@ -1,23 +1,23 @@
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:marvel/bloc/heroes_event.dart';
-import 'package:marvel/bloc/heroes_state.dart';
+import 'package:marvel/bloc/heroes_page_event.dart';
+import 'package:marvel/bloc/heroes_page_state.dart';
 import 'package:marvel/data/model/character.dart';
 import 'package:marvel/data/repository/marvel_repository.dart';
 
-class HeroesBloc extends Bloc<HeroesEvent, HeroesState> {
+class HeroesBloc extends Bloc<HeroesPageEvent, HeroesPageState> {
   final MarvelRepository marvelRepository;
 
   HeroesBloc(this.marvelRepository)
-      : super(CharactersLoadedState(characters: [])) {
-    on<LoadCharactersEvent>(
+      : super(const HeroesPageState(loading: true)) {
+    on<HeroesPageEvent>(
       (event, emit) async {
-        emit(DataLoadingState());
+        emit(state.copyWith(loading: true));
         try {
           final List<Character> _loadedCharacterList =
               await marvelRepository.getAllCharacters();
-          emit(CharactersLoadedState(characters: _loadedCharacterList));
+          emit(state.copyWith(loading: false, characters: _loadedCharacterList, ));
         } catch (e) {
-          emit(HeroesErrorState());
+          emit(state.copyWith(error: "error", loading: false));
         }
       },
     );

@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:marvel/bloc/details_bloc.dart';
-import 'package:marvel/bloc/details_event.dart';
+import 'package:marvel/bloc/details_page_event.dart';
 import 'package:marvel/data/model/character.dart';
 import 'package:marvel/data/repository/marvel_repository.dart';
 import 'package:marvel/presentation/widgets/details_widget.dart';
@@ -13,19 +13,13 @@ class DetailsPage extends StatelessWidget {
   final String description;
   final Thumbnail thumbnail;
 
-  DetailsPage(
-      {Key? key,
-      required this.id,
-      required this.name,
-      required this.description,
-      required this.thumbnail})
+  DetailsPage({Key? key, required this.id, required this.name, required this.description, required this.thumbnail})
       : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     return BlocProvider<DetailsBloc>(
-      create: (context) =>
-          DetailsBloc(marvelRepository)..add(LoadDetailsEvent(id)),
+      create: (context) => DetailsBloc(marvelRepository)..add(DetailsPageEvent(id)),
       child: Scaffold(
         appBar: AppBar(
           centerTitle: true,

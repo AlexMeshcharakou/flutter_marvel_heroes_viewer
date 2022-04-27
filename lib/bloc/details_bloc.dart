@@ -1,21 +1,22 @@
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:marvel/bloc/details_event.dart';
-import 'package:marvel/bloc/details_state.dart';
+import 'package:marvel/bloc/details_page_state.dart';
 import 'package:marvel/data/model/series.dart';
 import 'package:marvel/data/repository/marvel_repository.dart';
 
-class DetailsBloc extends Bloc<DetailsEvent, DetailsState> {
+import 'details_page_event.dart';
+
+class DetailsBloc extends Bloc<DetailsPageEvent, DetailsPageState> {
   final MarvelRepository marvelRepository;
 
-  DetailsBloc(this.marvelRepository) : super(DetailsLoadedState(loadedAllSeries: [])) {
-    on<LoadDetailsEvent>(
+  DetailsBloc(this.marvelRepository) : super(const DetailsPageState(loading: true)) {
+    on<DetailsPageEvent>(
       (event, emit) async {
-        emit(DataLoadingState());
+        emit(state.copyWith(loading: true));
         try {
           final List<Series> _loadedDetailList = await marvelRepository.getAllSeries(event.characterId);
-          emit(DetailsLoadedState(loadedAllSeries: _loadedDetailList));
+          emit(state.copyWith(allSeries: _loadedDetailList, loading: false));
         } catch (e) {
-          emit(DetailsErrorState());
+          emit(state.copyWith(error: "error", loading: false));
         }
       },
     );
