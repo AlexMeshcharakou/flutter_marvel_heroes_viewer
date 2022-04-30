@@ -1,11 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:marvel/bloc/details_bloc.dart';
-import 'package:marvel/bloc/details_page_state.dart';
+import 'package:marvel/bloc/details_state.dart';
 import 'package:marvel/data/model/character.dart';
 import 'package:marvel/data/model/series.dart';
-
-import 'my_image.dart';
 
 class DetailsWidget extends StatelessWidget {
   final String description;
@@ -15,28 +13,31 @@ class DetailsWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return BlocBuilder<DetailsBloc, DetailsPageState>(
+    return BlocBuilder<DetailsBloc, DetailsState>(
       builder: (context, state) {
-        if (state.loading == true) {
+        final allSeries = state.allSeries;
+        final loading = state.loading;
+        final error = state.error;
+        if (loading == true) {
           return const Center(
             child: CircularProgressIndicator(),
           );
         }
-        if (state.loading == false && state.allSeries != null) {
+        if (loading == false && allSeries != null) {
           return SingleChildScrollView(
             child: Column(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
                 _buildImage(),
-                _buildDescriptionTitle(),
+                if (description.isNotEmpty) const Text('DESCRIPTION', style: TextStyle(fontSize: 20)),
                 _buildDescription(),
-                _buildSeriesTitle(state),
-                _buildSeries(state),
+                if (allSeries.isNotEmpty) const Text('SERIES', style: TextStyle(fontSize: 20)),
+                _buildSeries(allSeries),
               ],
             ),
           );
         }
-        if (state.loading == false && state.error != null) {
+        if (loading == false && error != null) {
           return const Center(
             child: Text('ERROR'),
           );
@@ -46,23 +47,23 @@ class DetailsWidget extends StatelessWidget {
     );
   }
 
-  SizedBox _buildSeries(DetailsPageState state) {
+  SizedBox _buildSeries(allSeries) {
     return SizedBox(
       height: 230,
       child: ListView.builder(
         scrollDirection: Axis.horizontal,
-        itemCount: state.allSeries?.length,
+        itemCount: allSeries?.length,
         itemBuilder: (BuildContext context, int index) {
-          final item = state.allSeries![index];
+          final item = allSeries![index];
           return Column(
             children: [
               Expanded(
                 flex: 9,
                 child: Padding(
                   padding: const EdgeInsets.all(5.0),
-                  child: MyImage(
-                    _createThumbnailUrlSeries(item),
-                  ),
+                  child: (item != null)
+                      ? Image.network(_createThumbnailUrlSeries(item), fit: BoxFit.fitWidth)
+                      : Image.asset("assets/images/placeholder.png"),
                 ),
               ),
               SizedBox(
@@ -74,13 +75,6 @@ class DetailsWidget extends StatelessWidget {
           );
         },
       ),
-    );
-  }
-
-  Widget _buildSeriesTitle(DetailsPageState state) {
-    return Padding(
-      padding: const EdgeInsets.only(top: 15),
-      child: (state.allSeries != null) ? const Text('SERIES', style: TextStyle(fontSize: 20)) : const SizedBox.shrink(),
     );
   }
 
@@ -101,15 +95,6 @@ class DetailsWidget extends StatelessWidget {
     );
   }
 
-  Widget _buildDescriptionTitle() {
-    return Padding(
-      padding: const EdgeInsets.only(top: 25),
-      child: (description.isNotEmpty)
-          ? const Text('DESCRIPTION', style: TextStyle(fontSize: 20))
-          : const SizedBox.shrink(),
-    );
-  }
-
   Widget _buildImage() {
     return SizedBox(
       width: 300,
@@ -124,9 +109,9 @@ class DetailsWidget extends StatelessWidget {
               alignment: Alignment.topCenter,
               child: Padding(
                 padding: const EdgeInsets.all(10.0),
-                child: MyImage(
-                  _createThumbnailUrl(thumbnail),
-                ),
+                child: (thumbnail != null)
+                    ? Image.network(_createThumbnailUrl(thumbnail), fit: BoxFit.fitWidth)
+                    : Image.asset("assets/images/placeholder.png"),
               ),
             ),
           ],
@@ -135,11 +120,11 @@ class DetailsWidget extends StatelessWidget {
     );
   }
 
-  String _createThumbnailUrl(Thumbnail thumbnail) {
-    return thumbnail.path + '/landscape_xlarge.' + thumbnail.extension;
-  }
-
   String _createThumbnailUrlSeries(Series item) {
     return item.thumbnail.path + '/portrait_medium.' + item.thumbnail.extension;
+  }
+
+  String _createThumbnailUrl(Thumbnail thumbnail) {
+    return thumbnail.path + '/landscape_xlarge.' + thumbnail.extension;
   }
 }

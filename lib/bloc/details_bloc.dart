@@ -1,15 +1,15 @@
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:marvel/bloc/details_page_state.dart';
+import 'package:marvel/bloc/details_state.dart';
 import 'package:marvel/data/model/series.dart';
 import 'package:marvel/data/repository/marvel_repository.dart';
 
-import 'details_page_event.dart';
+import 'details_event.dart';
 
-class DetailsBloc extends Bloc<DetailsPageEvent, DetailsPageState> {
+class DetailsBloc extends Bloc<DetailsEvent, DetailsState> {
   final MarvelRepository marvelRepository;
 
-  DetailsBloc(this.marvelRepository) : super(const DetailsPageState(loading: true)) {
-    on<DetailsPageEvent>(
+  DetailsBloc(this.marvelRepository) : super(const DetailsState(loading: true)) {
+    on<DetailsEvent>(
       (event, emit) async {
         emit(state.copyWith(loading: true));
         try {

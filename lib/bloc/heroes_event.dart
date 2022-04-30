@@ -1,3 +1,6 @@
-abstract class HeroesEvent {}
+import 'package:equatable/equatable.dart';
 
-class LoadCharactersEvent extends HeroesEvent {}
+class HeroesEvent extends Equatable {
+  @override
+  List<Object?> get props => [];
+}

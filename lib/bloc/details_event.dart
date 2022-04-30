@@ -1,9 +1,9 @@
 import 'package:equatable/equatable.dart';
 
-class DetailsPageEvent extends Equatable {
+class DetailsEvent extends Equatable {
   final int characterId;
 
-  const DetailsPageEvent(this.characterId);
+  const DetailsEvent(this.characterId);
 
   @override
   List<Object?> get props => [characterId];

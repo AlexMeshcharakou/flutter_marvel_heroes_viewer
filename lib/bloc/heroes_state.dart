@@ -1,13 +1,18 @@
+import 'package:flutter/cupertino.dart';
 import 'package:marvel/data/model/character.dart';
+import 'package:equatable/equatable.dart';
 
-abstract class HeroesState {}
+@immutable
+class HeroesState extends Equatable {
+  final bool loading;
+  final List<Character>? characters;
+  final String? error;
 
-class DataLoadingState extends HeroesState {}
+  const HeroesState({required this.loading, this.characters, this.error});
 
-class HeroesErrorState extends HeroesState {}
+  HeroesState copyWith({loading, characters, error}) => HeroesState(
+      loading: loading ?? this.loading, characters: characters ?? this.characters, error: error ?? this.error);
 
-class CharactersLoadedState extends HeroesState {
-  final List<Character> characters;
-
-  CharactersLoadedState({required this.characters});
+  @override
+  List<Object?> get props => [loading, characters, error];
 }

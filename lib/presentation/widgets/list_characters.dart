@@ -1,21 +1,16 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:marvel/bloc/heroes_bloc.dart';
-import 'package:marvel/bloc/heroes_page_state.dart';
+import 'package:marvel/bloc/heroes_state.dart';
 import 'package:marvel/data/model/character.dart';
 import 'package:marvel/presentation/navigation/app_routes.dart';
-import 'package:marvel/presentation/widgets/my_image.dart';
 
 class ListCharacters extends StatelessWidget {
   const ListCharacters({Key? key}) : super(key: key);
 
-  String _createThumbnailUrl(Character item) {
-    return item.thumbnail.path + '/landscape_medium.' + item.thumbnail.extension;
-  }
-
   @override
   Widget build(BuildContext context) {
-    return BlocBuilder<HeroesBloc, HeroesPageState>(
+    return BlocBuilder<HeroesBloc, HeroesState>(
       builder: (context, state) {
         if (state.loading == true) {
           return const Center(
@@ -68,9 +63,9 @@ class ListCharacters extends StatelessWidget {
                 topLeft: Radius.circular(6),
                 bottomLeft: Radius.circular(6),
               ),
-              child: MyImage(
-                _createThumbnailUrl(item),
-              ),
+              child: (item.thumbnail != null)
+                  ? Image.network(_createThumbnailUrl(item.thumbnail), fit: BoxFit.fitWidth)
+                  : Image.asset("assets/images/placeholder.png"),
             ),
           ),
           Expanded(
@@ -88,4 +83,8 @@ class ListCharacters extends StatelessWidget {
       ),
     );
   }
+}
+
+String _createThumbnailUrl(Thumbnail thumbnail) {
+  return thumbnail.path + '/landscape_medium.' + thumbnail.extension;
 }

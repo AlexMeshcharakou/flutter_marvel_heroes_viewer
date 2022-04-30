@@ -3,12 +3,12 @@ import 'package:marvel/data/model/series.dart';
 import 'package:marvel/data/repository/marvel_api_client.dart';
 
 class MarvelRepository {
-  final MarvelApiClient _marvelApiProvider = MarvelApiClient();
+  final MarvelApiClient _marvelApiClient = MarvelApiClient();
   late int characterId;
 
   Future<List<Character>> getAllCharacters() =>
-      _marvelApiProvider.getCharacters();
+      _marvelApiClient.getCharacters();
 
   Future<List<Series>> getAllSeries(characterId) =>
-      _marvelApiProvider.getSeries(characterId);
+      _marvelApiClient.getSeries(characterId);
 }
