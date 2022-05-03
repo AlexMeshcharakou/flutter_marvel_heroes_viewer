@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:marvel/bloc/heroes_bloc.dart';
-import 'package:marvel/bloc/heroes_state.dart';
-import 'package:marvel/data/model/character.dart';
+import 'package:marvel/data/models/character.dart';
+import 'package:marvel/presentation/features/heroes/bloc/heroes_bloc.dart';
+import 'package:marvel/presentation/features/heroes/bloc/heroes_state.dart';
 import 'package:marvel/presentation/navigation/app_routes.dart';
 
 class ListCharacters extends StatelessWidget {
@@ -26,9 +26,7 @@ class ListCharacters extends StatelessWidget {
                 height: 100,
                 child: GestureDetector(
                   onTap: () {
-                    Navigator.pushNamed(context, AppRoutes.detailPage,
-                        arguments: Character(
-                            id: item.id, name: item.name, description: item.description, thumbnail: item.thumbnail));
+                    Navigator.pushNamed(context, AppRoutes.detailPage, arguments: item.id);
                   },
                   child: _buildCharacterCard(item),
                 ),
@@ -53,7 +51,7 @@ class ListCharacters extends StatelessWidget {
           Radius.circular(6),
         ),
       ),
-      elevation: 5,
+      elevation: 3,
       child: Row(
         children: [
           Expanded(
@@ -63,9 +61,7 @@ class ListCharacters extends StatelessWidget {
                 topLeft: Radius.circular(6),
                 bottomLeft: Radius.circular(6),
               ),
-              child: (item.thumbnail != null)
-                  ? Image.network(_createThumbnailUrl(item.thumbnail), fit: BoxFit.fitWidth)
-                  : Image.asset("assets/images/placeholder.png"),
+              child: Image.network(_createThumbnailUrl(item.thumbnail), fit: BoxFit.fitWidth),
             ),
           ),
           Expanded(

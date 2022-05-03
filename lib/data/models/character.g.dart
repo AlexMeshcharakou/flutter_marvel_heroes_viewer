@@ -10,20 +10,15 @@ ApiResponse _$ApiResponseFromJson(Map<String, dynamic> json) => ApiResponse(
       data: ApiResponseData.fromJson(json['data'] as Map<String, dynamic>),
     );
 
-Map<String, dynamic> _$ApiResponseToJson(ApiResponse instance) =>
-    <String, dynamic>{
+Map<String, dynamic> _$ApiResponseToJson(ApiResponse instance) => <String, dynamic>{
       'data': instance.data,
     };
 
-ApiResponseData _$ApiResponseDataFromJson(Map<String, dynamic> json) =>
-    ApiResponseData(
-      results: (json['results'] as List<dynamic>)
-          .map((e) => Character.fromJson(e as Map<String, dynamic>))
-          .toList(),
+ApiResponseData _$ApiResponseDataFromJson(Map<String, dynamic> json) => ApiResponseData(
+      results: (json['results'] as List<dynamic>).map((e) => Character.fromJson(e as Map<String, dynamic>)).toList(),
     );
 
-Map<String, dynamic> _$ApiResponseDataToJson(ApiResponseData instance) =>
-    <String, dynamic>{
+Map<String, dynamic> _$ApiResponseDataToJson(ApiResponseData instance) => <String, dynamic>{
       'results': instance.results,
     };
 
@@ -31,7 +26,7 @@ Character _$CharacterFromJson(Map<String, dynamic> json) => Character(
       title: json['title'] as String?,
       id: json['id'] as int,
       name: json['name'] as String,
-      description: json['description'] as String ,
+      description: json['description'] as String,
       thumbnail: Thumbnail.fromJson(json['thumbnail'] as Map<String, dynamic>),
     );
 

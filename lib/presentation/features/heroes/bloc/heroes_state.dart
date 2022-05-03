@@ -1,5 +1,5 @@
 import 'package:flutter/cupertino.dart';
-import 'package:marvel/data/model/character.dart';
+import 'package:marvel/data/models/character.dart';
 import 'package:equatable/equatable.dart';
 
 @immutable

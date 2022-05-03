@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 
 import 'presentation/navigation/route_generator.dart';
-import 'presentation/screens/heroes_page.dart';
+import 'presentation/features/heroes/heroes_page.dart';
 
 void main() {
   runApp(

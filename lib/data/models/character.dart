@@ -10,8 +10,7 @@ class ApiResponse {
     required this.data,
   });
 
-  factory ApiResponse.fromJson(Map<String, dynamic> json) =>
-      _$ApiResponseFromJson(json);
+  factory ApiResponse.fromJson(Map<String, dynamic> json) => _$ApiResponseFromJson(json);
 }
 
 @JsonSerializable()
@@ -22,8 +21,7 @@ class ApiResponseData {
     required this.results,
   });
 
-  factory ApiResponseData.fromJson(Map<String, dynamic> json) =>
-      _$ApiResponseDataFromJson(json);
+  factory ApiResponseData.fromJson(Map<String, dynamic> json) => _$ApiResponseDataFromJson(json);
 }
 
 @JsonSerializable()
@@ -42,8 +40,7 @@ class Character {
     required this.thumbnail,
   });
 
-  factory Character.fromJson(Map<String, dynamic> json) =>
-      _$CharacterFromJson(json);
+  factory Character.fromJson(Map<String, dynamic> json) => _$CharacterFromJson(json);
 
   @override
   String toString() {
@@ -61,6 +58,5 @@ class Thumbnail {
     required this.extension,
   });
 
-  factory Thumbnail.fromJson(Map<String, dynamic> json) =>
-      _$ThumbnailFromJson(json);
+  factory Thumbnail.fromJson(Map<String, dynamic> json) => _$ThumbnailFromJson(json);
 }
