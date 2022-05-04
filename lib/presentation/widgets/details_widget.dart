@@ -40,10 +40,8 @@ class DetailsWidget extends StatelessWidget {
                 mainAxisAlignment: MainAxisAlignment.start,
                 children: [
                   _buildImage(character.thumbnail),
-                  if (character.description.isNotEmpty) const Text('DESCRIPTION', style: TextStyle(fontSize: 20)),
-                  _buildDescription(character.description),
-                  if (allSeries.isNotEmpty) const Text('SERIES', style: TextStyle(fontSize: 20)),
-                  _buildSeries(allSeries),
+                  if (character.description.isNotEmpty) _buildDescription(character.description),
+                  if (allSeries.isNotEmpty) _buildSeries(allSeries),
                 ],
               ),
             ),
@@ -84,50 +82,66 @@ Widget _buildImage(Thumbnail thumbnail) {
 }
 
 Widget _buildDescription(String description) {
-  return SizedBox(
-    width: 370,
-    child: Padding(
-      padding: const EdgeInsets.all(5.0),
-      child: Text(
-        description,
-        textAlign: TextAlign.justify,
+  return Column(
+    children: [
+      const Text(
+        'DESCRIPTION',
+        style: TextStyle(fontSize: 20),
       ),
-    ),
+      SizedBox(
+        width: 370,
+        child: Padding(
+          padding: const EdgeInsets.all(5.0),
+          child: Text(
+            description,
+            textAlign: TextAlign.justify,
+          ),
+        ),
+      ),
+    ],
   );
 }
 
-SizedBox _buildSeries(allSeries) {
-  return SizedBox(
-    height: 230,
-    child: ListView.builder(
-      scrollDirection: Axis.horizontal,
-      itemCount: allSeries?.length,
-      itemBuilder: (BuildContext context, int index) {
-        final item = allSeries![index];
-        return Column(
-          children: [
-            Expanded(
-              flex: 9,
-              child: Card(
-                color: Colors.blue[50],
-                elevation: 10,
-                child: Padding(
-                  padding: const EdgeInsets.all(5.0),
-                  child: (item != null)
-                      ? Image.network(_createThumbnailUrlSeries(item), fit: BoxFit.fitWidth)
-                      : Image.asset("assets/images/placeholder.png"),
+Widget _buildSeries(allSeries) {
+  return Column(
+    children: [
+      const Text(
+        'SERIES',
+        style: TextStyle(fontSize: 20),
+      ),
+      SizedBox(
+        height: 230,
+        child: ListView.builder(
+          scrollDirection: Axis.horizontal,
+          itemCount: allSeries?.length,
+          itemBuilder: (BuildContext context, int index) {
+            final item = allSeries![index];
+            return Column(
+              children: [
+                Expanded(
+                  flex: 9,
+                  child: Card(
+                    color: Colors.blue[50],
+                    elevation: 10,
+                    child: Padding(
+                      padding: const EdgeInsets.all(5.0),
+                      child: (item != null)
+                          ? Image.network(_createThumbnailUrlSeries(item), fit: BoxFit.fitWidth)
+                          : Image.asset("assets/images/placeholder.png"),
+                    ),
+                  ),
                 ),
-              ),
-            ),
-            SizedBox(
-              child: Text(item.title),
-              width: 115,
-              height: 50,
-            ),
-          ],
-        );
-      },
-    ),
+                SizedBox(
+                  child: Text(item.title),
+                  width: 115,
+                  height: 50,
+                ),
+              ],
+            );
+          },
+        ),
+      ),
+    ],
   );
 }
 
