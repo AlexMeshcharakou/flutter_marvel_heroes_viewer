@@ -1,13 +1,13 @@
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:marvel/data/models/character.dart';
-import 'package:marvel/data/repository/marvel_repository.dart';
+import 'package:marvel/data/repository/repository.dart';
 import 'package:marvel/presentation/features/heroes/bloc/heroes_event.dart';
 import 'package:marvel/presentation/features/heroes/bloc/heroes_state.dart';
 
 class HeroesBloc extends Bloc<HeroesEvent, HeroesState> {
-  final MarvelRepository marvelRepository;
+  final Repository repository;
 
-  HeroesBloc(this.marvelRepository)
+  HeroesBloc({required this.repository})
       : super(
           const HeroesState(loading: true),
         ) {
@@ -17,7 +17,7 @@ class HeroesBloc extends Bloc<HeroesEvent, HeroesState> {
           state.copyWith(loading: true),
         );
         try {
-          final List<Character> characters = await marvelRepository.getAllCharacters();
+          final List<Character> characters = await repository.fetchCharacters();
           emit(
             state.copyWith(
               loading: false,
