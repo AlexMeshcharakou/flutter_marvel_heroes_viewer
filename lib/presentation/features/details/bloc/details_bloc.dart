@@ -19,11 +19,11 @@ class DetailsBloc extends Bloc<DetailsEvent, DetailsState> {
           state.copyWith(loading: true),
         );
         try {
-          // final Character character = await marvelRepository.fetchCharacters(event.characterId);
-          // final List<Series> series = await marvelRepository.getAllSeries(event.characterId);
-          // emit(
-          //   state.copyWith(character: character, allSeries: series, loading: false),
-          // );
+          final Character character = await marvelRepository.fetchCharacterDetails(event.characterId);
+          final List<Series> series = await marvelRepository.fetchSeries(event.characterId);
+          emit(
+            state.copyWith(character: character, allSeries: series, loading: false),
+          );
         } catch (e) {
           emit(
             state.copyWith(

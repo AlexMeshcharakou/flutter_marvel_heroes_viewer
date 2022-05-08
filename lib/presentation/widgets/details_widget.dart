@@ -36,13 +36,17 @@ class DetailsWidget extends StatelessWidget {
               ),
             ),
             body: SingleChildScrollView(
-              child: Column(
-                mainAxisAlignment: MainAxisAlignment.start,
-                children: [
-                  _buildImage(character.thumbnail),
-                  if (character.description.isNotEmpty) _buildDescription(character.description),
-                  if (allSeries.isNotEmpty) _buildSeries(allSeries),
-                ],
+              child: SizedBox(
+                width: double.infinity,
+                child: Column(
+                  mainAxisAlignment: MainAxisAlignment.start,
+                  crossAxisAlignment: CrossAxisAlignment.center,
+                  children: [
+                    _buildImage(character.thumbnail),
+                    if (character.description.isNotEmpty) _buildDescription(character.description),
+                    if (allSeries.isNotEmpty) _buildSeries(allSeries),
+                  ],
+                ),
               ),
             ),
           );
@@ -65,17 +69,12 @@ Widget _buildImage(Thumbnail thumbnail) {
     child: Card(
       color: Colors.blue[50],
       elevation: 10,
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.center,
-        children: [
-          Align(
-            alignment: Alignment.topCenter,
-            child: Padding(
-              padding: const EdgeInsets.all(10.0),
-              child: Image.network(_createThumbnailUrl(thumbnail), fit: BoxFit.fitWidth),
-            ),
-          ),
-        ],
+      child: Align(
+        alignment: Alignment.topCenter,
+        child: Padding(
+          padding: const EdgeInsets.all(10.0),
+          child: Image.network(_createThumbnailUrl(thumbnail), fit: BoxFit.fitWidth),
+        ),
       ),
     ),
   );
