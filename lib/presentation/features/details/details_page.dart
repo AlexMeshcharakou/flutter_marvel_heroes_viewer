@@ -1,12 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:marvel/data/repository/marvel_repository.dart';
+import 'package:marvel/data/repository/repository_impl.dart';
 import 'package:marvel/presentation/features/details/bloc/details_bloc.dart';
 import 'package:marvel/presentation/features/details/bloc/details_event.dart';
 import 'package:marvel/presentation/widgets/details_widget.dart';
 
 class DetailsPage extends StatelessWidget {
-  final marvelRepository = MarvelRepository();
+  final marvelRepository = RepositoryImpl();
   final int characterId;
 
   DetailsPage({Key? key, required this.characterId}) : super(key: key);
