@@ -1,6 +1,6 @@
 import 'package:flutter/cupertino.dart';
-import 'package:marvel/data/models/character.dart';
 import 'package:equatable/equatable.dart';
+import 'package:marvel/domain/entities/character.dart';
 
 @immutable
 class HeroesState extends Equatable {

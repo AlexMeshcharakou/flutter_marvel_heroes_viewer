@@ -1,7 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:marvel/data/models/character.dart';
-import 'package:marvel/data/models/series.dart';
 import 'package:marvel/presentation/features/details/bloc/details_bloc.dart';
 import 'package:marvel/presentation/features/details/bloc/details_state.dart';
 
@@ -42,7 +40,7 @@ class DetailsWidget extends StatelessWidget {
                   mainAxisAlignment: MainAxisAlignment.start,
                   crossAxisAlignment: CrossAxisAlignment.center,
                   children: [
-                    _buildImage(character.thumbnail),
+                    _buildImage(character.thumbnailPath, character.thumbnailExtension),
                     if (character.description.isNotEmpty) _buildDescription(character.description),
                     if (allSeries.isNotEmpty) _buildSeries(allSeries),
                   ],
@@ -62,7 +60,7 @@ class DetailsWidget extends StatelessWidget {
   }
 }
 
-Widget _buildImage(Thumbnail thumbnail) {
+Widget _buildImage(thumbnailPath, thumbnailExtension) {
   return SizedBox(
     width: 300,
     height: 230,
@@ -73,7 +71,7 @@ Widget _buildImage(Thumbnail thumbnail) {
         alignment: Alignment.topCenter,
         child: Padding(
           padding: const EdgeInsets.all(10.0),
-          child: Image.network(_createThumbnailUrl(thumbnail), fit: BoxFit.fitWidth),
+          child: Image.network(_createThumbnailUrl(thumbnailPath, thumbnailExtension), fit: BoxFit.fitWidth),
         ),
       ),
     ),
@@ -125,7 +123,8 @@ Widget _buildSeries(allSeries) {
                     child: Padding(
                       padding: const EdgeInsets.all(5.0),
                       child: (item != null)
-                          ? Image.network(_createThumbnailUrlSeries(item), fit: BoxFit.fitWidth)
+                          ? Image.network(_createThumbnailUrlSeries(item.thumbnailPath, item.thumbnailExtension),
+                              fit: BoxFit.fitWidth)
                           : Image.asset("assets/images/placeholder.png"),
                     ),
                   ),
@@ -144,10 +143,10 @@ Widget _buildSeries(allSeries) {
   );
 }
 
-String _createThumbnailUrlSeries(Series item) {
-  return item.thumbnail.path + '/portrait_medium.' + item.thumbnail.extension;
+String _createThumbnailUrlSeries(thumbnailPath, thumbnailExtension) {
+  return thumbnailPath + '/portrait_medium.' + thumbnailExtension;
 }
 
-String _createThumbnailUrl(Thumbnail thumbnail) {
-  return thumbnail.path + '/landscape_xlarge.' + thumbnail.extension;
+String _createThumbnailUrl(thumbnailPath, thumbnailExtension) {
+  return thumbnailPath + '/landscape_xlarge.' + thumbnailExtension;
 }

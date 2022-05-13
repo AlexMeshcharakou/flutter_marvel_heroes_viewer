@@ -3,51 +3,51 @@ import 'package:json_annotation/json_annotation.dart';
 part 'series.g.dart';
 
 @JsonSerializable()
-class SeriesResponse {
-  final SeriesResponseData data;
+class SeriesResponseModel {
+  final SeriesResponseDataModel data;
 
-  SeriesResponse({
+  SeriesResponseModel({
     required this.data,
   });
 
-  factory SeriesResponse.fromJson(Map<String, dynamic> json) => _$SeriesResponseFromJson(json);
+  factory SeriesResponseModel.fromJson(Map<String, dynamic> json) => _$SeriesResponseModelFromJson(json);
 }
 
 @JsonSerializable()
-class SeriesResponseData {
-  final List<Series> results;
+class SeriesResponseDataModel {
+  final List<SeriesModel> results;
 
-  SeriesResponseData({
+  SeriesResponseDataModel({
     required this.results,
   });
 
-  factory SeriesResponseData.fromJson(Map<String, dynamic> json) => _$SeriesResponseDataFromJson(json);
+  factory SeriesResponseDataModel.fromJson(Map<String, dynamic> json) => _$SeriesResponseDataModelFromJson(json);
 }
 
 @JsonSerializable()
-class Series {
+class SeriesModel {
   final String title;
   final dynamic description;
-  final ThumbnailSeries thumbnail;
+  final ThumbnailSeriesModel thumbnail;
 
-  Series({
+  SeriesModel({
     required this.title,
     required this.description,
     required this.thumbnail,
   });
 
-  factory Series.fromJson(Map<String, dynamic> json) => _$SeriesFromJson(json);
+  factory SeriesModel.fromJson(Map<String, dynamic> json) => _$SeriesModelFromJson(json);
 }
 
 @JsonSerializable()
-class ThumbnailSeries {
+class ThumbnailSeriesModel {
   final String path;
   final String extension;
 
-  ThumbnailSeries({
+  ThumbnailSeriesModel({
     required this.path,
     required this.extension,
   });
 
-  factory ThumbnailSeries.fromJson(Map<String, dynamic> json) => _$ThumbnailSeriesFromJson(json);
+  factory ThumbnailSeriesModel.fromJson(Map<String, dynamic> json) => _$ThumbnailSeriesModelFromJson(json);
 }

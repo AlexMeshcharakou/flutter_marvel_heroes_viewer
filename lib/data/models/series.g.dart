@@ -6,48 +6,55 @@ part of 'series.dart';
 // JsonSerializableGenerator
 // **************************************************************************
 
-SeriesResponse _$SeriesResponseFromJson(Map<String, dynamic> json) =>
-    SeriesResponse(
-      data: SeriesResponseData.fromJson(json['data'] as Map<String, dynamic>),
+SeriesResponseModel _$SeriesResponseModelFromJson(Map<String, dynamic> json) =>
+    SeriesResponseModel(
+      data: SeriesResponseDataModel.fromJson(
+          json['data'] as Map<String, dynamic>),
     );
 
-Map<String, dynamic> _$SeriesResponseToJson(SeriesResponse instance) =>
+Map<String, dynamic> _$SeriesResponseModelToJson(
+        SeriesResponseModel instance) =>
     <String, dynamic>{
       'data': instance.data,
     };
 
-SeriesResponseData _$SeriesResponseDataFromJson(Map<String, dynamic> json) =>
-    SeriesResponseData(
+SeriesResponseDataModel _$SeriesResponseDataModelFromJson(
+        Map<String, dynamic> json) =>
+    SeriesResponseDataModel(
       results: (json['results'] as List<dynamic>)
-          .map((e) => Series.fromJson(e as Map<String, dynamic>))
+          .map((e) => SeriesModel.fromJson(e as Map<String, dynamic>))
           .toList(),
     );
 
-Map<String, dynamic> _$SeriesResponseDataToJson(SeriesResponseData instance) =>
+Map<String, dynamic> _$SeriesResponseDataModelToJson(
+        SeriesResponseDataModel instance) =>
     <String, dynamic>{
       'results': instance.results,
     };
 
-Series _$SeriesFromJson(Map<String, dynamic> json) => Series(
+SeriesModel _$SeriesModelFromJson(Map<String, dynamic> json) => SeriesModel(
       title: json['title'] as String,
       description: json['description'],
-      thumbnail:
-          ThumbnailSeries.fromJson(json['thumbnail'] as Map<String, dynamic>),
+      thumbnail: ThumbnailSeriesModel.fromJson(
+          json['thumbnail'] as Map<String, dynamic>),
     );
 
-Map<String, dynamic> _$SeriesToJson(Series instance) => <String, dynamic>{
+Map<String, dynamic> _$SeriesModelToJson(SeriesModel instance) =>
+    <String, dynamic>{
       'title': instance.title,
       'description': instance.description,
       'thumbnail': instance.thumbnail,
     };
 
-ThumbnailSeries _$ThumbnailSeriesFromJson(Map<String, dynamic> json) =>
-    ThumbnailSeries(
+ThumbnailSeriesModel _$ThumbnailSeriesModelFromJson(
+        Map<String, dynamic> json) =>
+    ThumbnailSeriesModel(
       path: json['path'] as String,
       extension: json['extension'] as String,
     );
 
-Map<String, dynamic> _$ThumbnailSeriesToJson(ThumbnailSeries instance) =>
+Map<String, dynamic> _$ThumbnailSeriesModelToJson(
+        ThumbnailSeriesModel instance) =>
     <String, dynamic>{
       'path': instance.path,
       'extension': instance.extension,

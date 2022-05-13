@@ -18,7 +18,7 @@ class _MarvelApiClient implements MarvelApiClient {
   String? baseUrl;
 
   @override
-  Future<HttpResponse<ApiResponse>> fetchCharacters(ts, apiKey, hash) async {
+  Future<HttpResponse<ApiResponseModel>> getCharacters(ts, apiKey, hash) async {
     const _extra = <String, dynamic>{};
     final queryParameters = <String, dynamic>{
       r'ts': ts,
@@ -28,18 +28,18 @@ class _MarvelApiClient implements MarvelApiClient {
     final _headers = <String, dynamic>{};
     final _data = <String, dynamic>{};
     final _result = await _dio.fetch<Map<String, dynamic>>(
-        _setStreamType<HttpResponse<ApiResponse>>(
+        _setStreamType<HttpResponse<ApiResponseModel>>(
             Options(method: 'GET', headers: _headers, extra: _extra)
                 .compose(_dio.options, '/characters',
                     queryParameters: queryParameters, data: _data)
                 .copyWith(baseUrl: baseUrl ?? _dio.options.baseUrl)));
-    final value = ApiResponse.fromJson(_result.data!);
+    final value = ApiResponseModel.fromJson(_result.data!);
     final httpResponse = HttpResponse(value, _result);
     return httpResponse;
   }
 
   @override
-  Future<HttpResponse<ApiResponse>> fetchCharacterDetails(
+  Future<HttpResponse<ApiResponseModel>> getCharacterDetails(
       characterId, ts, apiKey, hash) async {
     const _extra = <String, dynamic>{};
     final queryParameters = <String, dynamic>{
@@ -50,18 +50,18 @@ class _MarvelApiClient implements MarvelApiClient {
     final _headers = <String, dynamic>{};
     final _data = <String, dynamic>{};
     final _result = await _dio.fetch<Map<String, dynamic>>(
-        _setStreamType<HttpResponse<ApiResponse>>(
+        _setStreamType<HttpResponse<ApiResponseModel>>(
             Options(method: 'GET', headers: _headers, extra: _extra)
                 .compose(_dio.options, '/characters/${characterId}',
                     queryParameters: queryParameters, data: _data)
                 .copyWith(baseUrl: baseUrl ?? _dio.options.baseUrl)));
-    final value = ApiResponse.fromJson(_result.data!);
+    final value = ApiResponseModel.fromJson(_result.data!);
     final httpResponse = HttpResponse(value, _result);
     return httpResponse;
   }
 
   @override
-  Future<HttpResponse<SeriesResponse>> fetchSeries(
+  Future<HttpResponse<SeriesResponseModel>> getAllSeries(
       characterId, ts, apiKey, hash) async {
     const _extra = <String, dynamic>{};
     final queryParameters = <String, dynamic>{
@@ -72,12 +72,12 @@ class _MarvelApiClient implements MarvelApiClient {
     final _headers = <String, dynamic>{};
     final _data = <String, dynamic>{};
     final _result = await _dio.fetch<Map<String, dynamic>>(
-        _setStreamType<HttpResponse<SeriesResponse>>(
+        _setStreamType<HttpResponse<SeriesResponseModel>>(
             Options(method: 'GET', headers: _headers, extra: _extra)
                 .compose(_dio.options, '/characters/${characterId}/series',
                     queryParameters: queryParameters, data: _data)
                 .copyWith(baseUrl: baseUrl ?? _dio.options.baseUrl)));
-    final value = SeriesResponse.fromJson(_result.data!);
+    final value = SeriesResponseModel.fromJson(_result.data!);
     final httpResponse = HttpResponse(value, _result);
     return httpResponse;
   }

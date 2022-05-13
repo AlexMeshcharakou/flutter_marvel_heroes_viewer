@@ -3,36 +3,36 @@ import 'package:json_annotation/json_annotation.dart';
 part 'character.g.dart';
 
 @JsonSerializable()
-class ApiResponse {
-  final ApiResponseData data;
+class ApiResponseModel {
+  final ApiResponseDataModel data;
 
-  ApiResponse({
+  ApiResponseModel({
     required this.data,
   });
 
-  factory ApiResponse.fromJson(Map<String, dynamic> json) => _$ApiResponseFromJson(json);
+  factory ApiResponseModel.fromJson(Map<String, dynamic> json) => _$ApiResponseModelFromJson(json);
 }
 
 @JsonSerializable()
-class ApiResponseData {
-  final List<Character> results;
+class ApiResponseDataModel {
+  final List<CharacterModel> results;
 
-  ApiResponseData({
+  ApiResponseDataModel({
     required this.results,
   });
 
-  factory ApiResponseData.fromJson(Map<String, dynamic> json) => _$ApiResponseDataFromJson(json);
+  factory ApiResponseDataModel.fromJson(Map<String, dynamic> json) => _$ApiResponseDataModelFromJson(json);
 }
 
 @JsonSerializable()
-class Character {
+class CharacterModel {
   final int id;
   final String name;
   final String? title;
   final String description;
-  final Thumbnail thumbnail;
+  final ThumbnailModel thumbnail;
 
-  Character({
+  CharacterModel({
     this.title,
     required this.id,
     required this.name,
@@ -40,23 +40,18 @@ class Character {
     required this.thumbnail,
   });
 
-  factory Character.fromJson(Map<String, dynamic> json) => _$CharacterFromJson(json);
-
-  @override
-  String toString() {
-    return 'Character{id: $id, name: $name, title: $title, description: $description, thumbnail: $thumbnail}';
-  }
+  factory CharacterModel.fromJson(Map<String, dynamic> json) => _$CharacterModelFromJson(json);
 }
 
 @JsonSerializable()
-class Thumbnail {
+class ThumbnailModel {
   final String path;
   final String extension;
 
-  Thumbnail({
+  ThumbnailModel({
     required this.path,
     required this.extension,
   });
 
-  factory Thumbnail.fromJson(Map<String, dynamic> json) => _$ThumbnailFromJson(json);
+  factory ThumbnailModel.fromJson(Map<String, dynamic> json) => _$ThumbnailModelFromJson(json);
 }

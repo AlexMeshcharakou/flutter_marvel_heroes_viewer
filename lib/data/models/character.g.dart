@@ -6,36 +6,42 @@ part of 'character.dart';
 // JsonSerializableGenerator
 // **************************************************************************
 
-ApiResponse _$ApiResponseFromJson(Map<String, dynamic> json) => ApiResponse(
-      data: ApiResponseData.fromJson(json['data'] as Map<String, dynamic>),
+ApiResponseModel _$ApiResponseModelFromJson(Map<String, dynamic> json) =>
+    ApiResponseModel(
+      data: ApiResponseDataModel.fromJson(json['data'] as Map<String, dynamic>),
     );
 
-Map<String, dynamic> _$ApiResponseToJson(ApiResponse instance) =>
+Map<String, dynamic> _$ApiResponseModelToJson(ApiResponseModel instance) =>
     <String, dynamic>{
       'data': instance.data,
     };
 
-ApiResponseData _$ApiResponseDataFromJson(Map<String, dynamic> json) =>
-    ApiResponseData(
+ApiResponseDataModel _$ApiResponseDataModelFromJson(
+        Map<String, dynamic> json) =>
+    ApiResponseDataModel(
       results: (json['results'] as List<dynamic>)
-          .map((e) => Character.fromJson(e as Map<String, dynamic>))
+          .map((e) => CharacterModel.fromJson(e as Map<String, dynamic>))
           .toList(),
     );
 
-Map<String, dynamic> _$ApiResponseDataToJson(ApiResponseData instance) =>
+Map<String, dynamic> _$ApiResponseDataModelToJson(
+        ApiResponseDataModel instance) =>
     <String, dynamic>{
       'results': instance.results,
     };
 
-Character _$CharacterFromJson(Map<String, dynamic> json) => Character(
+CharacterModel _$CharacterModelFromJson(Map<String, dynamic> json) =>
+    CharacterModel(
       title: json['title'] as String?,
       id: json['id'] as int,
       name: json['name'] as String,
       description: json['description'] as String,
-      thumbnail: Thumbnail.fromJson(json['thumbnail'] as Map<String, dynamic>),
+      thumbnail:
+          ThumbnailModel.fromJson(json['thumbnail'] as Map<String, dynamic>),
     );
 
-Map<String, dynamic> _$CharacterToJson(Character instance) => <String, dynamic>{
+Map<String, dynamic> _$CharacterModelToJson(CharacterModel instance) =>
+    <String, dynamic>{
       'id': instance.id,
       'name': instance.name,
       'title': instance.title,
@@ -43,12 +49,14 @@ Map<String, dynamic> _$CharacterToJson(Character instance) => <String, dynamic>{
       'thumbnail': instance.thumbnail,
     };
 
-Thumbnail _$ThumbnailFromJson(Map<String, dynamic> json) => Thumbnail(
+ThumbnailModel _$ThumbnailModelFromJson(Map<String, dynamic> json) =>
+    ThumbnailModel(
       path: json['path'] as String,
       extension: json['extension'] as String,
     );
 
-Map<String, dynamic> _$ThumbnailToJson(Thumbnail instance) => <String, dynamic>{
+Map<String, dynamic> _$ThumbnailModelToJson(ThumbnailModel instance) =>
+    <String, dynamic>{
       'path': instance.path,
       'extension': instance.extension,
     };
