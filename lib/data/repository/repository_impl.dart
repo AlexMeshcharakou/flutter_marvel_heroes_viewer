@@ -10,6 +10,12 @@ class RepositoryImpl implements MarvelRepository {
   final String apiKey = 'c1bba7288e4f2f4f744591622a48412b';
   final String hash = 'bab03858fdeab2fe461725bad8d65904';
 
+  static final RepositoryImpl _repositoryImpl = RepositoryImpl._();
+
+  RepositoryImpl._();
+
+  factory RepositoryImpl() => _repositoryImpl;
+
   @override
   Future<List<Character>> getCharacters() async {
     try {
