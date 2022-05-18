@@ -4,17 +4,17 @@ class Character extends Equatable {
   final int id;
   final String name;
   final String description;
-  final String thumbnailPath;
-  final String thumbnailExtension;
+  final String? smallThumbnailUrl;
+  final String? bigThumbnailUrl;
 
   const Character({
     required this.id,
     required this.name,
     required this.description,
-    required this.thumbnailPath,
-    required this.thumbnailExtension,
+    this.smallThumbnailUrl,
+    this.bigThumbnailUrl,
   });
 
   @override
-  List<Object?> get props => [id, name, description, thumbnailPath, thumbnailExtension];
+  List<Object?> get props => [id, name, description, smallThumbnailUrl, bigThumbnailUrl];
 }

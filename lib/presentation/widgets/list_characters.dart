@@ -16,11 +16,11 @@ class ListCharacters extends StatelessWidget {
             child: CircularProgressIndicator(),
           );
         }
-        if (state.loading == false && state.characters != null) {
+        if (state.loading == false && state.charactersViewData != null) {
           return ListView.builder(
-            itemCount: state.characters?.length,
+            itemCount: state.charactersViewData?.length,
             itemBuilder: (BuildContext context, int index) {
-              final item = state.characters![index];
+              final item = state.charactersViewData![index];
               return SizedBox(
                 height: 100,
                 child: GestureDetector(
@@ -60,8 +60,7 @@ class ListCharacters extends StatelessWidget {
                 topLeft: Radius.circular(6),
                 bottomLeft: Radius.circular(6),
               ),
-              child:
-                  Image.network(_createThumbnailUrl(item.thumbnailPath, item.thumbnailExtension), fit: BoxFit.fitWidth),
+              child: Image.network(item.smallThumbnailUrl, fit: BoxFit.fitWidth),
             ),
           ),
           Expanded(
@@ -79,8 +78,4 @@ class ListCharacters extends StatelessWidget {
       ),
     );
   }
-}
-
-String _createThumbnailUrl(thumbnailPath, thumbnailExtension) {
-  return thumbnailPath + '/landscape_medium.' + thumbnailExtension;
 }

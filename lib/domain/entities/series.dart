@@ -2,11 +2,10 @@ import 'package:equatable/equatable.dart';
 
 class Series extends Equatable {
   final String title;
-  final String thumbnailPath;
-  final String thumbnailExtension;
+  final String thumbnailUrl;
 
-  const Series({required this.thumbnailPath, required this.thumbnailExtension, required this.title});
+  const Series({required this.title, required this.thumbnailUrl});
 
   @override
-  List<Object?> get props => [title, thumbnailPath, thumbnailExtension];
+  List<Object?> get props => [title, thumbnailUrl];
 }

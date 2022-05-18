@@ -1,24 +1,24 @@
 import 'package:equatable/equatable.dart';
 import 'package:flutter/cupertino.dart';
-import 'package:marvel/domain/entities/character.dart';
-import 'package:marvel/domain/entities/series.dart';
+import 'package:marvel/presentation/view_models/view_data_details.dart';
+import 'package:marvel/presentation/view_models/view_data_series.dart';
 
 @immutable
 class DetailsState extends Equatable {
   final bool loading;
-  final Character? character;
-  final List<Series>? allSeries;
+  final ViewDataCharacterDetails? characterDetails;
+  final List<ViewDataSeries>? series;
   final String? error;
 
-  const DetailsState({required this.loading, this.character, this.allSeries, this.error});
+  const DetailsState({required this.loading, this.characterDetails, this.series, this.error});
 
-  DetailsState copyWith({required loading, character, allSeries, error}) => DetailsState(
+  DetailsState copyWith({required loading, characterDetails, series, error}) => DetailsState(
         loading: loading ?? this.loading,
-        character: character ?? this.character,
-        allSeries: allSeries ?? this.allSeries,
+        characterDetails: characterDetails ?? this.characterDetails,
+        series: series ?? this.series,
         error: error ?? this.error,
       );
 
   @override
-  List<Object?> get props => [loading, character, allSeries, error];
+  List<Object?> get props => [loading, characterDetails, series, error];
 }
