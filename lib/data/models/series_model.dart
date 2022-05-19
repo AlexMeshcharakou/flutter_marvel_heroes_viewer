@@ -1,6 +1,6 @@
 import 'package:json_annotation/json_annotation.dart';
 
-part 'series.g.dart';
+part 'series_model.g.dart';
 
 @JsonSerializable()
 class SeriesResponseModel {

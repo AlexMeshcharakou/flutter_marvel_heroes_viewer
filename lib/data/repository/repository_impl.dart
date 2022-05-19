@@ -1,8 +1,10 @@
 import 'package:dio/dio.dart';
+import 'package:marvel/data/models/character_model.dart';
 import 'package:marvel/data/sources/marvel_api_client.dart';
 import 'package:marvel/domain/entities/character.dart';
 import 'package:marvel/domain/entities/series.dart';
 import 'package:marvel/domain/repository/marvel_repository.dart';
+import 'package:marvel/data/convertors/convertor.dart';
 import 'package:marvel/data/convertors/convertor.dart';
 
 class RepositoryImpl implements MarvelRepository {
@@ -18,14 +20,14 @@ class RepositoryImpl implements MarvelRepository {
   factory RepositoryImpl() => _repositoryImpl;
 
   @override
-  Future<List<Character>> getCharacters() async {
+  Future<List<dynamic>> getCharacters() async {
     try {
       final httpResponse = await marvelClient.getCharacters(ts, apiKey, hash);
       if (httpResponse.response.statusCode != 200) {
         return Future.error("network error");
       }
       final result = httpResponse.data.data.results;
-      List<Character> characters = CharacterToDomainModel.toDomainModel(result);
+      List<dynamic> characters = result.map((e) => e.toDomainModel(e)).toList();
       return characters;
     } catch (error) {
       return Future.error("$error");

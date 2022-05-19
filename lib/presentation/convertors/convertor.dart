@@ -7,7 +7,7 @@ import 'package:marvel/presentation/view_models/view_data_details.dart';
 import 'package:marvel/presentation/view_models/view_data_series.dart';
 
 extension CharactersToViewData on HeroesBloc {
-  static toViewData(List<Character> characters) {
+  static toViewData(List<dynamic> characters) {
     return characters
         .map((characterEntity) => ViewDataCharacter(
             id: characterEntity.id, name: characterEntity.name, smallThumbnailUrl: characterEntity.smallThumbnailUrl))

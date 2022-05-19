@@ -1,6 +1,6 @@
 import 'package:dio/dio.dart';
-import 'package:marvel/data/models/character.dart';
-import 'package:marvel/data/models/series.dart';
+import 'package:marvel/data/models/character_model.dart';
+import 'package:marvel/data/models/series_model.dart';
 import 'package:retrofit/retrofit.dart';
 
 part 'marvel_api_client.g.dart';

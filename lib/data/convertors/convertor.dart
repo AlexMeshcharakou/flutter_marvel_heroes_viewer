@@ -1,19 +1,17 @@
-import 'package:marvel/data/models/character.dart';
-import 'package:marvel/data/models/series.dart';
+import 'package:marvel/data/models/character_model.dart';
+import 'package:marvel/data/models/series_model.dart';
 import 'package:marvel/data/repository/repository_impl.dart';
 import 'package:marvel/domain/entities/character.dart';
 import 'package:marvel/domain/entities/series.dart';
 
-extension CharacterToDomainModel on RepositoryImpl {
-  static toDomainModel(List<CharacterModel> characters) {
-    return characters
-        .map((characterResponse) => Character(
-            id: characterResponse.id,
-            name: characterResponse.name,
-            description: characterResponse.description,
-            smallThumbnailUrl:
-                characterResponse.thumbnail.path + '/landscape_medium.' + characterResponse.thumbnail.extension))
-        .toList();
+extension CharacterToDomainModel on CharacterModel {
+   toDomainModel(CharacterModel character) {
+    return Character(
+        id: character.id,
+        name: character.name,
+        description: character.description,
+        smallThumbnailUrl:
+        character.thumbnail.path + '/landscape_medium.' + character.thumbnail.extension);
   }
 }
 
