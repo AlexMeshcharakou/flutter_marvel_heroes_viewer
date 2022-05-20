@@ -1,3 +1,4 @@
+import 'package:marvel/domain/entities/character.dart';
 import 'package:marvel/domain/repository/marvel_repository.dart';
 
 class GetCharactersUseCase {
@@ -5,7 +6,7 @@ class GetCharactersUseCase {
 
   GetCharactersUseCase({required this.marvelRepository});
 
-  Future<List<dynamic>> call() {
+  Future<List<Character>> call() {
     return marvelRepository.getCharacters();
   }
 }

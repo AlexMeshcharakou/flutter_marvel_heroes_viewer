@@ -1,4 +1,5 @@
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:marvel/domain/entities/character.dart';
 import 'package:marvel/domain/use_cases/get_characters_use_case.dart';
 import 'package:marvel/presentation/features/heroes/bloc/heroes_event.dart';
 import 'package:marvel/presentation/features/heroes/bloc/heroes_state.dart';
@@ -18,8 +19,12 @@ class HeroesBloc extends Bloc<HeroesEvent, HeroesState> {
           state.copyWith(loading: true),
         );
         try {
-          final List<dynamic> characters = await getCharacters.call();
-          final List<ViewDataCharacter> charactersViewData = CharactersToViewData.toViewData(characters);
+          final List<Character> characters = await getCharacters.call();
+          final List<ViewDataCharacter> charactersViewData = characters
+              .map(
+                (characterEntity) => characterEntity.charactersToViewData(characterEntity),
+              )
+              .toList();
           emit(
             state.copyWith(
               loading: false,

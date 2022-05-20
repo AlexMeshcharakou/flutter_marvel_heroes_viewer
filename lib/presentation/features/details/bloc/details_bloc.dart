@@ -25,9 +25,13 @@ class DetailsBloc extends Bloc<DetailsEvent, DetailsState> {
         );
         try {
           final Character character = await getCharacterDetails.call(event.characterId);
-          final ViewDataCharacterDetails characterDetails = DetailsToViewData.toViewData(character);
+          final ViewDataCharacterDetails characterDetails = character.detailsToViewData(character);
           final List<Series> allSeries = await getAllSeries(event.characterId);
-          final List<ViewDataSeries> series = SeriesToViewData.toViewData(allSeries);
+          final List<ViewDataSeries> series = allSeries
+              .map(
+                (seriesResponse) => seriesResponse.seriesToViewData(seriesResponse),
+              )
+              .toList();
           emit(
             state.copyWith(characterDetails: characterDetails, series: series, loading: false),
           );

@@ -1,22 +1,17 @@
 import 'package:marvel/domain/entities/character.dart';
 import 'package:marvel/domain/entities/series.dart';
-import 'package:marvel/presentation/features/details/bloc/details_bloc.dart';
-import 'package:marvel/presentation/features/heroes/bloc/heroes_bloc.dart';
 import 'package:marvel/presentation/view_models/view_data_character.dart';
 import 'package:marvel/presentation/view_models/view_data_details.dart';
 import 'package:marvel/presentation/view_models/view_data_series.dart';
 
-extension CharactersToViewData on HeroesBloc {
-  static toViewData(List<dynamic> characters) {
-    return characters
-        .map((characterEntity) => ViewDataCharacter(
-            id: characterEntity.id, name: characterEntity.name, smallThumbnailUrl: characterEntity.smallThumbnailUrl))
-        .toList();
+extension CharactersToViewData on Character {
+  ViewDataCharacter charactersToViewData(Character character) {
+    return ViewDataCharacter(id: character.id, name: character.name, smallThumbnailUrl: character.smallThumbnailUrl);
   }
 }
 
-extension DetailsToViewData on DetailsBloc {
-  static toViewData(Character character) {
+extension DetailsToViewData on Character {
+  ViewDataCharacterDetails detailsToViewData(Character character) {
     return ViewDataCharacterDetails(
         id: character.id,
         name: character.name,
@@ -25,12 +20,8 @@ extension DetailsToViewData on DetailsBloc {
   }
 }
 
-extension SeriesToViewData on DetailsBloc {
-  static toViewData(List<Series> series) {
-    return series
-        .map(
-          (seriesEntity) => ViewDataSeries(title: seriesEntity.title, thumbnailUrl: seriesEntity.thumbnailUrl),
-        )
-        .toList();
+extension SeriesToViewData on Series {
+  ViewDataSeries seriesToViewData(Series series) {
+    return ViewDataSeries(title: series.title, thumbnailUrl: series.thumbnailUrl);
   }
 }
