@@ -1,13 +1,15 @@
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:marvel/data/models/character.dart';
-import 'package:marvel/data/repository/repository.dart';
+import 'package:marvel/domain/entities/character.dart';
+import 'package:marvel/domain/use_cases/get_characters_use_case.dart';
 import 'package:marvel/presentation/features/heroes/bloc/heroes_event.dart';
 import 'package:marvel/presentation/features/heroes/bloc/heroes_state.dart';
+import 'package:marvel/presentation/convertors/convertor.dart';
+import 'package:marvel/presentation/view_models/view_data_character.dart';
 
 class HeroesBloc extends Bloc<HeroesEvent, HeroesState> {
-  final Repository repository;
+  final GetCharactersUseCase getCharacters;
 
-  HeroesBloc({required this.repository})
+  HeroesBloc({required this.getCharacters})
       : super(
           const HeroesState(loading: true),
         ) {
@@ -17,11 +19,16 @@ class HeroesBloc extends Bloc<HeroesEvent, HeroesState> {
           state.copyWith(loading: true),
         );
         try {
-          final List<Character> characters = await repository.fetchCharacters();
+          final List<Character> characters = await getCharacters.call();
+          final List<ViewDataCharacter> charactersViewData = characters
+              .map(
+                (characterEntity) => characterEntity.charactersToViewData(characterEntity),
+              )
+              .toList();
           emit(
             state.copyWith(
               loading: false,
-              characters: characters,
+              characters: charactersViewData,
             ),
           );
         } catch (e) {

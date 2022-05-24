@@ -1,7 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:marvel/data/models/character.dart';
-import 'package:marvel/data/models/series.dart';
 import 'package:marvel/presentation/features/details/bloc/details_bloc.dart';
 import 'package:marvel/presentation/features/details/bloc/details_state.dart';
 
@@ -15,15 +13,15 @@ class DetailsWidget extends StatelessWidget {
     return BlocBuilder<DetailsBloc, DetailsState>(
       builder: (context, state) {
         final loading = state.loading;
-        final character = state.character;
-        final allSeries = state.allSeries;
+        final character = state.characterDetails;
+        final series = state.series;
         final error = state.error;
         if (loading == true) {
           return const Center(
             child: CircularProgressIndicator(),
           );
         }
-        if (loading == false && character != null && allSeries != null) {
+        if (loading == false && character != null && series != null) {
           return Scaffold(
             appBar: AppBar(
               centerTitle: true,
@@ -42,9 +40,9 @@ class DetailsWidget extends StatelessWidget {
                   mainAxisAlignment: MainAxisAlignment.start,
                   crossAxisAlignment: CrossAxisAlignment.center,
                   children: [
-                    _buildImage(character.thumbnail),
+                    _buildImage(character.bigThumbnailUrl),
                     if (character.description.isNotEmpty) _buildDescription(character.description),
-                    if (allSeries.isNotEmpty) _buildSeries(allSeries),
+                    if (series.isNotEmpty) _buildSeries(series),
                   ],
                 ),
               ),
@@ -62,7 +60,7 @@ class DetailsWidget extends StatelessWidget {
   }
 }
 
-Widget _buildImage(Thumbnail thumbnail) {
+Widget _buildImage(String? url) {
   return SizedBox(
     width: 300,
     height: 230,
@@ -73,7 +71,9 @@ Widget _buildImage(Thumbnail thumbnail) {
         alignment: Alignment.topCenter,
         child: Padding(
           padding: const EdgeInsets.all(10.0),
-          child: Image.network(_createThumbnailUrl(thumbnail), fit: BoxFit.fitWidth),
+          child:(url != null)
+              ? Image.network(url, fit: BoxFit.fitWidth)
+              : Image.asset("assets/images/placeholder.png"),
         ),
       ),
     ),
@@ -101,7 +101,7 @@ Widget _buildDescription(String description) {
   );
 }
 
-Widget _buildSeries(allSeries) {
+Widget _buildSeries(series) {
   return Column(
     children: [
       const Text(
@@ -112,9 +112,9 @@ Widget _buildSeries(allSeries) {
         height: 230,
         child: ListView.builder(
           scrollDirection: Axis.horizontal,
-          itemCount: allSeries?.length,
+          itemCount: series?.length,
           itemBuilder: (BuildContext context, int index) {
-            final item = allSeries![index];
+            final item = series![index];
             return Column(
               children: [
                 Expanded(
@@ -125,7 +125,7 @@ Widget _buildSeries(allSeries) {
                     child: Padding(
                       padding: const EdgeInsets.all(5.0),
                       child: (item != null)
-                          ? Image.network(_createThumbnailUrlSeries(item), fit: BoxFit.fitWidth)
+                          ? Image.network(item.thumbnailUrl, fit: BoxFit.fitWidth)
                           : Image.asset("assets/images/placeholder.png"),
                     ),
                   ),
@@ -142,12 +142,4 @@ Widget _buildSeries(allSeries) {
       ),
     ],
   );
-}
-
-String _createThumbnailUrlSeries(Series item) {
-  return item.thumbnail.path + '/portrait_medium.' + item.thumbnail.extension;
-}
-
-String _createThumbnailUrl(Thumbnail thumbnail) {
-  return thumbnail.path + '/landscape_xlarge.' + thumbnail.extension;
 }

@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:marvel/data/models/character.dart';
 import 'package:marvel/presentation/features/heroes/bloc/heroes_bloc.dart';
 import 'package:marvel/presentation/features/heroes/bloc/heroes_state.dart';
 import 'package:marvel/presentation/navigation/app_routes.dart';
@@ -17,11 +16,11 @@ class ListCharacters extends StatelessWidget {
             child: CircularProgressIndicator(),
           );
         }
-        if (state.loading == false && state.characters != null) {
+        if (state.loading == false && state.charactersViewData != null) {
           return ListView.builder(
-            itemCount: state.characters?.length,
+            itemCount: state.charactersViewData?.length,
             itemBuilder: (BuildContext context, int index) {
-              final item = state.characters![index];
+              final item = state.charactersViewData![index];
               return SizedBox(
                 height: 100,
                 child: GestureDetector(
@@ -44,7 +43,7 @@ class ListCharacters extends StatelessWidget {
     );
   }
 
-  Widget _buildCharacterCard(Character item) {
+  Widget _buildCharacterCard(item) {
     return Card(
       shape: const RoundedRectangleBorder(
         borderRadius: BorderRadius.all(
@@ -61,7 +60,7 @@ class ListCharacters extends StatelessWidget {
                 topLeft: Radius.circular(6),
                 bottomLeft: Radius.circular(6),
               ),
-              child: Image.network(_createThumbnailUrl(item.thumbnail), fit: BoxFit.fitWidth),
+              child: Image.network(item.smallThumbnailUrl, fit: BoxFit.fitWidth),
             ),
           ),
           Expanded(
@@ -79,8 +78,4 @@ class ListCharacters extends StatelessWidget {
       ),
     );
   }
-}
-
-String _createThumbnailUrl(Thumbnail thumbnail) {
-  return thumbnail.path + '/landscape_medium.' + thumbnail.extension;
 }

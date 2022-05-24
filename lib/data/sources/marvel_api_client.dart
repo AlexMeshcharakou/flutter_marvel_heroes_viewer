@@ -1,6 +1,6 @@
 import 'package:dio/dio.dart';
-import 'package:marvel/data/models/character.dart';
-import 'package:marvel/data/models/series.dart';
+import 'package:marvel/data/models/character_model.dart';
+import 'package:marvel/data/models/series_model.dart';
 import 'package:retrofit/retrofit.dart';
 
 part 'marvel_api_client.g.dart';
@@ -10,14 +10,14 @@ abstract class MarvelApiClient {
   factory MarvelApiClient(Dio dio, {String baseUrl}) = _MarvelApiClient;
 
   @GET('/characters')
-  Future<HttpResponse<ApiResponse>> fetchCharacters(
+  Future<HttpResponse<ApiResponseModel>> getCharacters(
     @Query('ts') String ts,
     @Query('apikey') String apiKey,
     @Query('hash') String hash,
   );
 
   @GET("/characters/{characterId}")
-  Future<HttpResponse<ApiResponse>> fetchCharacterDetails(
+  Future<HttpResponse<ApiResponseModel>> getCharacterDetails(
     @Path("characterId") int characterId,
     @Query("ts") String ts,
     @Query("apikey") String apiKey,
@@ -25,7 +25,7 @@ abstract class MarvelApiClient {
   );
 
   @GET("/characters/{characterId}/series")
-  Future<HttpResponse<SeriesResponse>> fetchSeries(
+  Future<HttpResponse<SeriesResponseModel>> getAllSeries(
     @Path("characterId") int characterId,
     @Query("ts") String ts,
     @Query("apikey") String apiKey,

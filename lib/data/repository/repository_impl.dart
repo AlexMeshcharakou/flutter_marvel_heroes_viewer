@@ -1,28 +1,33 @@
 import 'package:dio/dio.dart';
-import 'package:marvel/data/models/character.dart';
-import 'package:marvel/data/models/series.dart';
-import 'package:marvel/data/repository/repository.dart';
 import 'package:marvel/data/sources/marvel_api_client.dart';
+import 'package:marvel/domain/entities/character.dart';
+import 'package:marvel/domain/entities/series.dart';
+import 'package:marvel/domain/repository/marvel_repository.dart';
+import 'package:marvel/data/convertors/convertor.dart';
 
-class RepositoryImpl extends Repository {
+class RepositoryImpl implements MarvelRepository {
   final MarvelApiClient marvelClient = MarvelApiClient(Dio(), baseUrl: 'https://gateway.marvel.com:443/v1/public/');
   final String ts = '2';
   final String apiKey = 'c1bba7288e4f2f4f744591622a48412b';
   final String hash = 'bab03858fdeab2fe461725bad8d65904';
 
+  RepositoryImpl._();
+
+  static final RepositoryImpl _repositoryImpl = RepositoryImpl._();
+
+  factory RepositoryImpl() => _repositoryImpl;
+
   @override
-  Future<List<Character>> fetchCharacters() async {
+  Future<List<Character>> getCharacters() async {
     try {
-      final httpResponse = await marvelClient.fetchCharacters(ts, apiKey, hash);
+      final httpResponse = await marvelClient.getCharacters(ts, apiKey, hash);
       if (httpResponse.response.statusCode != 200) {
         return Future.error("network error");
       }
-      final Map<String, dynamic> apiResponse = httpResponse.response.data;
-      final apiResponseData = ApiResponse.fromJson(apiResponse);
-      final result = apiResponseData.data.results;
+      final result = httpResponse.data.data.results;
       List<Character> characters = result
           .map(
-            (item) => Character(id: item.id, name: item.name, description: item.description, thumbnail: item.thumbnail),
+            (characterResponse) => characterResponse.characterToDomainModel(characterResponse),
           )
           .toList();
       return characters;
@@ -32,18 +37,16 @@ class RepositoryImpl extends Repository {
   }
 
   @override
-  Future<Character> fetchCharacterDetails(int characterId) async {
+  Future<Character> getCharacterDetails(int characterId) async {
     try {
-      final httpResponse = await marvelClient.fetchCharacterDetails(characterId, ts, apiKey, hash);
+      final httpResponse = await marvelClient.getCharacterDetails(characterId, ts, apiKey, hash);
       if (httpResponse.response.statusCode != 200) {
         return Future.error("network error");
       }
-      final Map<String, dynamic> apiResponse = httpResponse.response.data;
-      final apiResponseData = ApiResponse.fromJson(apiResponse);
-      final result = apiResponseData.data.results;
+      final result = httpResponse.data.data.results;
       Character character = result
           .map(
-            (item) => Character(id: item.id, name: item.name, description: item.description, thumbnail: item.thumbnail),
+            (characterResponse) => characterResponse.detailsToDomainModel(characterResponse),
           )
           .single;
       return character;
@@ -53,18 +56,16 @@ class RepositoryImpl extends Repository {
   }
 
   @override
-  Future<List<Series>> fetchSeries(int characterId) async {
+  Future<List<Series>> getAllSeries(int characterId) async {
     try {
-      final httpResponse = await marvelClient.fetchSeries(characterId, ts, apiKey, hash);
+      final httpResponse = await marvelClient.getAllSeries(characterId, ts, apiKey, hash);
       if (httpResponse.response.statusCode != 200) {
         return Future.error("network error");
       }
-      final Map<String, dynamic> seriesResponse = httpResponse.response.data;
-      final seriesResponseData = SeriesResponse.fromJson(seriesResponse);
-      final data = seriesResponseData.data;
-      List<Series>? allSeries = data.results
+      final result = httpResponse.data.data.results;
+      List<Series> allSeries = result
           .map(
-            (item) => Series(title: item.title, description: item.description, thumbnail: item.thumbnail),
+            (seriesResponse) => seriesResponse.seriesToDomainModel(seriesResponse),
           )
           .toList();
       return allSeries;
