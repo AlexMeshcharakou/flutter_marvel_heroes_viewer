@@ -6,7 +6,7 @@ class GetCharactersUseCase {
 
   GetCharactersUseCase({required this.marvelRepository});
 
-  Future<List<Character>> call() {
-    return marvelRepository.getCharacters();
+  Future<List<Character>> call(int offset) {
+    return marvelRepository.getCharacters(offset);
   }
 }

@@ -2,7 +2,7 @@ import 'package:marvel/domain/entities/character.dart';
 import 'package:marvel/domain/entities/series.dart';
 
 abstract class MarvelRepository {
-  Future<List<Character>> getCharacters();
+  Future<List<Character>> getCharacters(int offset);
 
   Future<Character> getCharacterDetails(int characterId);
 

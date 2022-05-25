@@ -18,9 +18,9 @@ class RepositoryImpl implements MarvelRepository {
   factory RepositoryImpl() => _repositoryImpl;
 
   @override
-  Future<List<Character>> getCharacters() async {
+  Future<List<Character>> getCharacters(int offset) async {
     try {
-      final httpResponse = await marvelClient.getCharacters(ts, apiKey, hash);
+      final httpResponse = await marvelClient.getCharacters(ts, apiKey, hash, offset);
       if (httpResponse.response.statusCode != 200) {
         return Future.error("network error");
       }

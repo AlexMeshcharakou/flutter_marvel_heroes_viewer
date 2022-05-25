@@ -25,8 +25,8 @@ class HeroesPage extends StatelessWidget {
         ),
       ),
       body: BlocProvider<HeroesBloc>(
-        create: (context) => HeroesBloc(getCharacters: getAllCharactersUseCase)..add(HeroesEvent()),
-        child: const ListCharacters(),
+        create: (context) => HeroesBloc(getCharactersUseCase: getAllCharactersUseCase)..add(HeroesEvent()),
+        child: ListCharacters(),
       ),
     );
   }

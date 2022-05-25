@@ -7,30 +7,46 @@ import 'package:marvel/presentation/convertors/convertor.dart';
 import 'package:marvel/presentation/view_models/view_data_character.dart';
 
 class HeroesBloc extends Bloc<HeroesEvent, HeroesState> {
-  final GetCharactersUseCase getCharacters;
+  final GetCharactersUseCase getCharactersUseCase;
+  int offset = 0;
+  bool isFetching = false;
 
-  HeroesBloc({required this.getCharacters})
+  HeroesBloc({required this.getCharactersUseCase})
       : super(
           const HeroesState(loading: true),
         ) {
     on<HeroesEvent>(
       (event, emit) async {
-        emit(
-          state.copyWith(loading: true),
-        );
         try {
-          final List<Character> characters = await getCharacters.call();
-          final List<ViewDataCharacter> charactersViewData = characters
-              .map(
-                (characterEntity) => characterEntity.charactersToViewData(characterEntity),
-              )
-              .toList();
-          emit(
-            state.copyWith(
-              loading: false,
-              characters: charactersViewData,
-            ),
-          );
+          if (state.charactersViewData == null) {
+            final List<Character> characters = await getCharactersUseCase.call(offset);
+            final List<ViewDataCharacter> charactersViewData = characters
+                .map(
+                  (characterEntity) => characterEntity.charactersToViewData(characterEntity),
+                )
+                .toList();
+            isFetching = false;
+            emit(
+              state.copyWith(
+                loading: false,
+                characters: charactersViewData,
+              ),
+            );
+          } else {
+            final List<Character> characters = await getCharactersUseCase.call(state.charactersViewData!.length);
+            final List<ViewDataCharacter> charactersViewData = characters
+                .map(
+                  (characterEntity) => characterEntity.charactersToViewData(characterEntity),
+                )
+                .toList();
+            isFetching = false;
+            emit(
+              state.copyWith(
+                loading: false,
+                characters: state.charactersViewData! + charactersViewData,
+              ),
+            );
+          }
         } catch (e) {
           emit(
             state.copyWith(
