@@ -6,14 +6,13 @@ import 'package:marvel/domain/repository/marvel_repository.dart';
 import 'package:marvel/data/convertors/convertor.dart';
 
 class RepositoryImpl implements MarvelRepository {
+  static final RepositoryImpl _repositoryImpl = RepositoryImpl._();
   final MarvelApiClient marvelClient = MarvelApiClient(Dio(), baseUrl: 'https://gateway.marvel.com:443/v1/public/');
   final String ts = '2';
   final String apiKey = 'c1bba7288e4f2f4f744591622a48412b';
   final String hash = 'bab03858fdeab2fe461725bad8d65904';
 
   RepositoryImpl._();
-
-  static final RepositoryImpl _repositoryImpl = RepositoryImpl._();
 
   factory RepositoryImpl() => _repositoryImpl;
 

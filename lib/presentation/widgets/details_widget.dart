@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:marvel/presentation/features/details/bloc/details_bloc.dart';
+import 'package:marvel/presentation/features/details/bloc/details_event.dart';
 import 'package:marvel/presentation/features/details/bloc/details_state.dart';
+import 'package:marvel/presentation/widgets/error_page.dart';
 
 class DetailsWidget extends StatelessWidget {
   final int characterId;
@@ -50,8 +52,12 @@ class DetailsWidget extends StatelessWidget {
           );
         }
         if (loading == false && error != null) {
-          return const Center(
-            child: Text('ERROR'),
+          return ErrorPage(
+            onRetry: () {
+              context.read<DetailsBloc>().add(
+                    DetailsEvent(characterId),
+                  );
+            },
           );
         }
         return const SizedBox.shrink();
@@ -71,8 +77,14 @@ Widget _buildImage(String? url) {
         alignment: Alignment.topCenter,
         child: Padding(
           padding: const EdgeInsets.all(10.0),
-          child:(url != null)
-              ? Image.network(url, fit: BoxFit.fitWidth)
+          child: (url != null)
+              ? Image.network(
+                  url,
+                  fit: BoxFit.fitWidth,
+                  errorBuilder: (_, __, ___) {
+                    return const Icon(Icons.broken_image);
+                  },
+                )
               : Image.asset("assets/images/placeholder.png"),
         ),
       ),
@@ -119,14 +131,24 @@ Widget _buildSeries(series) {
               children: [
                 Expanded(
                   flex: 9,
-                  child: Card(
-                    color: Colors.blue[50],
-                    elevation: 10,
-                    child: Padding(
-                      padding: const EdgeInsets.all(5.0),
-                      child: (item != null)
-                          ? Image.network(item.thumbnailUrl, fit: BoxFit.fitWidth)
-                          : Image.asset("assets/images/placeholder.png"),
+                  child: SizedBox(
+                    width: 130,
+                    child: Card(
+                      color: Colors.blue[50],
+                      elevation: 10,
+                      child: Padding(
+                        padding: const EdgeInsets.all(5.0),
+                        child: (item.thumbnailUrl != null)
+                            ? FadeInImage.assetNetwork(
+                                placeholder: "assets/images/placeholder.png",
+                                image: item.thumbnailUrl,
+                                fit: BoxFit.fitWidth,
+                                imageErrorBuilder: (_, __, ___) {
+                                  return const Icon(Icons.broken_image);
+                                },
+                              )
+                            : Image.asset("assets/images/placeholder.png"),
+                      ),
                     ),
                   ),
                 ),
