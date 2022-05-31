@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 
 class BuildCharacterCard extends StatelessWidget {
-  final dynamic item;
+  final dynamic _item;
 
-  const BuildCharacterCard({Key? key, this.item}) : super(key: key);
+  const BuildCharacterCard( this._item,{Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -23,9 +23,9 @@ class BuildCharacterCard extends StatelessWidget {
                 topLeft: Radius.circular(6),
                 bottomLeft: Radius.circular(6),
               ),
-              child: (item.smallThumbnailUrl != null)
+              child: (_item.smallThumbnailUrl != null)
                   ? Image.network(
-                      item.smallThumbnailUrl,
+                      _item.smallThumbnailUrl,
                       fit: BoxFit.fitWidth,
                       errorBuilder: (_, __, ___) {
                         return const Icon(Icons.broken_image);
@@ -39,7 +39,7 @@ class BuildCharacterCard extends StatelessWidget {
             child: Padding(
               padding: const EdgeInsets.only(left: 15.0),
               child: Text(
-                item.name,
+                _item.name,
                 textAlign: TextAlign.start,
                 style: const TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
               ),

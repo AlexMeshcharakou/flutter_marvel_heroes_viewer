@@ -4,8 +4,9 @@ import 'package:marvel/presentation/features/heroes/bloc/heroes_bloc.dart';
 import 'package:marvel/presentation/features/heroes/bloc/heroes_event.dart';
 import 'package:marvel/presentation/features/heroes/bloc/heroes_state.dart';
 import 'package:marvel/presentation/navigation/app_routes.dart';
-import 'package:marvel/presentation/widgets/BottomError.dart';
-import 'package:marvel/presentation/widgets/BuildCharacterCard.dart';
+import 'package:marvel/presentation/widgets/bottom_error.dart';
+import 'package:marvel/presentation/widgets/bottom_loader.dart';
+import 'package:marvel/presentation/widgets/build_character_card.dart';
 import 'package:marvel/presentation/widgets/error_page.dart';
 
 class ListCharacters extends StatefulWidget {
@@ -42,20 +43,20 @@ class _ListCharactersState extends State<ListCharacters> {
               if (state.error != null && !state.loading) {
                 endOfPage = const BottomError();
               } else {
-                endOfPage = _bottomLoader();
+                endOfPage = const BottomLoader();
               }
               return index == state.charactersViewData!.length
                   ? endOfPage
                   : SizedBox(
-                      height: 95,
-                      child: GestureDetector(
-                        onTap: () {
-                          Navigator.pushNamed(context, AppRoutes.detailPage,
-                              arguments: state.charactersViewData![index].id);
-                        },
-                        child: BuildCharacterCard(item: state.charactersViewData![index]),
-                      ),
-                    );
+                height: 95,
+                child: GestureDetector(
+                  onTap: () {
+                    Navigator.pushNamed(context, AppRoutes.detailPage,
+                        arguments: state.charactersViewData![index].id);
+                  },
+                  child: BuildCharacterCard(state.charactersViewData![index]),
+                ),
+              );
             },
           );
         }
@@ -88,15 +89,5 @@ class _ListCharactersState extends State<ListCharacters> {
     final maxScroll = _scrollController.position.maxScrollExtent;
     final currentScroll = _scrollController.offset;
     return currentScroll >= (maxScroll * 0.9);
-  }
-
-  Widget _bottomLoader() {
-    return const Center(
-      child: SizedBox(
-        height: 50,
-        width: 50,
-        child: CircularProgressIndicator(strokeWidth: 4.0),
-      ),
-    );
   }
 }
