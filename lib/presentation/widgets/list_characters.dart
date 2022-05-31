@@ -4,6 +4,8 @@ import 'package:marvel/presentation/features/heroes/bloc/heroes_bloc.dart';
 import 'package:marvel/presentation/features/heroes/bloc/heroes_event.dart';
 import 'package:marvel/presentation/features/heroes/bloc/heroes_state.dart';
 import 'package:marvel/presentation/navigation/app_routes.dart';
+import 'package:marvel/presentation/widgets/BottomError.dart';
+import 'package:marvel/presentation/widgets/BuildCharacterCard.dart';
 import 'package:marvel/presentation/widgets/error_page.dart';
 
 class ListCharacters extends StatefulWidget {
@@ -38,7 +40,7 @@ class _ListCharactersState extends State<ListCharacters> {
             itemBuilder: (BuildContext context, int index) {
               Widget endOfPage;
               if (state.error != null && !state.loading) {
-                endOfPage = _bottomError();
+                endOfPage = const BottomError();
               } else {
                 endOfPage = _bottomLoader();
               }
@@ -51,7 +53,7 @@ class _ListCharactersState extends State<ListCharacters> {
                           Navigator.pushNamed(context, AppRoutes.detailPage,
                               arguments: state.charactersViewData![index].id);
                         },
-                        child: _buildCharacterCard(state.charactersViewData![index]),
+                        child: BuildCharacterCard(item: state.charactersViewData![index]),
                       ),
                     );
             },
@@ -88,35 +90,6 @@ class _ListCharactersState extends State<ListCharacters> {
     return currentScroll >= (maxScroll * 0.9);
   }
 
-  Widget _bottomError() {
-    return SizedBox(
-      height: 70,
-      child: ElevatedButton(
-        child: Row(
-          mainAxisSize: MainAxisSize.min,
-          children: const [
-            Text(
-              'Check internet connection and Tap',
-              style: TextStyle(
-                fontSize: 14,
-              ),
-            ),
-            SizedBox(
-              width: 20,
-            ),
-            Icon(
-              Icons.refresh_rounded,
-              size: 35.0,
-            ),
-          ],
-        ),
-        onPressed: () {
-          context.read<HeroesBloc>().add(ScrolledToEndEvent());
-        },
-      ),
-    );
-  }
-
   Widget _bottomLoader() {
     return const Center(
       child: SizedBox(
@@ -126,48 +99,4 @@ class _ListCharactersState extends State<ListCharacters> {
       ),
     );
   }
-}
-
-Widget _buildCharacterCard(item) {
-  return Card(
-    shape: const RoundedRectangleBorder(
-      borderRadius: BorderRadius.all(
-        Radius.circular(6),
-      ),
-    ),
-    elevation: 3,
-    child: Row(
-      children: [
-        Expanded(
-          flex: 3,
-          child: ClipRRect(
-            borderRadius: const BorderRadius.only(
-              topLeft: Radius.circular(6),
-              bottomLeft: Radius.circular(6),
-            ),
-            child: (item.smallThumbnailUrl != null)
-                ? Image.network(
-                    item.smallThumbnailUrl,
-                    fit: BoxFit.fitWidth,
-                    errorBuilder: (_, __, ___) {
-                      return const Icon(Icons.broken_image);
-                    },
-                  )
-                : Image.asset("assets/images/placeholder.png"),
-          ),
-        ),
-        Expanded(
-          flex: 6,
-          child: Padding(
-            padding: const EdgeInsets.only(left: 15.0),
-            child: Text(
-              item.name,
-              textAlign: TextAlign.start,
-              style: const TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
-            ),
-          ),
-        ),
-      ],
-    ),
-  );
 }

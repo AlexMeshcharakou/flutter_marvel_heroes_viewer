@@ -8,7 +8,6 @@ import 'package:marvel/presentation/view_models/view_data_character.dart';
 
 class HeroesBloc extends Bloc<HeroesEvent, HeroesState> {
   final GetCharactersUseCase getCharactersUseCase;
-  final int _offset = 0;
 
   HeroesBloc({required this.getCharactersUseCase})
       : super(
@@ -20,12 +19,8 @@ class HeroesBloc extends Bloc<HeroesEvent, HeroesState> {
           state.copyWith(loading: true),
         );
         try {
-          final List<Character> characters = await getCharactersUseCase.call(_offset);
-          final List<ViewDataCharacter> charactersViewData = characters
-              .map(
-                (characterEntity) => characterEntity.charactersToViewData(characterEntity),
-              )
-              .toList();
+          final List<Character> characters = await getCharactersUseCase.call();
+          final List<ViewDataCharacter> charactersViewData = _mapCharacters(characters);
           emit(
             state.copyWith(loading: false, characters: charactersViewData),
           );
@@ -41,8 +36,7 @@ class HeroesBloc extends Bloc<HeroesEvent, HeroesState> {
     );
     on<ScrolledToEndEvent>(
       (event, emit) async {
-        if (state.hasReachedMax) return;
-        if (state.loading) return;
+        if (state.loading || state.hasReachedMax) return;
         emit(
           state.copyWith(loading: true, hasReachedMax: false),
         );
@@ -52,11 +46,7 @@ class HeroesBloc extends Bloc<HeroesEvent, HeroesState> {
             emit(state.copyWith(loading: false, hasReachedMax: true));
             return;
           }
-          final List<ViewDataCharacter> charactersViewData = characters
-              .map(
-                (characterEntity) => characterEntity.charactersToViewData(characterEntity),
-              )
-              .toList();
+          final List<ViewDataCharacter> charactersViewData = _mapCharacters(characters);
           emit(
             state.copyWith(loading: false, characters: state.charactersViewData! + charactersViewData),
           );
@@ -64,11 +54,19 @@ class HeroesBloc extends Bloc<HeroesEvent, HeroesState> {
           emit(
             state.copyWith(
               loading: false,
-              error: "error",
+              error: "We can't load Heroes right now",
             ),
           );
         }
       },
     );
+  }
+
+  List<ViewDataCharacter> _mapCharacters(List<Character> characters) {
+    return characters
+        .map(
+          (characterEntity) => characterEntity.charactersToViewData(characterEntity),
+        )
+        .toList();
   }
 }
