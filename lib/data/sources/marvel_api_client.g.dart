@@ -18,12 +18,14 @@ class _MarvelApiClient implements MarvelApiClient {
   String? baseUrl;
 
   @override
-  Future<HttpResponse<ApiResponseModel>> getCharacters(ts, apiKey, hash) async {
+  Future<HttpResponse<ApiResponseModel>> getCharacters(
+      ts, apiKey, hash, offset) async {
     const _extra = <String, dynamic>{};
     final queryParameters = <String, dynamic>{
       r'ts': ts,
       r'apikey': apiKey,
-      r'hash': hash
+      r'hash': hash,
+      r'offset': offset
     };
     final _headers = <String, dynamic>{};
     final _data = <String, dynamic>{};
