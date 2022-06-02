@@ -54,7 +54,7 @@ class DetailsWidget extends StatelessWidget {
             ),
           );
         }
-        if (loading == false && error != null) {
+        if (loading == false && error == true) {
           return ErrorPage(
             onRetry: () {
               context.read<DetailsBloc>().add(

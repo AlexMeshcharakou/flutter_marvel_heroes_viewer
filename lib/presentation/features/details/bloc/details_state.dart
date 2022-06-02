@@ -8,7 +8,7 @@ class DetailsState extends Equatable {
   final bool loading;
   final ViewDataCharacterDetails? characterDetails;
   final List<ViewDataSeries>? series;
-  final String? error;
+  final bool? error;
 
   const DetailsState({required this.loading, this.characterDetails, this.series, this.error});
 

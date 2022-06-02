@@ -39,7 +39,7 @@ class DetailsBloc extends Bloc<DetailsEvent, DetailsState> {
           emit(
             state.copyWith(
               loading: false,
-              error: "error",
+              error: true,
             ),
           );
         }

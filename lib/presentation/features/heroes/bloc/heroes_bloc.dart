@@ -28,7 +28,7 @@ class HeroesBloc extends Bloc<HeroesEvent, HeroesState> {
           emit(
             state.copyWith(
               loading: false,
-              error: "error",
+              error: true,
             ),
           );
         }
@@ -54,7 +54,7 @@ class HeroesBloc extends Bloc<HeroesEvent, HeroesState> {
           emit(
             state.copyWith(
               loading: false,
-              error: "We can't load Heroes right now",
+              error: true,
             ),
           );
         }

@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:marvel/data/data_sources/remote_data_source.dart';
 import 'package:marvel/data/repository/repository_impl.dart';
 import 'package:marvel/domain/use_cases/get_character_details_use_case.dart';
 import 'package:marvel/domain/use_cases/get_series_use_case.dart';
@@ -9,8 +10,9 @@ import 'package:marvel/presentation/widgets/details_widget.dart';
 
 class DetailsPage extends StatelessWidget {
   final GetCharacterDetailsUseCase getCharacterDetailsUseCase =
-      GetCharacterDetailsUseCase(marvelRepository: RepositoryImpl());
-  final GetAllSeriesUseCase getAllSeriesUseCase = GetAllSeriesUseCase(marvelRepository: RepositoryImpl());
+      GetCharacterDetailsUseCase(marvelRepository: RepositoryImpl(remoteDataSource: RemoteDataSourceImpl()));
+  final GetAllSeriesUseCase getAllSeriesUseCase =
+      GetAllSeriesUseCase(marvelRepository: RepositoryImpl(remoteDataSource: RemoteDataSourceImpl()));
   final int characterId;
 
   DetailsPage({Key? key, required this.characterId}) : super(key: key);

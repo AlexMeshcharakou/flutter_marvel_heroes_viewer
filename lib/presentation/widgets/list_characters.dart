@@ -48,19 +48,19 @@ class _ListCharactersState extends State<ListCharacters> {
               return index == state.charactersViewData!.length
                   ? endOfPage
                   : SizedBox(
-                height: 95,
-                child: GestureDetector(
-                  onTap: () {
-                    Navigator.pushNamed(context, AppRoutes.detailPage,
-                        arguments: state.charactersViewData![index].id);
-                  },
-                  child: BuildCharacterCard(state.charactersViewData![index]),
-                ),
-              );
+                      height: 95,
+                      child: GestureDetector(
+                        onTap: () {
+                          Navigator.pushNamed(context, AppRoutes.detailPage,
+                              arguments: state.charactersViewData![index].id);
+                        },
+                        child: BuildCharacterCard(state.charactersViewData![index]),
+                      ),
+                    );
             },
           );
         }
-        if (state.error != null) {
+        if (state.error == true) {
           return ErrorPage(
             onRetry: () {
               context.read<HeroesBloc>().add(ReadyForDataEvent());
