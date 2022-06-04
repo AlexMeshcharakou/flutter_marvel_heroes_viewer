@@ -13,17 +13,20 @@ class LocalCharacter {
   @HiveField(3)
   final String description;
   @HiveField(4)
-  final LocalThumbnail thumbnail;
+  final String? smallThumbnailUrl;
+  @HiveField(5)
+  final String? bigThumbnailUrl;
 
-  LocalCharacter(this.id, this.name, this.title, this.description, this.thumbnail);
-}
+  LocalCharacter(
+      {this.smallThumbnailUrl,
+      this.bigThumbnailUrl,
+      required this.id,
+      required this.name,
+      this.title,
+      required this.description});
 
-@HiveType(typeId: 1)
-class LocalThumbnail {
-  @HiveField(0)
-  final String path;
-  @HiveField(1)
-  final String extension;
-
-  LocalThumbnail(this.path, this.extension);
+  @override
+  String toString() {
+    return 'LocalCharacter{id: $id, name: $name, title: $title, description: $description, smallThumbnailUrl: $smallThumbnailUrl, bigThumbnailUrl: $bigThumbnailUrl}';
+  }
 }

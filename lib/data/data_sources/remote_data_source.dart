@@ -32,8 +32,8 @@ class RemoteDataSourceImpl implements RemoteDataSource {
           )
           .toList();
       return characters;
-    } catch (error) {
-      return Future.error("$error");
+    } catch (DioError) {
+      return Future.error("$DioError");
     }
   }
 
