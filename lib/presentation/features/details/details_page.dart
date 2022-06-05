@@ -10,9 +10,9 @@ import 'package:marvel/presentation/widgets/details_widget.dart';
 
 class DetailsPage extends StatelessWidget {
   final GetCharacterDetailsUseCase getCharacterDetailsUseCase =
-      GetCharacterDetailsUseCase(marvelRepository: RepositoryImpl(remoteDataSource: RemoteDataSourceImpl()));
+      GetCharacterDetailsUseCase(marvelRepository: RepositoryImpl(dioDataSource: DioDataSource()));
   final GetAllSeriesUseCase getAllSeriesUseCase =
-      GetAllSeriesUseCase(marvelRepository: RepositoryImpl(remoteDataSource: RemoteDataSourceImpl()));
+      GetAllSeriesUseCase(marvelRepository: RepositoryImpl(dioDataSource: DioDataSource()));
   final int characterId;
 
   DetailsPage({Key? key, required this.characterId}) : super(key: key);

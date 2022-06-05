@@ -11,7 +11,7 @@ import 'package:marvel/presentation/widgets/list_characters.dart';
 class HeroesPage extends StatelessWidget {
   final GetCharactersUseCase getAllCharactersUseCase = GetCharactersUseCase(
       marvelRepository:
-          RepositoryImpl(remoteDataSource: RemoteDataSourceImpl(), localDataSource: LocalDataSourceImpl()));
+          RepositoryImpl(dioDataSource: DioDataSource(), hiveDataSource: HiveDataSource()));
 
   HeroesPage({Key? key}) : super(key: key);
 

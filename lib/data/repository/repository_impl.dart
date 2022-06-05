@@ -1,56 +1,43 @@
-import 'package:hive_flutter/hive_flutter.dart';
 import 'package:marvel/data/data_sources/local_data_source.dart';
 import 'package:marvel/data/data_sources/remote_data_source.dart';
 import 'package:marvel/data/models/local_models/local_character.dart';
 import 'package:marvel/domain/entities/character.dart';
 import 'package:marvel/domain/entities/series.dart';
 import 'package:marvel/domain/repository/marvel_repository.dart';
+import 'package:marvel/data/converters/converter.dart';
 
 class RepositoryImpl implements MarvelRepository {
-  final RemoteDataSourceImpl? remoteDataSource;
-  final LocalDataSourceImpl? localDataSource;
+  final DioDataSource? dioDataSource;
+  final HiveDataSource? hiveDataSource;
 
-  RepositoryImpl({this.localDataSource, this.remoteDataSource});
+  RepositoryImpl({this.hiveDataSource, this.dioDataSource});
 
   @override
   Future<List<Character>> getCharacters(int offset) async {
     try {
-      List<Character> characters = await remoteDataSource!.getCharacters(offset);
-      List<LocalCharacter> list = characters
-          .map((e) => LocalCharacter(
-              id: e.id,
-              name: e.name,
-              description: e.description,
-              smallThumbnailUrl: e.smallThumbnailUrl,
-              bigThumbnailUrl: e.bigThumbnailUrl))
-          .toList();
-      if (Hive.box('characters').isEmpty) {
-        for (var element in list) {
-          localDataSource?.charactersToDB(element);
+      List<Character> characters = await dioDataSource!.getCharacters(offset);
+      List<LocalCharacter> localCharacters = characters.map((hero) => domainModelToLocalCharacter(hero)).toList();
+      if (offset == 0) {
+        hiveDataSource?.deleteAll();
+        for (var character in localCharacters) {
+          hiveDataSource?.save(character);
         }
       }
       return characters;
     } catch (DioError) {
-      List<LocalCharacter> list = localDataSource!.getCharactersFromDB();
-      List<Character> characters = list
-          .map((e) => Character(
-              id: e.id,
-              name: e.name,
-              description: e.description,
-              smallThumbnailUrl: e.smallThumbnailUrl,
-              bigThumbnailUrl: e.bigThumbnailUrl))
-          .toList();
+      List<LocalCharacter> localCharacters = hiveDataSource!.getAll();
+      List<Character> characters = localCharacters.map((hero) => localCharacterToDomainModel(hero)).toList();
       return characters;
     }
   }
 
   @override
   Future<Character> getCharacterDetails(int characterId) async {
-    return await remoteDataSource!.getCharacterDetails(characterId);
+    return await dioDataSource!.getCharacterDetails(characterId);
   }
 
   @override
   Future<List<Series>> getAllSeries(int characterId) async {
-    return await remoteDataSource!.getAllSeries(characterId);
+    return await dioDataSource!.getAllSeries(characterId);
   }
 }

@@ -3,7 +3,7 @@ import 'package:marvel/domain/entities/character.dart';
 import 'package:marvel/domain/entities/series.dart';
 import 'package:marvel/domain/use_cases/get_character_details_use_case.dart';
 import 'package:marvel/domain/use_cases/get_series_use_case.dart';
-import 'package:marvel/presentation/convertors/convertor.dart';
+import 'package:marvel/presentation/converters/converter.dart';
 import 'package:marvel/presentation/features/details/bloc/details_state.dart';
 import 'package:marvel/presentation/view_models/view_data_details.dart';
 import 'package:marvel/presentation/view_models/view_data_series.dart';
@@ -16,7 +16,7 @@ class DetailsBloc extends Bloc<DetailsEvent, DetailsState> {
 
   DetailsBloc({required this.getAllSeries, required this.getCharacterDetails})
       : super(
-          const DetailsState(loading: true),
+          const DetailsState(loading: true, error: false),
         ) {
     on<DetailsEvent>(
       (event, emit) async {

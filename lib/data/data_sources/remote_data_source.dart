@@ -1,5 +1,5 @@
 import 'package:dio/dio.dart';
-import 'package:marvel/data/convertors/convertor.dart';
+import 'package:marvel/data/converters/converter.dart';
 import 'package:marvel/data/sources/marvel_api_client.dart';
 import 'package:marvel/domain/entities/character.dart';
 import 'package:marvel/domain/entities/series.dart';
@@ -12,7 +12,7 @@ abstract class RemoteDataSource {
   Future<List<Series>> getAllSeries(int characterId);
 }
 
-class RemoteDataSourceImpl implements RemoteDataSource {
+class DioDataSource implements RemoteDataSource {
   final MarvelApiClient marvelClient = MarvelApiClient(Dio(), baseUrl: 'https://gateway.marvel.com:443/v1/public/');
   final String ts = '2';
   final String apiKey = 'c1bba7288e4f2f4f744591622a48412b';

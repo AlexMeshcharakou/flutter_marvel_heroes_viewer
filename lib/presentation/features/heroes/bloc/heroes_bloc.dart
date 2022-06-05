@@ -3,7 +3,7 @@ import 'package:marvel/domain/entities/character.dart';
 import 'package:marvel/domain/use_cases/get_characters_use_case.dart';
 import 'package:marvel/presentation/features/heroes/bloc/heroes_event.dart';
 import 'package:marvel/presentation/features/heroes/bloc/heroes_state.dart';
-import 'package:marvel/presentation/convertors/convertor.dart';
+import 'package:marvel/presentation/converters/converter.dart';
 import 'package:marvel/presentation/view_models/view_data_character.dart';
 
 class HeroesBloc extends Bloc<HeroesEvent, HeroesState> {
@@ -11,7 +11,7 @@ class HeroesBloc extends Bloc<HeroesEvent, HeroesState> {
 
   HeroesBloc({required this.getCharactersUseCase})
       : super(
-          const HeroesState(loading: false, hasReachedMax: false),
+          const HeroesState(loading: false, hasReachedMax: false, error: false),
         ) {
     on<ReadyForDataEvent>(
       (event, emit) async {

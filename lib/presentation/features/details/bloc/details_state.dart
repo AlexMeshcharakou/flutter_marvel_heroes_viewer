@@ -8,9 +8,9 @@ class DetailsState extends Equatable {
   final bool loading;
   final ViewDataCharacterDetails? characterDetails;
   final List<ViewDataSeries>? series;
-  final bool? error;
+  final bool error;
 
-  const DetailsState({required this.loading, this.characterDetails, this.series, this.error});
+  const DetailsState({required this.loading, this.characterDetails, this.series, required this.error});
 
   DetailsState copyWith({required loading, characterDetails, series, error}) => DetailsState(
         loading: loading ?? this.loading,
