@@ -1,7 +1,6 @@
 import 'package:marvel/data/models/local_models/local_character.dart';
 import 'package:marvel/data/models/remote_models/character_model.dart';
 import 'package:marvel/data/models/remote_models/series_model.dart';
-import 'package:marvel/data/repository/repository_impl.dart';
 import 'package:marvel/domain/entities/character.dart';
 import 'package:marvel/domain/entities/series.dart';
 
@@ -32,7 +31,7 @@ extension SeriesToDomainModel on SeriesModel {
   }
 }
 
-extension LocalCharacterToDomainModel on RepositoryImpl {
+extension LocalCharacterToDomainModel on LocalCharacter {
   Character localCharacterToDomainModel(LocalCharacter localCharacter) {
     return Character(
         id: localCharacter.id,
@@ -43,7 +42,7 @@ extension LocalCharacterToDomainModel on RepositoryImpl {
   }
 }
 
-extension DomainModelToLocalCharacter on RepositoryImpl {
+extension DomainModelToLocalCharacter on Character {
   LocalCharacter domainModelToLocalCharacter(Character character) {
     return LocalCharacter(
         id: character.id,

@@ -1,8 +1,8 @@
 import 'package:marvel/domain/entities/character.dart';
 import 'package:marvel/domain/entities/series.dart';
-import 'package:marvel/presentation/view_models/view_data_character.dart';
-import 'package:marvel/presentation/view_models/view_data_details.dart';
-import 'package:marvel/presentation/view_models/view_data_series.dart';
+import 'package:marvel/presentation/view_data/view_data_character.dart';
+import 'package:marvel/presentation/view_data/view_data_details.dart';
+import 'package:marvel/presentation/view_data/view_data_series.dart';
 
 extension CharactersToViewData on Character {
   ViewDataCharacter charactersToViewData(Character character) {

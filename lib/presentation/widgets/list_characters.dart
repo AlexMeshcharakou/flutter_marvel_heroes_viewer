@@ -40,7 +40,7 @@ class _ListCharactersState extends State<ListCharacters> {
             itemCount: state.hasReachedMax ? state.charactersViewData!.length : state.charactersViewData!.length + 1,
             itemBuilder: (BuildContext context, int index) {
               Widget endOfPage;
-              if (state.error != null && !state.loading) {
+              if (state.error == true && !state.loading) {
                 endOfPage = const BottomError();
               } else {
                 endOfPage = const BottomLoader();

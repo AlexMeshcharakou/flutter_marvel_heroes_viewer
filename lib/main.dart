@@ -6,7 +6,11 @@ import 'presentation/navigation/route_generator.dart';
 import 'presentation/features/heroes/heroes_page.dart';
 
 void main() async {
-  await _initFlutter();
+  WidgetsFlutterBinding.ensureInitialized();
+  await Hive.initFlutter();
+  Hive.registerAdapter<LocalCharacter>(LocalCharacterAdapter());
+  await Hive.openBox('characters');
+  // await _initHive();
   runApp(
     MaterialApp(
       debugShowCheckedModeBanner: false,
@@ -16,8 +20,7 @@ void main() async {
   );
 }
 
-Future<void> _initFlutter() async {
-  WidgetsFlutterBinding.ensureInitialized();
+Future<void> _initHive() async {
   await Hive.initFlutter();
   Hive.registerAdapter<LocalCharacter>(LocalCharacterAdapter());
   await Hive.openBox('characters');

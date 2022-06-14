@@ -4,7 +4,7 @@ import 'package:marvel/domain/use_cases/get_characters_use_case.dart';
 import 'package:marvel/presentation/features/heroes/bloc/heroes_event.dart';
 import 'package:marvel/presentation/features/heroes/bloc/heroes_state.dart';
 import 'package:marvel/presentation/converters/converter.dart';
-import 'package:marvel/presentation/view_models/view_data_character.dart';
+import 'package:marvel/presentation/view_data/view_data_character.dart';
 
 class HeroesBloc extends Bloc<HeroesEvent, HeroesState> {
   final GetCharactersUseCase getCharactersUseCase;
@@ -19,17 +19,19 @@ class HeroesBloc extends Bloc<HeroesEvent, HeroesState> {
           state.copyWith(loading: true),
         );
         try {
-          final List<Character> characters = await getCharactersUseCase.call();
-          final List<ViewDataCharacter> charactersViewData = _mapCharacters(characters);
+          final List<Character> localCharacters = await getCharactersUseCase.call();
+          final List<ViewDataCharacter> charactersViewData = _mapCharacters(localCharacters);
           emit(
             state.copyWith(loading: false, characters: charactersViewData),
           );
+          final List<Character> remoteCharacters = await getCharactersUseCase.call();
+          final List<ViewDataCharacter> charactersViewDataRemote = _mapCharacters(remoteCharacters);
+          emit(
+            state.copyWith(loading: false, characters: charactersViewDataRemote),
+          );
         } catch (e) {
           emit(
-            state.copyWith(
-              loading: false,
-              error: true,
-            ),
+            state.copyWith(loading: false, error: true),
           );
         }
       },
@@ -50,7 +52,7 @@ class HeroesBloc extends Bloc<HeroesEvent, HeroesState> {
           emit(
             state.copyWith(loading: false, characters: state.charactersViewData! + charactersViewData),
           );
-        } catch (e) {
+        } catch (ex) {
           emit(
             state.copyWith(
               loading: false,

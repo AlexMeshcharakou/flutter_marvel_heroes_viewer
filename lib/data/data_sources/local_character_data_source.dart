@@ -1,19 +1,19 @@
 import 'package:hive_flutter/hive_flutter.dart';
 import 'package:marvel/data/models/local_models/local_character.dart';
 
-abstract class LocalDataSource {
-  Future<void> save(LocalCharacter character);
+abstract class LocalCharacterDataSource {
+  void save(LocalCharacter character);
 
   List<LocalCharacter> getAll();
 
-  Future<void> deleteAll();
+  void deleteAll();
 }
 
-class HiveDataSource implements LocalDataSource {
+class HiveDataSource implements LocalCharacterDataSource {
   @override
-  Future<void> save(LocalCharacter character) async {
+  void save(LocalCharacter character)  {
     var box = Hive.box('characters');
-    await box.add(character);
+    box.add(character);
   }
 
   @override
@@ -24,8 +24,8 @@ class HiveDataSource implements LocalDataSource {
   }
 
   @override
-  Future<void> deleteAll() async {
+  void deleteAll()  {
     var box = Hive.box('characters');
-    await box.clear();
+    box.clear();
   }
 }
