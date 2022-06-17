@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:marvel/presentation/view_models/view_data_series.dart';
+import 'package:marvel/presentation/view_data/view_data_series.dart';
 
 class BuildSeries extends StatelessWidget {
   final List<ViewDataSeries> _series;

@@ -19,17 +19,12 @@ class HeroesBloc extends Bloc<HeroesEvent, HeroesState> {
           state.copyWith(loading: true),
         );
         try {
-          final List<Character> localCharacters = await getCharactersUseCase.call();
-          final List<ViewDataCharacter> charactersViewData = _mapCharacters(localCharacters);
+          final List<Character> characters = await getCharactersUseCase();
+          final List<ViewDataCharacter> charactersViewData = _mapCharacters(characters);
           emit(
             state.copyWith(loading: false, characters: charactersViewData),
           );
-          final List<Character> remoteCharacters = await getCharactersUseCase.call();
-          final List<ViewDataCharacter> charactersViewDataRemote = _mapCharacters(remoteCharacters);
-          emit(
-            state.copyWith(loading: false, characters: charactersViewDataRemote),
-          );
-        } catch (e) {
+        } catch (ex) {
           emit(
             state.copyWith(loading: false, error: true),
           );

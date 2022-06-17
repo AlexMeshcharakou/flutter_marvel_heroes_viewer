@@ -11,10 +11,10 @@ import 'package:marvel/presentation/view_data/view_data_series.dart';
 import 'details_event.dart';
 
 class DetailsBloc extends Bloc<DetailsEvent, DetailsState> {
-  final GetCharacterDetailsUseCase getCharacterDetails;
-  final GetAllSeriesUseCase getAllSeries;
+  final GetCharacterDetailsUseCase getCharacterDetailsUseCase;
+  final GetAllSeriesUseCase getAllSeriesUseCase;
 
-  DetailsBloc({required this.getAllSeries, required this.getCharacterDetails})
+  DetailsBloc({required this.getAllSeriesUseCase, required this.getCharacterDetailsUseCase})
       : super(
           const DetailsState(loading: true, error: false),
         ) {
@@ -24,9 +24,9 @@ class DetailsBloc extends Bloc<DetailsEvent, DetailsState> {
           state.copyWith(loading: true),
         );
         try {
-          final Character character = await getCharacterDetails.call(event.characterId);
+          final Character character = await getCharacterDetailsUseCase(event.characterId);
           final ViewDataCharacterDetails characterDetails = character.detailsToViewData(character);
-          final List<Series> allSeries = await getAllSeries(event.characterId);
+          final List<Series> allSeries = await getAllSeriesUseCase(event.characterId);
           final List<ViewDataSeries> series = allSeries
               .map(
                 (seriesResponse) => seriesResponse.seriesToViewData(seriesResponse),

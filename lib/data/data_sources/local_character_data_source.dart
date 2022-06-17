@@ -2,18 +2,17 @@ import 'package:hive_flutter/hive_flutter.dart';
 import 'package:marvel/data/models/local_models/local_character.dart';
 
 abstract class LocalCharacterDataSource {
-  void save(LocalCharacter character);
+  void save(List<LocalCharacter> characters);
 
   List<LocalCharacter> getAll();
-
-  void deleteAll();
 }
 
 class HiveDataSource implements LocalCharacterDataSource {
   @override
-  void save(LocalCharacter character)  {
+  void save(List<LocalCharacter> characters) {
     var box = Hive.box('characters');
-    box.add(character);
+    box.clear();
+    box.addAll(characters);
   }
 
   @override
@@ -21,11 +20,5 @@ class HiveDataSource implements LocalCharacterDataSource {
     var box = Hive.box('characters');
     List<dynamic> characters = box.values.toList();
     return characters.cast<LocalCharacter>();
-  }
-
-  @override
-  void deleteAll()  {
-    var box = Hive.box('characters');
-    box.clear();
   }
 }
