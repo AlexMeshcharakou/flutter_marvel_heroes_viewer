@@ -12,6 +12,7 @@ class DefaultMarvelRepository implements MarvelRepository {
   final DioDataSource dioDataSource;
   final HiveDataSource? hiveDataSource;
   late int offset;
+  late List<Character> characters;
 
   DefaultMarvelRepository({this.hiveDataSource, required this.dioDataSource});
 
@@ -24,24 +25,32 @@ class DefaultMarvelRepository implements MarvelRepository {
           throw DataRetrievingException();
         }
         final result = httpResponse.data.data.results;
-        List<Character> characters = result
+        characters = result
             .map(
-              (characterResponse) => characterResponse.characterToDomainModel(characterResponse),
+              (remoteCharacter) => remoteCharacter.characterToDomainModel(remoteCharacter),
             )
             .toList();
-        List<LocalCharacter> localCharacters =
-            characters.map((hero) => hero.domainModelToLocalCharacter(hero)).toList();
-        hiveDataSource?.save(localCharacters);
-        return characters;
+        _saveCharactersToDB(characters);
       } on DioError {
-        return _getLocalCharacters();
+        _getCharactersFromLocal();
       }
+      return characters;
     }
     try {
-      return _getRemoteCharacters(offset);
+      final httpResponse = await dioDataSource.getCharacters(offset);
+      if (httpResponse.response.statusCode != 200) {
+        throw DataRetrievingException();
+      }
+      final result = httpResponse.data.data.results;
+      characters = result
+          .map(
+            (remoteCharacter) => remoteCharacter.characterToDomainModel(remoteCharacter),
+          )
+          .toList();
     } on DioError {
       throw NoInternetException();
     }
+    return characters;
   }
 
   @override
@@ -74,7 +83,7 @@ class DefaultMarvelRepository implements MarvelRepository {
       List<Series> allSeries = result
           .map(
             (seriesResponse) => seriesResponse.seriesToDomainModel(seriesResponse),
-      )
+          )
           .toList();
       return allSeries;
     } on DioError {
@@ -82,26 +91,17 @@ class DefaultMarvelRepository implements MarvelRepository {
     }
   }
 
-  Future<List<Character>> _getRemoteCharacters(int offset) async {
-    final httpResponse = await dioDataSource.getCharacters(offset);
-    if (httpResponse.response.statusCode != 200) {
-      throw DataRetrievingException();
-    }
-    final result = httpResponse.data.data.results;
-    List<Character> characters = result
-        .map(
-          (characterResponse) => characterResponse.characterToDomainModel(characterResponse),
-        )
-        .toList();
-    return characters;
-  }
-
-  List<Character> _getLocalCharacters() {
+  List<Character> _getCharactersFromLocal() {
     if (hiveDataSource!.getAll().isNotEmpty) {
       List<LocalCharacter> localCharacters = hiveDataSource!.getAll();
-      List<Character> characters = localCharacters.map((hero) => hero.localCharacterToDomainModel(hero)).toList();
+      characters = localCharacters.map((hero) => hero.localCharacterToDomainModel(hero)).toList();
       return characters;
     }
     throw DataRetrievingException();
+  }
+
+  void _saveCharactersToDB(List<Character> characters) {
+    List<LocalCharacter> localCharacters = characters.map((hero) => hero.domainModelToLocalCharacter(hero)).toList();
+    hiveDataSource?.save(localCharacters);
   }
 }

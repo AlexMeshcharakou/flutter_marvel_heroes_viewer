@@ -7,9 +7,9 @@ class HeroesState extends Equatable {
   final bool loading;
   final bool hasReachedMax;
   final List<ViewDataCharacter>? charactersViewData;
-  final bool error;
+  final String? error;
 
-  const HeroesState({required this.loading, required this.hasReachedMax, this.charactersViewData, required this.error});
+  const HeroesState({required this.loading, required this.hasReachedMax, this.charactersViewData, this.error});
 
   HeroesState copyWith({loading, hasReachedMax, characters, error}) => HeroesState(
       loading: loading ?? this.loading,

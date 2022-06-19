@@ -54,13 +54,14 @@ class DetailsWidget extends StatelessWidget {
             ),
           );
         }
-        if (loading == false && error == true) {
+        if (loading == false && error != null) {
           return ErrorPage(
             onRetry: () {
               context.read<DetailsBloc>().add(
                     DetailsEvent(characterId),
                   );
             },
+            error: error.toString(),
           );
         }
         return const SizedBox.shrink();

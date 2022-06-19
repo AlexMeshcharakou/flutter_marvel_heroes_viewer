@@ -1,6 +1,7 @@
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:marvel/domain/entities/character.dart';
 import 'package:marvel/domain/entities/series.dart';
+import 'package:marvel/domain/exceptions/exceptions.dart';
 import 'package:marvel/domain/use_cases/get_character_details_use_case.dart';
 import 'package:marvel/domain/use_cases/get_series_use_case.dart';
 import 'package:marvel/presentation/converters/converter.dart';
@@ -16,7 +17,7 @@ class DetailsBloc extends Bloc<DetailsEvent, DetailsState> {
 
   DetailsBloc({required this.getAllSeriesUseCase, required this.getCharacterDetailsUseCase})
       : super(
-          const DetailsState(loading: true, error: false),
+          const DetailsState(loading: true),
         ) {
     on<DetailsEvent>(
       (event, emit) async {
@@ -30,17 +31,19 @@ class DetailsBloc extends Bloc<DetailsEvent, DetailsState> {
           final List<ViewDataSeries> series = allSeries
               .map(
                 (seriesResponse) => seriesResponse.seriesToViewData(seriesResponse),
-              ).cast<ViewDataSeries>()
+              )
+              .cast<ViewDataSeries>()
               .toList();
           emit(
             state.copyWith(characterDetails: characterDetails, series: series, loading: false),
           );
-        } catch (e) {
+        } on DataRetrievingException {
           emit(
-            state.copyWith(
-              loading: false,
-              error: true,
-            ),
+            state.copyWith(loading: false, error: 'Something went wrong'),
+          );
+        } on NoInternetException {
+          emit(
+            state.copyWith(loading: false, error: 'Please check internet connection and'),
           );
         }
       },

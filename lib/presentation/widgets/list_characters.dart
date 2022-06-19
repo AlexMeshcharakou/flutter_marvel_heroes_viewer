@@ -40,7 +40,7 @@ class _ListCharactersState extends State<ListCharacters> {
             itemCount: state.hasReachedMax ? state.charactersViewData!.length : state.charactersViewData!.length + 1,
             itemBuilder: (BuildContext context, int index) {
               Widget endOfPage;
-              if (state.error == true && !state.loading) {
+              if (state.error != null && !state.loading) {
                 endOfPage = const BottomError();
               } else {
                 endOfPage = const BottomLoader();
@@ -60,11 +60,12 @@ class _ListCharactersState extends State<ListCharacters> {
             },
           );
         }
-        if (state.error == true) {
+        if (state.error != null) {
           return ErrorPage(
             onRetry: () {
               context.read<HeroesBloc>().add(ReadyForDataEvent());
             },
+            error: state.error.toString(),
           );
         }
         return const SizedBox.shrink();

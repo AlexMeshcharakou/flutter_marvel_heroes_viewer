@@ -2,8 +2,9 @@ import 'package:flutter/material.dart';
 
 class ErrorPage extends StatelessWidget {
   final Function onRetry;
+  final String error;
 
-  const ErrorPage({Key? key, required this.onRetry}) : super(key: key);
+  const ErrorPage({Key? key, required this.onRetry, required this.error}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -11,18 +12,12 @@ class ErrorPage extends StatelessWidget {
       child: Column(
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
-          const Text(
-            "NO CONNECTION",
-            style: TextStyle(fontSize: 22, fontWeight: FontWeight.bold),
+          Text(
+            error,
+            style: const TextStyle(fontSize: 22, fontWeight: FontWeight.bold),
           ),
           const SizedBox(
             height: 25,
-          ),
-          const Text(
-            "Please check internet connection and ",
-            style: TextStyle(
-              fontSize: 16,
-            ),
           ),
           ElevatedButton(
             child: Row(

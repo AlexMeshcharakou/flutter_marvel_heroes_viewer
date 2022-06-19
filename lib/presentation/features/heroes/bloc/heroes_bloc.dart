@@ -1,5 +1,6 @@
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:marvel/domain/entities/character.dart';
+import 'package:marvel/domain/exceptions/exceptions.dart';
 import 'package:marvel/domain/use_cases/get_characters_use_case.dart';
 import 'package:marvel/presentation/features/heroes/bloc/heroes_event.dart';
 import 'package:marvel/presentation/features/heroes/bloc/heroes_state.dart';
@@ -11,7 +12,7 @@ class HeroesBloc extends Bloc<HeroesEvent, HeroesState> {
 
   HeroesBloc({required this.getCharactersUseCase})
       : super(
-          const HeroesState(loading: false, hasReachedMax: false, error: false),
+          const HeroesState(loading: false, hasReachedMax: false),
         ) {
     on<ReadyForDataEvent>(
       (event, emit) async {
@@ -24,9 +25,13 @@ class HeroesBloc extends Bloc<HeroesEvent, HeroesState> {
           emit(
             state.copyWith(loading: false, characters: charactersViewData),
           );
-        } catch (ex) {
+        } on DataRetrievingException {
           emit(
-            state.copyWith(loading: false, error: true),
+            state.copyWith(loading: false, error: 'Something went wrong'),
+          );
+        } on NoInternetException {
+          emit(
+            state.copyWith(loading: false, error: 'Please check internet connection and'),
           );
         }
       },
@@ -47,12 +52,13 @@ class HeroesBloc extends Bloc<HeroesEvent, HeroesState> {
           emit(
             state.copyWith(loading: false, characters: state.charactersViewData! + charactersViewData),
           );
-        } catch (ex) {
+        } on DataRetrievingException {
           emit(
-            state.copyWith(
-              loading: false,
-              error: true,
-            ),
+            state.copyWith(loading: false, error: 'Something went wrong'),
+          );
+        } on NoInternetException {
+          emit(
+            state.copyWith(loading: false, error: 'Please check internet connection and'),
           );
         }
       },
