@@ -39,11 +39,11 @@ class DetailsBloc extends Bloc<DetailsEvent, DetailsState> {
           );
         } on DataRetrievingException {
           emit(
-            state.copyWith(loading: false, error: 'Something went wrong'),
+            state.copyWith(loading: false, error: 'Something went wrong.'),
           );
         } on NoInternetException {
           emit(
-            state.copyWith(loading: false, error: 'Please check internet connection and'),
+            state.copyWith(loading: false, error: 'Please check internet connection.'),
           );
         }
       },

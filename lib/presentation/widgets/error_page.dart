@@ -24,7 +24,7 @@ class ErrorPage extends StatelessWidget {
               mainAxisSize: MainAxisSize.min,
               children: const [
                 Text(
-                  "try again",
+                  "Try again",
                   style: TextStyle(
                     fontSize: 16,
                   ),
