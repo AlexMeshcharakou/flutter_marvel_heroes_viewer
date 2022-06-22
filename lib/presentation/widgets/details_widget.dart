@@ -7,6 +7,7 @@ import 'package:marvel/presentation/widgets/build_character_image.dart';
 import 'package:marvel/presentation/widgets/build_description.dart';
 import 'package:marvel/presentation/widgets/build_series.dart';
 import 'package:marvel/presentation/widgets/error_page.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 class DetailsWidget extends StatelessWidget {
   final int characterId;
@@ -31,7 +32,7 @@ class DetailsWidget extends StatelessWidget {
             appBar: AppBar(
               centerTitle: true,
               title: Text(
-                character.name,
+                AppLocalizations.of(context)!.name + character.name,
                 style: const TextStyle(
                   color: Colors.white,
                   fontSize: 20,

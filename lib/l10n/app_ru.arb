@@ -1,0 +1,10 @@
+{
+  "marvel": "Марвел",
+  "description": "ОПИСАНИЕ",
+  "series": "СЕРИИ",
+  "name": "Имя героя:  ",
+  "tryAgain": "Попробуйте еще раз",
+  "checkInternetConnectionAndTap": "Проверьте интерент соединение и нажмите",
+  "somethingWentWrong": "Произошла ошибка.",
+  "pleaseCheckInternetConnection": "Проверьте интернет соединение."
+}

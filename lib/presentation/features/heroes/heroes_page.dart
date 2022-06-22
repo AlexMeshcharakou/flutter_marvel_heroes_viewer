@@ -7,6 +7,7 @@ import 'package:marvel/domain/use_cases/get_characters_use_case.dart';
 import 'package:marvel/presentation/features/heroes/bloc/heroes_bloc.dart';
 import 'package:marvel/presentation/features/heroes/bloc/heroes_event.dart';
 import 'package:marvel/presentation/widgets/list_characters.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 class HeroesPage extends StatelessWidget {
   final GetCharactersUseCase getAllCharactersUseCase = GetCharactersUseCase(
@@ -20,9 +21,9 @@ class HeroesPage extends StatelessWidget {
     return Scaffold(
       appBar: AppBar(
         centerTitle: true,
-        title: const Text(
-          'Marvel',
-          style: TextStyle(
+        title:  Text(
+          AppLocalizations.of(context)!.marvel,
+          style: const TextStyle(
             color: Colors.white,
             fontSize: 24,
           ),
