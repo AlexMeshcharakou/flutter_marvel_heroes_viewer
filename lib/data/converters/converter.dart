@@ -1,5 +1,6 @@
-import 'package:marvel/data/models/character_model.dart';
-import 'package:marvel/data/models/series_model.dart';
+import 'package:marvel/data/models/local_models/local_character.dart';
+import 'package:marvel/data/models/remote_models/character_model.dart';
+import 'package:marvel/data/models/remote_models/series_model.dart';
 import 'package:marvel/domain/entities/character.dart';
 import 'package:marvel/domain/entities/series.dart';
 
@@ -27,5 +28,27 @@ extension SeriesToDomainModel on SeriesModel {
   Series seriesToDomainModel(SeriesModel series) {
     return Series(
         title: series.title, thumbnailUrl: series.thumbnail.path + '/portrait_medium.' + series.thumbnail.extension);
+  }
+}
+
+extension LocalCharacterToDomainModel on LocalCharacter {
+  Character localCharacterToDomainModel(LocalCharacter localCharacter) {
+    return Character(
+        id: localCharacter.id,
+        name: localCharacter.name,
+        description: localCharacter.description,
+        smallThumbnailUrl: localCharacter.smallThumbnailUrl,
+        bigThumbnailUrl: localCharacter.bigThumbnailUrl);
+  }
+}
+
+extension DomainModelToLocalCharacter on Character {
+  LocalCharacter domainModelToLocalCharacter(Character character) {
+    return LocalCharacter(
+        id: character.id,
+        name: character.name,
+        description: character.description,
+        smallThumbnailUrl: character.smallThumbnailUrl,
+        bigThumbnailUrl: character.bigThumbnailUrl);
   }
 }

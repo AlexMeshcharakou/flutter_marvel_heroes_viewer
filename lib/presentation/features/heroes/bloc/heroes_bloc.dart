@@ -1,10 +1,11 @@
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:marvel/domain/entities/character.dart';
+import 'package:marvel/domain/exceptions/exceptions.dart';
 import 'package:marvel/domain/use_cases/get_characters_use_case.dart';
 import 'package:marvel/presentation/features/heroes/bloc/heroes_event.dart';
 import 'package:marvel/presentation/features/heroes/bloc/heroes_state.dart';
-import 'package:marvel/presentation/convertors/convertor.dart';
-import 'package:marvel/presentation/view_models/view_data_character.dart';
+import 'package:marvel/presentation/converters/converter.dart';
+import 'package:marvel/presentation/view_data/view_data_character.dart';
 
 class HeroesBloc extends Bloc<HeroesEvent, HeroesState> {
   final GetCharactersUseCase getCharactersUseCase;
@@ -19,17 +20,18 @@ class HeroesBloc extends Bloc<HeroesEvent, HeroesState> {
           state.copyWith(loading: true),
         );
         try {
-          final List<Character> characters = await getCharactersUseCase.call();
+          final List<Character> characters = await getCharactersUseCase();
           final List<ViewDataCharacter> charactersViewData = _mapCharacters(characters);
           emit(
             state.copyWith(loading: false, characters: charactersViewData),
           );
-        } catch (e) {
+        } on DataRetrievingException {
           emit(
-            state.copyWith(
-              loading: false,
-              error: "error",
-            ),
+            state.copyWith(loading: false, error: 'Something went wrong.'),
+          );
+        } on NoInternetException {
+          emit(
+            state.copyWith(loading: false, error: 'Please check internet connection.'),
           );
         }
       },
@@ -50,12 +52,13 @@ class HeroesBloc extends Bloc<HeroesEvent, HeroesState> {
           emit(
             state.copyWith(loading: false, characters: state.charactersViewData! + charactersViewData),
           );
-        } catch (e) {
+        } on DataRetrievingException {
           emit(
-            state.copyWith(
-              loading: false,
-              error: "We can't load Heroes right now",
-            ),
+            state.copyWith(loading: false, error: 'Something went wrong.'),
+          );
+        } on NoInternetException {
+          emit(
+            state.copyWith(loading: false, error: 'Please check internet connection.'),
           );
         }
       },
