@@ -1,22 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:hive_flutter/hive_flutter.dart';
+
 import 'package:marvel/data/models/local_models/local_character.dart';
-import 'package:flutter_gen/gen_l10n/app_localizations.dart';
-import 'presentation/navigation/route_generator.dart';
-import 'presentation/features/heroes/heroes_page.dart';
+import 'package:marvel/main_app.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await _initHive();
-  runApp(
-    MaterialApp(
-      debugShowCheckedModeBanner: false,
-      localizationsDelegates: AppLocalizations.localizationsDelegates,
-      supportedLocales: AppLocalizations.supportedLocales,
-      home: HeroesPage(),
-      onGenerateRoute: RouteGenerator.generateRoute,
-    ),
-  );
+  runApp(const MainApp());
 }
 
 Future<void> _initHive() async {

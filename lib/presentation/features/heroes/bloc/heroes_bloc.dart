@@ -27,11 +27,11 @@ class HeroesBloc extends Bloc<HeroesEvent, HeroesState> {
           );
         } on DataRetrievingException {
           emit(
-            state.copyWith(loading: false, error: 'Something went wrong.'),
+            state.copyWith(loading: false, error: "Something went wrong."),
           );
         } on NoInternetException {
           emit(
-            state.copyWith(loading: false, error: 'Please check internet connection.'),
+            state.copyWith(loading: false, error: "Please check internet connection."),
           );
         }
       },
@@ -54,11 +54,11 @@ class HeroesBloc extends Bloc<HeroesEvent, HeroesState> {
           );
         } on DataRetrievingException {
           emit(
-            state.copyWith(loading: false, error: 'Something went wrong.'),
+            state.copyWith(loading: false, error: "Something went wrong."),
           );
         } on NoInternetException {
           emit(
-            state.copyWith(loading: false, error: 'Please check internet connection.'),
+            state.copyWith(loading: false, error: "Please check internet connection."),
           );
         }
       },

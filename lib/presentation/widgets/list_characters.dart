@@ -65,7 +65,7 @@ class _ListCharactersState extends State<ListCharacters> {
             onRetry: () {
               context.read<HeroesBloc>().add(ReadyForDataEvent());
             },
-            error: state.error.toString(),
+            error: state.error!
           );
         }
         return const SizedBox.shrink();
