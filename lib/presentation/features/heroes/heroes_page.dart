@@ -1,9 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:marvel/data/data_sources/local_character_data_source.dart';
-import 'package:marvel/data/data_sources/remote_data_source.dart';
-import 'package:marvel/data/repository/default_marvel_repository.dart';
-import 'package:marvel/domain/use_cases/get_characters_use_case.dart';
 import 'package:marvel/presentation/features/heroes/bloc/heroes_bloc.dart';
 import 'package:marvel/presentation/features/heroes/bloc/heroes_event.dart';
 import 'package:marvel/presentation/widgets/build_language_picker.dart';
@@ -18,9 +14,6 @@ class HeroesPage extends StatefulWidget {
 }
 
 class _HeroesPageState extends State<HeroesPage> {
-  final GetCharactersUseCase getAllCharactersUseCase = GetCharactersUseCase(
-      marvelRepository: DefaultMarvelRepository(dioDataSource: DioDataSource(), hiveDataSource: HiveDataSource()));
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -38,7 +31,7 @@ class _HeroesPageState extends State<HeroesPage> {
         ],
       ),
       body: BlocProvider<HeroesBloc>(
-        create: (context) => HeroesBloc(getCharactersUseCase: getAllCharactersUseCase)..add(ReadyForDataEvent()),
+        create: (context) => HeroesBloc(context: context)..add(ReadyForDataEvent()),
         child: const ListCharacters(),
       ),
     );

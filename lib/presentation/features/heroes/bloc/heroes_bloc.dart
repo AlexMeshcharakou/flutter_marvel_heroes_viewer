@@ -1,16 +1,20 @@
+import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:marvel/domain/entities/character.dart';
 import 'package:marvel/domain/exceptions/exceptions.dart';
 import 'package:marvel/domain/use_cases/get_characters_use_case.dart';
+import 'package:marvel/main.dart';
 import 'package:marvel/presentation/features/heroes/bloc/heroes_event.dart';
 import 'package:marvel/presentation/features/heroes/bloc/heroes_state.dart';
 import 'package:marvel/presentation/converters/converter.dart';
 import 'package:marvel/presentation/view_data/view_data_character.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 class HeroesBloc extends Bloc<HeroesEvent, HeroesState> {
-  final GetCharactersUseCase getCharactersUseCase;
+  final GetCharactersUseCase getCharactersUseCase = getIt.get<GetCharactersUseCase>();
+  final BuildContext context;
 
-  HeroesBloc({required this.getCharactersUseCase})
+  HeroesBloc({required this.context})
       : super(
           const HeroesState(loading: false, hasReachedMax: false),
         ) {
@@ -27,11 +31,11 @@ class HeroesBloc extends Bloc<HeroesEvent, HeroesState> {
           );
         } on DataRetrievingException {
           emit(
-            state.copyWith(loading: false, error: "Something went wrong."),
+            state.copyWith(loading: false, error: AppLocalizations.of(context)!.somethingWentWrong),
           );
         } on NoInternetException {
           emit(
-            state.copyWith(loading: false, error: "Please check internet connection."),
+            state.copyWith(loading: false, error: AppLocalizations.of(context)!.pleaseCheckInternetConnection),
           );
         }
       },
@@ -43,7 +47,7 @@ class HeroesBloc extends Bloc<HeroesEvent, HeroesState> {
           state.copyWith(loading: true, hasReachedMax: false),
         );
         try {
-          final List<Character> characters = await getCharactersUseCase.call(state.charactersViewData!.length);
+          final List<Character> characters = await getCharactersUseCase(state.charactersViewData!.length);
           if (characters.isEmpty) {
             emit(state.copyWith(loading: false, hasReachedMax: true));
             return;
@@ -54,11 +58,11 @@ class HeroesBloc extends Bloc<HeroesEvent, HeroesState> {
           );
         } on DataRetrievingException {
           emit(
-            state.copyWith(loading: false, error: "Something went wrong."),
+            state.copyWith(loading: false, error: AppLocalizations.of(context)!.somethingWentWrong),
           );
         } on NoInternetException {
           emit(
-            state.copyWith(loading: false, error: "Please check internet connection."),
+            state.copyWith(loading: false, error: AppLocalizations.of(context)!.pleaseCheckInternetConnection),
           );
         }
       },
