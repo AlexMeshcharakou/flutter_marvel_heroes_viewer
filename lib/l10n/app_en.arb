@@ -4,7 +4,7 @@
   "series": "SERIES",
   "name": "Hero's name:  ",
   "tryAgain": "Try again",
-  "checkInternetConnectionAndTap": "Check internet connection and Tap",
+  "checkInternetConnectionAndTap": "Check internet connection.",
   "somethingWentWrong": "Something went wrong.",
   "pleaseCheckInternetConnection": "Please check internet connection."
 }

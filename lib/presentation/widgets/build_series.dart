@@ -50,7 +50,7 @@ class BuildSeries extends StatelessWidget {
                   SizedBox(
                     child: Text(item.title),
                     width: 115,
-                    height: 65,
+                    height: 80,
                   ),
                 ],
               );

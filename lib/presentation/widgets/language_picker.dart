@@ -1,15 +1,16 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:marvel/presentation/localization/locale_cubit.dart';
+import 'package:marvel/presentation/localization/locale_bloc.dart';
+import 'package:marvel/presentation/localization/locale_event.dart';
 
-class BuildLanguagePicker extends StatefulWidget {
-  const BuildLanguagePicker({Key? key}) : super(key: key);
+class LanguagePicker extends StatefulWidget {
+  const LanguagePicker({Key? key}) : super(key: key);
 
   @override
-  State<BuildLanguagePicker> createState() => _BuildLanguagePickerState();
+  State<LanguagePicker> createState() => _LanguagePickerState();
 }
 
-class _BuildLanguagePickerState extends State<BuildLanguagePicker> {
+class _LanguagePickerState extends State<LanguagePicker> {
   String dropdownValue = 'En';
 
   @override
@@ -31,9 +32,9 @@ class _BuildLanguagePickerState extends State<BuildLanguagePicker> {
             () {
               dropdownValue = newValue!;
               if (dropdownValue == 'Ru') {
-                BlocProvider.of<LocaleCubit>(context).toRussian();
+                BlocProvider.of<LocaleBloc>(context).add(ChangedToRussianEvent());
               } else {
-                BlocProvider.of<LocaleCubit>(context).toEnglish();
+                BlocProvider.of<LocaleBloc>(context).add(ChangedToEnglishEvent());
               }
             },
           );

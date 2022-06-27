@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:marvel/presentation/features/heroes/bloc/heroes_bloc.dart';
 import 'package:marvel/presentation/features/heroes/bloc/heroes_event.dart';
-import 'package:marvel/presentation/widgets/build_language_picker.dart';
+import 'package:marvel/presentation/widgets/language_picker.dart';
 import 'package:marvel/presentation/widgets/list_characters.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
@@ -27,7 +27,7 @@ class _HeroesPageState extends State<HeroesPage> {
           ),
         ),
         actions: const [
-          BuildLanguagePicker(),
+          LanguagePicker(),
         ],
       ),
       body: BlocProvider<HeroesBloc>(

@@ -4,7 +4,7 @@
   "series": "СЕРИИ",
   "name": "Имя героя:  ",
   "tryAgain": "Попробуйте еще раз",
-  "checkInternetConnectionAndTap": "Проверьте интерент соединение и нажмите",
+  "checkInternetConnectionAndTap": "Проверьте интерент соединение.",
   "somethingWentWrong": "Произошла ошибка.",
   "pleaseCheckInternetConnection": "Проверьте интернет соединение."
 }

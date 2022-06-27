@@ -12,9 +12,6 @@ import 'package:marvel/domain/use_cases/get_character_details_use_case.dart';
 import 'package:marvel/domain/use_cases/get_characters_use_case.dart';
 import 'package:marvel/domain/use_cases/get_series_use_case.dart';
 import 'package:marvel/main_app.dart';
-import 'package:flutter_gen/gen_l10n/app_localizations_en.dart';
-import 'package:flutter_gen/gen_l10n/app_localizations_ru.dart';
-
 
 GetIt getIt = GetIt.instance;
 
@@ -46,6 +43,4 @@ void setupGetIt() {
   getIt.registerFactory<GetCharacterDetailsUseCase>(
       () => GetCharacterDetailsUseCase(marvelRepository: DefaultMarvelRepository()));
   getIt.registerFactory<GetAllSeriesUseCase>(() => GetAllSeriesUseCase(marvelRepository: DefaultMarvelRepository()));
-  getIt.registerFactory<AppLocalizationsEn>(() => AppLocalizationsEn());
-  getIt.registerFactory<AppLocalizationsRu>(() => AppLocalizationsRu());
 }
