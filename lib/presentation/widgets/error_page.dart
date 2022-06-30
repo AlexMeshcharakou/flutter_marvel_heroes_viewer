@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 class ErrorPage extends StatelessWidget {
   final Function onRetry;
@@ -22,17 +23,17 @@ class ErrorPage extends StatelessWidget {
           ElevatedButton(
             child: Row(
               mainAxisSize: MainAxisSize.min,
-              children: const [
+              children: [
                 Text(
-                  "Try again",
-                  style: TextStyle(
+                  AppLocalizations.of(context)!.tryAgain,
+                  style: const TextStyle(
                     fontSize: 16,
                   ),
                 ),
-                SizedBox(
+                const SizedBox(
                   width: 20,
                 ),
-                Icon(
+                const Icon(
                   Icons.refresh_rounded,
                   size: 24.0,
                 ),

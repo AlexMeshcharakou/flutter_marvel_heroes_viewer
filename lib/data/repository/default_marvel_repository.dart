@@ -1,5 +1,5 @@
 import 'package:dio/dio.dart';
-import 'package:marvel/data/data_sources/local_character_data_source.dart';
+import 'package:marvel/data/data_sources/local_data_source.dart';
 import 'package:marvel/data/data_sources/remote_data_source.dart';
 import 'package:marvel/data/models/local_models/local_character.dart';
 import 'package:marvel/domain/entities/character.dart';
@@ -7,12 +7,11 @@ import 'package:marvel/domain/entities/series.dart';
 import 'package:marvel/domain/exceptions/exceptions.dart';
 import 'package:marvel/domain/repository/marvel_repository.dart';
 import 'package:marvel/data/converters/converter.dart';
+import 'package:marvel/main.dart';
 
 class DefaultMarvelRepository implements MarvelRepository {
-  final DioDataSource dioDataSource;
-  final HiveDataSource? hiveDataSource;
-
-  DefaultMarvelRepository({this.hiveDataSource, required this.dioDataSource});
+  final RemoteDataSource dioDataSource = getIt.get<RemoteDataSource>();
+  final LocalDataSource hiveDataSource = getIt.get<LocalDataSource>();
 
   @override
   Future<List<Character>> getCharacters(int offset) async {
@@ -81,8 +80,8 @@ class DefaultMarvelRepository implements MarvelRepository {
   }
 
   List<Character> _getLocal() {
-    if (hiveDataSource!.getAll().isNotEmpty) {
-      List<LocalCharacter> localCharacters = hiveDataSource!.getAll();
+    if (hiveDataSource.getAll().isNotEmpty) {
+      List<LocalCharacter> localCharacters = hiveDataSource.getAll();
       return localCharacters.map((hero) => hero.localCharacterToDomainModel(hero)).toList();
     }
     throw DataRetrievingException();
@@ -90,6 +89,6 @@ class DefaultMarvelRepository implements MarvelRepository {
 
   void _saveCharactersToDB(List<Character> characters) {
     List<LocalCharacter> localCharacters = characters.map((hero) => hero.domainModelToLocalCharacter(hero)).toList();
-    hiveDataSource?.save(localCharacters);
+    hiveDataSource.save(localCharacters);
   }
 }
