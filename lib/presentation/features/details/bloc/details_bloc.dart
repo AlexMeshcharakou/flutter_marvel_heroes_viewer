@@ -1,21 +1,24 @@
+import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:marvel/domain/entities/character.dart';
 import 'package:marvel/domain/entities/series.dart';
 import 'package:marvel/domain/exceptions/exceptions.dart';
 import 'package:marvel/domain/use_cases/get_character_details_use_case.dart';
 import 'package:marvel/domain/use_cases/get_series_use_case.dart';
+import 'package:marvel/main.dart';
 import 'package:marvel/presentation/converters/converter.dart';
 import 'package:marvel/presentation/features/details/bloc/details_state.dart';
 import 'package:marvel/presentation/view_data/view_data_details.dart';
 import 'package:marvel/presentation/view_data/view_data_series.dart';
-
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'details_event.dart';
 
 class DetailsBloc extends Bloc<DetailsEvent, DetailsState> {
-  final GetCharacterDetailsUseCase getCharacterDetailsUseCase;
-  final GetAllSeriesUseCase getAllSeriesUseCase;
+  final GetCharacterDetailsUseCase getCharacterDetailsUseCase = getIt.get<GetCharacterDetailsUseCase>();
+  final GetAllSeriesUseCase getAllSeriesUseCase = getIt.get<GetAllSeriesUseCase>();
+  final BuildContext context;
 
-  DetailsBloc({required this.getAllSeriesUseCase, required this.getCharacterDetailsUseCase})
+  DetailsBloc({required this.context})
       : super(
           const DetailsState(loading: true),
         ) {
@@ -39,11 +42,11 @@ class DetailsBloc extends Bloc<DetailsEvent, DetailsState> {
           );
         } on DataRetrievingException {
           emit(
-            state.copyWith(loading: false, error: 'Something went wrong.'),
+            state.copyWith(loading: false, error: AppLocalizations.of(context)!.somethingWentWrong),
           );
         } on NoInternetException {
           emit(
-            state.copyWith(loading: false, error: 'Please check internet connection.'),
+            state.copyWith(loading: false, error: AppLocalizations.of(context)!.checkInternetConnectionAndTap),
           );
         }
       },

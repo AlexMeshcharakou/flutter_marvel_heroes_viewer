@@ -11,7 +11,7 @@ class BuildCharacterImage extends StatelessWidget {
       width: 300,
       height: 230,
       child: Card(
-        color: Colors.blue[50],
+        color: Colors.red[50],
         elevation: 10,
         child: Align(
           alignment: Alignment.topCenter,

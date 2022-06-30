@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 class BuildDescription extends StatelessWidget {
   final String _description;
@@ -9,9 +10,9 @@ class BuildDescription extends StatelessWidget {
   Widget build(BuildContext context) {
     return Column(
       children: [
-        const Text(
-          'DESCRIPTION',
-          style: TextStyle(fontSize: 20),
+        Text(
+          AppLocalizations.of(context)!.description,
+          style: const TextStyle(fontSize: 20),
         ),
         SizedBox(
           width: 370,

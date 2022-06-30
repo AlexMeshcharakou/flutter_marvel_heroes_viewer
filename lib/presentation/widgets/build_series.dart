@@ -1,19 +1,19 @@
 import 'package:flutter/material.dart';
 import 'package:marvel/presentation/view_data/view_data_series.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 class BuildSeries extends StatelessWidget {
   final List<ViewDataSeries> _series;
 
-   const BuildSeries(this._series, {Key? key}) : super(key: key);
-
+  const BuildSeries(this._series, {Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     return Column(
       children: [
-        const Text(
-          'SERIES',
-          style: TextStyle(fontSize: 20),
+        Text(
+          AppLocalizations.of(context)!.series,
+          style: const TextStyle(fontSize: 20),
         ),
         SizedBox(
           height: 230,
@@ -29,7 +29,7 @@ class BuildSeries extends StatelessWidget {
                     child: SizedBox(
                       width: 130,
                       child: Card(
-                        color: Colors.blue[50],
+                        color: Colors.red[50],
                         elevation: 10,
                         child: Padding(
                           padding: const EdgeInsets.all(5.0),
@@ -50,7 +50,7 @@ class BuildSeries extends StatelessWidget {
                   SizedBox(
                     child: Text(item.title),
                     width: 115,
-                    height: 65,
+                    height: 79,
                   ),
                 ],
               );
@@ -60,5 +60,4 @@ class BuildSeries extends StatelessWidget {
       ],
     );
   }
-
 }
