@@ -45,11 +45,8 @@ flutter_icons:
   image_path: "assets/images/launch_icon.png"
 
 flutter:
-
   generate: true
-  # The following line ensures that the Material Icons font is
-  # included with your application, so that you can use the icons in
-  # the material Icons class.
+
   uses-material-design: true
 
   assets:

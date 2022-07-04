@@ -6,7 +6,11 @@ import 'package:marvel/presentation/view_data/view_data_series.dart';
 
 extension CharactersToViewData on Character {
   ViewDataCharacter charactersToViewData(Character character) {
-    return ViewDataCharacter(id: character.id, name: character.name, smallThumbnailUrl: character.smallThumbnailUrl);
+    return ViewDataCharacter(
+        id: character.id,
+        name: character.name,
+        smallThumbnailUrl: character.smallThumbnailUrl,
+        bigThumbnailUrl: character.bigThumbnailUrl);
   }
 }
 

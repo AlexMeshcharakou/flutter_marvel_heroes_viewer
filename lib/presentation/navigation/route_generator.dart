@@ -8,13 +8,13 @@ class RouteGenerator {
     switch (settings.name) {
       case AppRoutes.heroesPage:
         return MaterialPageRoute(
-          builder: (context) => HeroesPage(),
+          builder: (context) => const HeroesPage(),
         );
       case AppRoutes.detailPage:
-        final characterId = settings.arguments as int;
+        List<dynamic> args = settings.arguments as List<dynamic>;
         return MaterialPageRoute(
           builder: (context) => DetailsPage(
-            characterId: characterId,
+            characterId: args[0], name: args[1], url: args[2]
           ),
         );
     }

@@ -51,8 +51,11 @@ class _ListCharactersState extends State<ListCharacters> {
                       height: 95,
                       child: GestureDetector(
                         onTap: () {
-                          Navigator.pushNamed(context, AppRoutes.detailPage,
-                              arguments: state.charactersViewData![index].id);
+                          Navigator.pushNamed(context, AppRoutes.detailPage, arguments: [
+                            state.charactersViewData![index].id,
+                            state.charactersViewData![index].name,
+                            state.charactersViewData![index].bigThumbnailUrl
+                          ]);
                         },
                         child: BuildCharacterCard(state.charactersViewData![index]),
                       ),

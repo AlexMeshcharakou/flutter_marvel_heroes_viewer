@@ -11,8 +11,10 @@ import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 class DetailsWidget extends StatelessWidget {
   final int characterId;
+  final String name;
+  final String url;
 
-  const DetailsWidget(this.characterId, {Key? key}) : super(key: key);
+  const DetailsWidget({required this.characterId, Key? key, required this.name, required this.url}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -22,9 +24,24 @@ class DetailsWidget extends StatelessWidget {
         final character = state.characterDetails;
         final series = state.series;
         final error = state.error;
+
         if (loading == true) {
-          return const Center(
-            child: CircularProgressIndicator(),
+          return Column(
+            children: [
+              const SizedBox(height: 93),
+              Center(
+                child: Hero(
+                  tag: characterId,
+                  child: Image.network(
+                    url,
+                    fit: BoxFit.fitWidth,
+                    errorBuilder: (_, __, ___) {
+                      return const Icon(Icons.broken_image);
+                    },
+                  ),
+                ),
+              ),
+            ],
           );
         }
         if (loading == false && character != null && series != null) {

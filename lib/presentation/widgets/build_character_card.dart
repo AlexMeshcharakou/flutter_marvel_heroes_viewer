@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 class BuildCharacterCard extends StatelessWidget {
   final dynamic _item;
 
-  const BuildCharacterCard( this._item,{Key? key}) : super(key: key);
+  const BuildCharacterCard(this._item, {Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -24,12 +24,15 @@ class BuildCharacterCard extends StatelessWidget {
                 bottomLeft: Radius.circular(6),
               ),
               child: (_item.smallThumbnailUrl != null)
-                  ? Image.network(
-                      _item.smallThumbnailUrl,
-                      fit: BoxFit.fitWidth,
-                      errorBuilder: (_, __, ___) {
-                        return const Icon(Icons.broken_image);
-                      },
+                  ? Hero(
+                      tag: _item.id,
+                      child: Image.network(
+                        _item.bigThumbnailUrl,
+                        fit: BoxFit.fitWidth,
+                        errorBuilder: (_, __, ___) {
+                          return const Icon(Icons.broken_image);
+                        },
+                      ),
                     )
                   : Image.asset("assets/images/placeholder.png"),
             ),

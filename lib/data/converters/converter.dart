@@ -10,7 +10,8 @@ extension CharacterToDomainModel on CharacterModel {
         id: character.id,
         name: character.name,
         description: character.description,
-        smallThumbnailUrl: character.thumbnail.path + '/landscape_medium.' + character.thumbnail.extension);
+        smallThumbnailUrl: character.thumbnail.path + '/landscape_medium.' + character.thumbnail.extension,
+        bigThumbnailUrl: character.thumbnail.path + '/landscape_xlarge.' + character.thumbnail.extension);
   }
 }
 

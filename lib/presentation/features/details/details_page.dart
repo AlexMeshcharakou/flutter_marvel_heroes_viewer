@@ -6,8 +6,10 @@ import 'package:marvel/presentation/widgets/details_widget.dart';
 
 class DetailsPage extends StatelessWidget {
   final int characterId;
+  final String name;
+  final String url;
 
-  const DetailsPage({Key? key, required this.characterId}) : super(key: key);
+  const DetailsPage({Key? key, required this.characterId, required this.name, required this.url}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -17,7 +19,11 @@ class DetailsPage extends StatelessWidget {
           ..add(
             DetailsEvent(characterId),
           ),
-        child: DetailsWidget(characterId),
+        child: DetailsWidget(
+          characterId: characterId,
+          name: name,
+          url: url,
+        ),
       ),
     );
   }
