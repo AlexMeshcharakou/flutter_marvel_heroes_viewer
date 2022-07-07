@@ -8,7 +8,7 @@ class RouteGenerator {
     switch (settings.name) {
       case AppRoutes.heroesPage:
         return MaterialPageRoute(
-          builder: (context) => HeroesPage(),
+          builder: (context) => const HeroesPage(),
         );
       case AppRoutes.detailPage:
         final characterId = settings.arguments as int;

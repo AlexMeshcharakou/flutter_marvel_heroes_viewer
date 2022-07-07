@@ -29,15 +29,16 @@ class _ListCharactersState extends State<ListCharacters> {
   Widget build(BuildContext context) {
     return BlocBuilder<HeroesBloc, HeroesState>(
       builder: (context, state) {
-        if (state.loading == true && state.charactersViewData == null) {
+        final characters = state.charactersViewData;
+        if (state.loading == true && characters == null) {
           return const Center(
             child: CircularProgressIndicator(),
           );
         }
-        if (state.charactersViewData != null) {
+        if (characters != null) {
           return ListView.builder(
             controller: _scrollController,
-            itemCount: state.hasReachedMax ? state.charactersViewData!.length : state.charactersViewData!.length + 1,
+            itemCount: state.hasReachedMax ? characters.length : characters.length + 1,
             itemBuilder: (BuildContext context, int index) {
               Widget endOfPage;
               if (state.error != null && !state.loading) {
@@ -45,16 +46,15 @@ class _ListCharactersState extends State<ListCharacters> {
               } else {
                 endOfPage = const BottomLoader();
               }
-              return index == state.charactersViewData!.length
+              return index == characters.length
                   ? endOfPage
                   : SizedBox(
                       height: 95,
                       child: GestureDetector(
                         onTap: () {
-                          Navigator.pushNamed(context, AppRoutes.detailPage,
-                              arguments: state.charactersViewData![index].id);
+                          Navigator.pushNamed(context, AppRoutes.detailPage, arguments: characters[index].id);
                         },
-                        child: BuildCharacterCard(state.charactersViewData![index]),
+                        child: BuildCharacterCard(characters[index]),
                       ),
                     );
             },

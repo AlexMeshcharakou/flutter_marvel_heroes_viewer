@@ -22,7 +22,6 @@ class _HeroesPageState extends State<HeroesPage> {
         title: Text(
           AppLocalizations.of(context)!.marvel,
           style: const TextStyle(
-            color: Colors.white,
             fontSize: 30,
           ),
         ),

@@ -26,7 +26,7 @@ class _LanguagePickerState extends State<LanguagePicker> {
         value: dropdownValue,
         elevation: 24,
         style: const TextStyle(color: Colors.white, fontSize: 16),
-        dropdownColor: Colors.blue,
+        dropdownColor: Colors.red,
         onChanged: (String? newValue) {
           setState(
             () {
