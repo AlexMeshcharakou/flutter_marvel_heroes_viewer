@@ -1,4 +1,4 @@
-# marvel
+# Marvell heroes viewer
 
 - Marvel is an application that introduces characters from marvel universe using marvel api.
 - I used clean architecture to create the project.
@@ -24,21 +24,21 @@
 </p>
 
 ## Packages used
- - dio: ^4.0.6
- - equatable: ^2.0.3
- - intl: ^0.17.0
- - flutter_bloc: ^8.0.1
- - get_it: ^7.2.0
- - hive: ^2.2.1
- - hive_flutter: ^1.1.0
- - json_annotation: ^4.5.0
- - retrofit: ^3.0.1+1
- - build_runner: ^2.1.8
- - flutter_launcher_icons: ^0.9.3
- - flutter_lints: ^1.0.0 
- - hive_generator: ^1.1.3
- - json_serializable: ^6.1.5
- - retrofit_generator: ^4.0.1
+ - dio
+ - equatable
+ - intl
+ - flutter_bloc1
+ - get_it
+ - hive
+ - hive_flutter
+ - json_annotation
+ - retrofit
+ - build_runner
+ - flutter_launcher_icons
+ - flutter_lints 
+ - hive_generator
+ - json_serializable
+ - retrofit_generator
 
 ## How to use
 
