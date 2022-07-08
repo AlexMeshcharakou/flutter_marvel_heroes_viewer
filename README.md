@@ -1,6 +1,6 @@
-# Marvell heroes viewer
+# Marvel heroes viewer
 
-- Marvel is an application that introduces characters from marvel universe using marvel api.
+- Marvel heroes viewer is an application that introduces characters from marvel universe using marvel api.
 - I used clean architecture to create the project.
 
 
