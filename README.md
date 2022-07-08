@@ -27,7 +27,7 @@
  - dio
  - equatable
  - intl
- - flutter_bloc1
+ - flutter_bloc
  - get_it
  - hive
  - hive_flutter
