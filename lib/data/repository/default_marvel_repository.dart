@@ -7,11 +7,12 @@ import 'package:marvel/domain/entities/series.dart';
 import 'package:marvel/domain/exceptions/exceptions.dart';
 import 'package:marvel/domain/repository/marvel_repository.dart';
 import 'package:marvel/data/converters/converter.dart';
-import 'package:marvel/main.dart';
 
 class DefaultMarvelRepository implements MarvelRepository {
-  final RemoteDataSource dioDataSource = getIt.get<RemoteDataSource>();
-  final LocalDataSource hiveDataSource = getIt.get<LocalDataSource>();
+  final RemoteDataSource dioDataSource;
+  final LocalDataSource hiveDataSource;
+
+  DefaultMarvelRepository({required this.hiveDataSource, required this.dioDataSource});
 
   @override
   Future<List<Character>> getCharacters(int offset) async {

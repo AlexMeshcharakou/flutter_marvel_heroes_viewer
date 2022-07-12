@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
-class BuildDescription extends StatelessWidget {
+class DescriptionWidget extends StatelessWidget {
   final String _description;
 
-  const BuildDescription(this._description, {Key? key}) : super(key: key);
+  const DescriptionWidget(this._description, {Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {

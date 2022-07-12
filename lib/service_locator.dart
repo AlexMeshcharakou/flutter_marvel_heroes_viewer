@@ -15,15 +15,17 @@ void setupGetIt() {
   getIt.registerSingleton<BaseOptions>(BaseOptions(connectTimeout: 8000, receiveTimeout: 8000));
 
   getIt.registerSingleton<Dio>(Dio(getIt<BaseOptions>()));
+
   getIt.registerSingleton<MarvelApiClient>(
       MarvelApiClient(getIt<Dio>(), baseUrl: 'https://gateway.marvel.com:443/v1/public/'));
 
-  getIt.registerFactory<RemoteDataSource>(() => DioDataSource());
-  getIt.registerFactory<LocalDataSource>(() => HiveDataSource());
+  getIt.registerSingleton<MarvelRepository>(
+      DefaultMarvelRepository(hiveDataSource: HiveDataSource(), dioDataSource: DioDataSource()));
 
-  getIt.registerSingleton<MarvelRepository>(DefaultMarvelRepository());
-  getIt.registerFactory<GetCharactersUseCase>(() => GetCharactersUseCase(marvelRepository: DefaultMarvelRepository()));
+  getIt.registerFactory<GetCharactersUseCase>(() => GetCharactersUseCase(marvelRepository: getIt<MarvelRepository>()));
+
   getIt.registerFactory<GetCharacterDetailsUseCase>(
-          () => GetCharacterDetailsUseCase(marvelRepository: DefaultMarvelRepository()));
-  getIt.registerFactory<GetAllSeriesUseCase>(() => GetAllSeriesUseCase(marvelRepository: DefaultMarvelRepository()));
+      () => GetCharacterDetailsUseCase(marvelRepository: getIt<MarvelRepository>()));
+
+  getIt.registerFactory<GetAllSeriesUseCase>(() => GetAllSeriesUseCase(marvelRepository: getIt<MarvelRepository>()));
 }

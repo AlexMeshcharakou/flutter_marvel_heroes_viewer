@@ -1,18 +1,18 @@
 import 'package:marvel/domain/entities/character.dart';
 import 'package:marvel/domain/entities/series.dart';
-import 'package:marvel/presentation/view_data/view_data_character.dart';
-import 'package:marvel/presentation/view_data/view_data_details.dart';
-import 'package:marvel/presentation/view_data/view_data_series.dart';
+import 'package:marvel/presentation/view_data/character_view_data.dart';
+import 'package:marvel/presentation/view_data/details_view_data.dart';
+import 'package:marvel/presentation/view_data/series_view_data.dart';
 
 extension CharactersToViewData on Character {
-  ViewDataCharacter charactersToViewData(Character character) {
-    return ViewDataCharacter(id: character.id, name: character.name, smallThumbnailUrl: character.smallThumbnailUrl);
+  CharacterViewData charactersToViewData(Character character) {
+    return CharacterViewData(id: character.id, name: character.name, smallThumbnailUrl: character.smallThumbnailUrl);
   }
 }
 
 extension DetailsToViewData on Character {
-  ViewDataCharacterDetails detailsToViewData(Character character) {
-    return ViewDataCharacterDetails(
+  DetailsViewData detailsToViewData(Character character) {
+    return DetailsViewData(
         id: character.id,
         name: character.name,
         description: character.description,
@@ -21,7 +21,7 @@ extension DetailsToViewData on Character {
 }
 
 extension SeriesToViewData on Series {
-  ViewDataSeries seriesToViewData(Series series) {
-    return ViewDataSeries(title: series.title, thumbnailUrl: series.thumbnailUrl);
+  SeriesViewData seriesToViewData(Series series) {
+    return SeriesViewData(title: series.title, thumbnailUrl: series.thumbnailUrl);
   }
 }
