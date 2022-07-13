@@ -35,7 +35,7 @@ class DetailsWidget extends StatelessWidget {
                 AppLocalizations.of(context)!.name + character.name,
                 style: const TextStyle(
                   color: Colors.white,
-                  fontSize: 20,
+                  fontSize: 18,
                 ),
               ),
             ),

@@ -19,8 +19,10 @@ void setupGetIt() {
   getIt.registerSingleton<MarvelApiClient>(
       MarvelApiClient(getIt<Dio>(), baseUrl: 'https://gateway.marvel.com:443/v1/public/'));
 
+  getIt.registerSingleton<RemoteDataSource>(DioDataSource(marvelClient: getIt<MarvelApiClient>()));
+
   getIt.registerSingleton<MarvelRepository>(
-      DefaultMarvelRepository(hiveDataSource: HiveDataSource(), dioDataSource: DioDataSource()));
+      DefaultMarvelRepository(localDataSource: HiveDataSource(), remoteDataSource: getIt<RemoteDataSource>()));
 
   getIt.registerFactory<GetCharactersUseCase>(() => GetCharactersUseCase(marvelRepository: getIt<MarvelRepository>()));
 
