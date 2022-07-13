@@ -1,5 +1,3 @@
-import 'package:marvel/domain/entities/character.dart';
-import 'package:marvel/domain/entities/series.dart';
 
 abstract class MarvelRepository {
   Future<List<Character>> getCharacters(int offset);

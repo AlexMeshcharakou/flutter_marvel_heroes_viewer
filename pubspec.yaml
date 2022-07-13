@@ -12,6 +12,11 @@ dependencies:
   flutter:
     sdk: flutter
 
+  domain:
+    path: ./domain
+  data:
+    path: ./data
+
   flutter_localizations:
     sdk: flutter
 
