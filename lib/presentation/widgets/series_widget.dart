@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
-import 'package:marvel/presentation/view_data/view_data_series.dart';
+import 'package:marvel/presentation/view_data/series_view_data.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
-class BuildSeries extends StatelessWidget {
-  final List<ViewDataSeries> _series;
+class SeriesWidget extends StatelessWidget {
+  final List<SeriesViewData> _series;
 
-  const BuildSeries(this._series, {Key? key}) : super(key: key);
+  const SeriesWidget(this._series, {Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -37,7 +37,7 @@ class BuildSeries extends StatelessWidget {
                               ? FadeInImage.assetNetwork(
                                   placeholder: "assets/images/placeholder.png",
                                   image: item.thumbnailUrl,
-                                  fit: BoxFit.fitWidth,
+                                  fit: BoxFit.fill,
                                   imageErrorBuilder: (_, __, ___) {
                                     return const Icon(Icons.broken_image);
                                   },

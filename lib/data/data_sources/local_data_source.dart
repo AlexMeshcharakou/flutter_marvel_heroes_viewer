@@ -8,16 +8,16 @@ abstract class LocalDataSource {
 }
 
 class HiveDataSource implements LocalDataSource {
+  final box = Hive.box('characters');
+
   @override
   void save(List<LocalCharacter> characters) {
-    var box = Hive.box('characters');
     box.clear();
     box.addAll(characters);
   }
 
   @override
   List<LocalCharacter> getAll() {
-    var box = Hive.box('characters');
     List<dynamic> characters = box.values.toList();
     return characters.cast<LocalCharacter>();
   }

@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 
-class BuildCharacterCard extends StatelessWidget {
+class CharacterCardWidget extends StatelessWidget {
   final dynamic _item;
 
-  const BuildCharacterCard( this._item,{Key? key}) : super(key: key);
+  const CharacterCardWidget( this._item,{Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {

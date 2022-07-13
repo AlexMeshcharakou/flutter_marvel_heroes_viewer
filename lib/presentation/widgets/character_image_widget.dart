@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 
-class BuildCharacterImage extends StatelessWidget {
+class CharacterImageWidget extends StatelessWidget {
   final String? _url;
 
-  const BuildCharacterImage(this._url, {Key? key}) : super(key: key);
+  const CharacterImageWidget(this._url, {Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {

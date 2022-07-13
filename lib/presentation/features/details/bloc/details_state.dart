@@ -1,13 +1,13 @@
 import 'package:equatable/equatable.dart';
 import 'package:flutter/cupertino.dart';
-import 'package:marvel/presentation/view_data/view_data_details.dart';
-import 'package:marvel/presentation/view_data/view_data_series.dart';
+import 'package:marvel/presentation/view_data/details_view_data.dart';
+import 'package:marvel/presentation/view_data/series_view_data.dart';
 
 @immutable
 class DetailsState extends Equatable {
   final bool loading;
-  final ViewDataCharacterDetails? characterDetails;
-  final List<ViewDataSeries>? series;
+  final DetailsViewData? characterDetails;
+  final List<SeriesViewData>? series;
   final String? error;
 
   const DetailsState({required this.loading, this.characterDetails, this.series, this.error});

@@ -3,18 +3,17 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:marvel/domain/entities/character.dart';
 import 'package:marvel/domain/exceptions/exceptions.dart';
 import 'package:marvel/domain/use_cases/get_characters_use_case.dart';
-import 'package:marvel/main.dart';
 import 'package:marvel/presentation/features/heroes/bloc/heroes_event.dart';
 import 'package:marvel/presentation/features/heroes/bloc/heroes_state.dart';
 import 'package:marvel/presentation/converters/converter.dart';
-import 'package:marvel/presentation/view_data/view_data_character.dart';
+import 'package:marvel/presentation/view_data/character_view_data.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 class HeroesBloc extends Bloc<HeroesEvent, HeroesState> {
-  final GetCharactersUseCase getCharactersUseCase = getIt.get<GetCharactersUseCase>();
+  final GetCharactersUseCase getCharactersUseCase;
   final BuildContext context;
 
-  HeroesBloc({required this.context})
+  HeroesBloc({required this.getCharactersUseCase, required this.context})
       : super(
           const HeroesState(loading: false, hasReachedMax: false),
         ) {
@@ -25,7 +24,7 @@ class HeroesBloc extends Bloc<HeroesEvent, HeroesState> {
         );
         try {
           final List<Character> characters = await getCharactersUseCase();
-          final List<ViewDataCharacter> charactersViewData = _mapCharacters(characters);
+          final List<CharacterViewData> charactersViewData = _mapCharacters(characters);
           emit(
             state.copyWith(loading: false, characters: charactersViewData),
           );
@@ -52,7 +51,7 @@ class HeroesBloc extends Bloc<HeroesEvent, HeroesState> {
             emit(state.copyWith(loading: false, hasReachedMax: true));
             return;
           }
-          final List<ViewDataCharacter> charactersViewData = _mapCharacters(characters);
+          final List<CharacterViewData> charactersViewData = _mapCharacters(characters);
           emit(
             state.copyWith(loading: false, characters: state.charactersViewData! + charactersViewData),
           );
@@ -69,7 +68,7 @@ class HeroesBloc extends Bloc<HeroesEvent, HeroesState> {
     );
   }
 
-  List<ViewDataCharacter> _mapCharacters(List<Character> characters) {
+  List<CharacterViewData> _mapCharacters(List<Character> characters) {
     return characters
         .map(
           (characterEntity) => characterEntity.charactersToViewData(characterEntity),

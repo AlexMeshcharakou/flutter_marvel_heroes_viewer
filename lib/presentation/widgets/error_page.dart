@@ -15,6 +15,7 @@ class ErrorPage extends StatelessWidget {
         children: [
           Text(
             error,
+            textAlign: TextAlign.center,
             style: const TextStyle(fontSize: 22, fontWeight: FontWeight.bold),
           ),
           const SizedBox(

@@ -6,7 +6,7 @@ import 'package:marvel/presentation/features/heroes/bloc/heroes_state.dart';
 import 'package:marvel/presentation/navigation/app_routes.dart';
 import 'package:marvel/presentation/widgets/bottom_error.dart';
 import 'package:marvel/presentation/widgets/bottom_loader.dart';
-import 'package:marvel/presentation/widgets/build_character_card.dart';
+import 'package:marvel/presentation/widgets/character_card_widget.dart';
 import 'package:marvel/presentation/widgets/error_page.dart';
 
 class ListCharacters extends StatefulWidget {
@@ -54,7 +54,7 @@ class _ListCharactersState extends State<ListCharacters> {
                         onTap: () {
                           Navigator.pushNamed(context, AppRoutes.detailPage, arguments: characters[index].id);
                         },
-                        child: BuildCharacterCard(characters[index]),
+                        child: CharacterCardWidget(characters[index]),
                       ),
                     );
             },
