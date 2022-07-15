@@ -1,8 +1,6 @@
 import 'package:marvel/data/models/local_models/local_character.dart';
 import 'package:marvel/data/models/remote_models/character_model.dart';
 import 'package:marvel/data/models/remote_models/series_model.dart';
-import 'package:marvel/domain/entities/character.dart';
-import 'package:marvel/domain/entities/series.dart';
 
 extension CharacterToDomainModel on CharacterModel {
   Character characterToDomainModel(CharacterModel character) {

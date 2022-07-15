@@ -1,11 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:marvel/domain/entities/character.dart';
-import 'package:marvel/domain/entities/series.dart';
-import 'package:marvel/domain/exceptions/exceptions.dart';
-import 'package:marvel/domain/use_cases/get_character_details_use_case.dart';
-import 'package:marvel/domain/use_cases/get_series_use_case.dart';
-import 'package:marvel/presentation/converters/converter.dart';
 import 'package:marvel/presentation/features/details/bloc/details_state.dart';
 import 'package:marvel/presentation/view_data/details_view_data.dart';
 import 'package:marvel/presentation/view_data/series_view_data.dart';

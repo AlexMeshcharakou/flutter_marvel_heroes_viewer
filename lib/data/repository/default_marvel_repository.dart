@@ -2,10 +2,6 @@ import 'package:dio/dio.dart';
 import 'package:marvel/data/data_sources/local_data_source.dart';
 import 'package:marvel/data/data_sources/remote_data_source.dart';
 import 'package:marvel/data/models/local_models/local_character.dart';
-import 'package:marvel/domain/entities/character.dart';
-import 'package:marvel/domain/entities/series.dart';
-import 'package:marvel/domain/exceptions/exceptions.dart';
-import 'package:marvel/domain/repository/marvel_repository.dart';
 import 'package:marvel/data/converters/converter.dart';
 
 class DefaultMarvelRepository implements MarvelRepository {
