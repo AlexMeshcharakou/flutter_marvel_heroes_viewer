@@ -8,6 +8,7 @@ class CharacterCardWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Card(
+      color: Colors.red[50],
       shape: const RoundedRectangleBorder(
         borderRadius: BorderRadius.all(
           Radius.circular(6),
@@ -16,28 +17,25 @@ class CharacterCardWidget extends StatelessWidget {
       elevation: 3,
       child: Row(
         children: [
-          Expanded(
-            flex: 3,
-            child: ClipRRect(
-              borderRadius: const BorderRadius.only(
-                topLeft: Radius.circular(6),
-                bottomLeft: Radius.circular(6),
-              ),
-              child: (_item.smallThumbnailUrl != null)
-                  ? Image.network(
-                      _item.smallThumbnailUrl,
-                      fit: BoxFit.fitWidth,
-                      errorBuilder: (_, __, ___) {
-                        return const Icon(Icons.broken_image);
-                      },
-                    )
-                  : Image.asset("assets/images/placeholder.png"),
+          ClipRRect(
+            borderRadius: const BorderRadius.only(
+              topLeft: Radius.circular(6),
+              bottomLeft: Radius.circular(6),
             ),
+            child: (_item.smallThumbnailUrl != null)
+                ? Image.network(
+                    _item.smallThumbnailUrl,
+                    fit: BoxFit.fitHeight,
+                    errorBuilder: (_, __, ___) {
+                      return const Icon(Icons.broken_image);
+                    },
+                  )
+                : Image.asset("assets/images/placeholder.png"),
           ),
-          Expanded(
-            flex: 6,
-            child: Padding(
-              padding: const EdgeInsets.only(left: 15.0),
+          Padding(
+            padding: const EdgeInsets.only(left: 25.0),
+            child: SizedBox(
+              width: 260,
               child: Text(
                 _item.name,
                 textAlign: TextAlign.start,
