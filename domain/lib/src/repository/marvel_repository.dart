@@ -1,4 +1,4 @@
-import '../../domain_module.dart';
+import 'package:domain/domain_module.dart';
 
 abstract class MarvelRepository {
   Future<List<Character>> getCharacters(int offset);

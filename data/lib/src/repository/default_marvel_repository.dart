@@ -1,8 +1,6 @@
 import 'package:dio/dio.dart';
-import 'package:marvel/data/data_sources/local_data_source.dart';
-import 'package:marvel/data/data_sources/remote_data_source.dart';
-import 'package:marvel/data/models/local_models/local_character.dart';
-import 'package:marvel/data/converters/converter.dart';
+import 'package:domain/domain_module.dart';
+import 'package:data/data_module.dart';
 
 class DefaultMarvelRepository implements MarvelRepository {
   final RemoteDataSource remoteDataSource;

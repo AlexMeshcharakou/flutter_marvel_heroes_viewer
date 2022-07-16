@@ -1,5 +1,5 @@
-import 'package:hive_flutter/hive_flutter.dart';
-import 'package:marvel/data/models/local_models/local_character.dart';
+import 'package:hive/hive.dart';
+import 'package:data/data_module.dart';
 
 abstract class LocalDataSource {
   void save(List<LocalCharacter> characters);

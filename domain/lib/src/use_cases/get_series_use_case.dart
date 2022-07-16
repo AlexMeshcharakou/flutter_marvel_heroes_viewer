@@ -1,4 +1,4 @@
-import '../../domain_module.dart';
+import 'package:domain/domain_module.dart';
 
 class GetAllSeriesUseCase {
   final MarvelRepository marvelRepository;

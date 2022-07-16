@@ -6,6 +6,7 @@ import 'package:marvel/presentation/widgets/language_picker.dart';
 import 'package:marvel/presentation/widgets/list_characters.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:marvel/service_locator.dart';
+import 'package:domain/domain_module.dart';
 
 class HeroesPage extends StatefulWidget {
   const HeroesPage({Key? key}) : super(key: key);

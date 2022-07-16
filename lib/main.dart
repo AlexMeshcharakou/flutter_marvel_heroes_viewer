@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get_it/get_it.dart';
 import 'package:hive_flutter/hive_flutter.dart';
-import 'package:marvel/data/models/local_models/local_character.dart';
+import 'package:data/data_module.dart';
 import 'package:marvel/main_app.dart';
 import 'package:marvel/service_locator.dart';
 

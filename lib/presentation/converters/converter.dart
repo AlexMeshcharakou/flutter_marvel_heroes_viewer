@@ -1,5 +1,4 @@
-import 'package:marvel/domain/entities/character.dart';
-import 'package:marvel/domain/entities/series.dart';
+import 'package:domain/domain_module.dart';
 import 'package:marvel/presentation/view_data/character_view_data.dart';
 import 'package:marvel/presentation/view_data/details_view_data.dart';
 import 'package:marvel/presentation/view_data/series_view_data.dart';

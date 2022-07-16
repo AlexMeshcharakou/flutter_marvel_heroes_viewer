@@ -35,7 +35,7 @@ class CharacterCardWidget extends StatelessWidget {
           Padding(
             padding: const EdgeInsets.only(left: 25.0),
             child: SizedBox(
-              width: 260,
+              width: 200,
               child: Text(
                 _item.name,
                 textAlign: TextAlign.start,

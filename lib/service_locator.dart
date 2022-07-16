@@ -1,11 +1,7 @@
 import 'package:dio/dio.dart';
 import 'package:get_it/get_it.dart';
-import 'package:marvel/data/data_sources/local_data_source.dart';
-import 'package:marvel/data/data_sources/marvel_api_client.dart';
-import 'package:marvel/data/data_sources/remote_data_source.dart';
-import 'package:marvel/data/repository/default_marvel_repository.dart';
-
 import 'package:domain/domain_module.dart';
+import 'package:data/data_module.dart';
 
 GetIt getIt = GetIt.instance;
 
