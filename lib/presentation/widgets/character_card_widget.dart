@@ -8,7 +8,6 @@ class CharacterCardWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Card(
-      color: Colors.red[50],
       shape: const RoundedRectangleBorder(
         borderRadius: BorderRadius.all(
           Radius.circular(6),

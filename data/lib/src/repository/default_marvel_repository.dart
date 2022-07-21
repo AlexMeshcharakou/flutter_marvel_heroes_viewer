@@ -1,3 +1,4 @@
+import 'package:data/src/converters/converter.dart';
 import 'package:dio/dio.dart';
 import 'package:domain/domain_module.dart';
 import 'package:data/data_module.dart';

@@ -1,3 +1,5 @@
+import 'package:data/src/models/remote_models/character_model.dart';
+import 'package:data/src/models/remote_models/series_model.dart';
 import 'package:domain/domain_module.dart';
 import 'package:data/data_module.dart';
 
