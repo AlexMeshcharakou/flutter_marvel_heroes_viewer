@@ -1,7 +1,8 @@
+import 'package:data/src/models/remote_models/character_model.dart';
+import 'package:data/src/models/remote_models/series_model.dart';
 import 'package:dio/dio.dart';
-import 'package:marvel/data/models/remote_models/character_model.dart';
-import 'package:marvel/data/models/remote_models/series_model.dart';
-import 'package:retrofit/retrofit.dart';
+import 'package:retrofit/dio.dart';
+import 'package:retrofit/http.dart';
 
 part 'marvel_api_client.g.dart';
 

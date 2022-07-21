@@ -1,0 +1,12 @@
+name: domain
+description: Domain layer
+version: 0.0.1
+
+publish_to: 'none'
+
+environment:
+  sdk: ">=2.16.1 <3.0.0"
+
+dependencies:
+  equatable: ^2.0.0
+

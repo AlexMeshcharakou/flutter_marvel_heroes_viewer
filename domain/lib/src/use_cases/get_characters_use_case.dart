@@ -1,5 +1,4 @@
-import 'package:marvel/domain/entities/character.dart';
-import 'package:marvel/domain/repository/marvel_repository.dart';
+import 'package:domain/domain_module.dart';
 
 class GetCharactersUseCase {
   final MarvelRepository marvelRepository;

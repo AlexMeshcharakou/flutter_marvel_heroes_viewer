@@ -8,7 +8,6 @@ class CharacterCardWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Card(
-      color: Colors.red[50],
       shape: const RoundedRectangleBorder(
         borderRadius: BorderRadius.all(
           Radius.circular(6),
@@ -35,7 +34,7 @@ class CharacterCardWidget extends StatelessWidget {
           Padding(
             padding: const EdgeInsets.only(left: 25.0),
             child: SizedBox(
-              width: 260,
+              width: 200,
               child: Text(
                 _item.name,
                 textAlign: TextAlign.start,
