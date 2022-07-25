@@ -9,9 +9,9 @@ import 'package:domain/domain_module.dart';
 
 class HeroesBloc extends Bloc<HeroesEvent, HeroesState> {
   final GetCharactersUseCase getCharactersUseCase;
-  final BuildContext context;
+  final BuildContext? context;
 
-  HeroesBloc({required this.getCharactersUseCase, required this.context})
+  HeroesBloc({required this.getCharactersUseCase, this.context})
       : super(
           const HeroesState(loading: false, hasReachedMax: false),
         ) {
@@ -28,11 +28,11 @@ class HeroesBloc extends Bloc<HeroesEvent, HeroesState> {
           );
         } on DataRetrievingException {
           emit(
-            state.copyWith(loading: false, error: AppLocalizations.of(context)!.somethingWentWrong),
+            state.copyWith(loading: false, error: AppLocalizations.of(context!)!.somethingWentWrong),
           );
         } on NoInternetException {
           emit(
-            state.copyWith(loading: false, error: AppLocalizations.of(context)!.pleaseCheckInternetConnection),
+            state.copyWith(loading: false, error: AppLocalizations.of(context!)!.pleaseCheckInternetConnection),
           );
         }
       },
@@ -55,11 +55,11 @@ class HeroesBloc extends Bloc<HeroesEvent, HeroesState> {
           );
         } on DataRetrievingException {
           emit(
-            state.copyWith(loading: false, error: AppLocalizations.of(context)!.somethingWentWrong),
+            state.copyWith(loading: false, error: AppLocalizations.of(context!)!.somethingWentWrong),
           );
         } on NoInternetException {
           emit(
-            state.copyWith(loading: false, error: AppLocalizations.of(context)!.pleaseCheckInternetConnection),
+            state.copyWith(loading: false, error: AppLocalizations.of(context!)!.pleaseCheckInternetConnection),
           );
         }
       },

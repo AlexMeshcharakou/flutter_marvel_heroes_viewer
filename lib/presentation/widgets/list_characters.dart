@@ -63,7 +63,7 @@ class _ListCharactersState extends State<ListCharacters> {
         if (state.error != null) {
           return ErrorPage(
             onRetry: () {
-              context.read<HeroesBloc>().add(ReadyForDataEvent());
+              BlocProvider.of<HeroesBloc>(context).add(ReadyForDataEvent());
             },
             error: state.error.toString(),
           );
