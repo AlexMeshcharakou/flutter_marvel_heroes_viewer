@@ -11,13 +11,13 @@ import 'package:domain/domain_module.dart';
 class DetailsBloc extends Bloc<DetailsEvent, DetailsState> {
   final GetCharacterDetailsUseCase getCharacterDetailsUseCase;
   final GetAllSeriesUseCase getAllSeriesUseCase;
-  final BuildContext context;
+  final BuildContext? context;
 
-  DetailsBloc({required this.getCharacterDetailsUseCase, required this.getAllSeriesUseCase, required this.context})
+  DetailsBloc({required this.getCharacterDetailsUseCase, required this.getAllSeriesUseCase, this.context})
       : super(
           const DetailsState(loading: true),
         ) {
-    on<DetailsEvent>(
+    on<ReadyForDetailsEvent>(
       (event, emit) async {
         emit(
           state.copyWith(loading: true),
@@ -33,15 +33,15 @@ class DetailsBloc extends Bloc<DetailsEvent, DetailsState> {
               .cast<SeriesViewData>()
               .toList();
           emit(
-            state.copyWith(characterDetails: characterDetails, series: series, loading: false),
+            state.copyWith(loading: false, characterDetails: characterDetails, series: series),
           );
         } on DataRetrievingException {
           emit(
-            state.copyWith(loading: false, error: AppLocalizations.of(context)!.somethingWentWrong),
+            state.copyWith(loading: false, error: AppLocalizations.of(context!)!.somethingWentWrong),
           );
         } on NoInternetException {
           emit(
-            state.copyWith(loading: false, error: AppLocalizations.of(context)!.checkInternetConnectionAndTap),
+            state.copyWith(loading: false, error: AppLocalizations.of(context!)!.checkInternetConnectionAndTap),
           );
         }
       },

@@ -23,6 +23,15 @@
     <img src="screenshots/Screenshot_1657137342.png" width="19%" title="Character Detail Rus"/>
 </p>
 
+## Features of the app
+ - infinite scrollable list with pagination fetched from the remote API
+ - details page loaded by id from the remote API
+ - state management tool - BLoC 
+ - loading/error states
+ - localization
+ - clean architecture
+ - local data base
+
 ## Packages used
  - dio
  - equatable
@@ -39,6 +48,8 @@
  - hive_generator
  - json_serializable
  - retrofit_generator
+ - mocktail
+ - bloc_test
 
 ## How to use
 
