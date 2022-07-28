@@ -20,7 +20,7 @@ class DetailsPage extends StatelessWidget {
           getCharacterDetailsUseCase: getIt.get<GetCharacterDetailsUseCase>(),
           getAllSeriesUseCase: getIt.get<GetAllSeriesUseCase>(),
         )..add(
-            DetailsEvent(characterId),
+          ReadyForDetailsEvent(characterId),
           ),
         child: DetailsWidget(characterId),
       ),

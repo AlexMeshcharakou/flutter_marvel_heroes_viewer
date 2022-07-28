@@ -59,7 +59,7 @@ class DetailsWidget extends StatelessWidget {
           return ErrorPage(
             onRetry: () {
               context.read<DetailsBloc>().add(
-                    DetailsEvent(characterId),
+                ReadyForDetailsEvent(characterId),
                   );
             },
             error: error.toString(),

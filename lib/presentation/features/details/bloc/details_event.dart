@@ -1,10 +1,13 @@
 import 'package:equatable/equatable.dart';
 
-class DetailsEvent extends Equatable {
-  final int characterId;
-
-  const DetailsEvent(this.characterId);
+abstract class DetailsEvent extends Equatable {
 
   @override
-  List<Object?> get props => [characterId];
+  List<Object?> get props => [];
+}
+
+class ReadyForDetailsEvent extends DetailsEvent {
+  final int characterId;
+
+  ReadyForDetailsEvent(this.characterId);
 }
