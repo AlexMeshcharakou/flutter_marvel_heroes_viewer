@@ -15,11 +15,12 @@ void main() {
   late HeroesBloc heroesBloc;
 
   blocTest<HeroesBloc, HeroesState>(
-    'emits [HeroesState(loading: true, hasReachedMax: false), '
-    'HeroesState(loading: false, hasReachedMax: false, charactersViewData: <CharacterViewData>[])] when successful',
+    'emits states when successful',
     setUp: () {
       getCharactersUseCase = MockGetCharactersUseCase();
+
       heroesBloc = HeroesBloc(getCharactersUseCase: getCharactersUseCase);
+
       when(() => getCharactersUseCase.call()).thenAnswer((_) => testCharacters);
     },
     build: () => heroesBloc,
