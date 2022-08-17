@@ -6,4 +6,6 @@ abstract class MarvelRepository {
   Future<Character> getCharacterDetails(int characterId);
 
   Future<List<Series>> getAllSeries(int characterId);
+
+  Future<List<Character>> searchCharacters(String nameStartsWith);
 }

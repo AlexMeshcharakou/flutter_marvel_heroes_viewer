@@ -1,4 +1,4 @@
-import 'package:flutter/cupertino.dart';
+import 'package:flutter/material.dart';
 import 'package:equatable/equatable.dart';
 import 'package:marvel/presentation/view_data/character_view_data.dart';
 
