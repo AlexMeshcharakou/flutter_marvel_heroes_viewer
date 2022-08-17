@@ -31,8 +31,39 @@ class _HeroesPageState extends State<HeroesPage> {
           LanguagePicker(),
         ],
       ),
+      floatingActionButton: FloatingActionButton(
+        onPressed: () {
+          ScaffoldMessenger.of(context).showSnackBar(
+            SnackBar(
+              action: SnackBarAction(
+                label: '',
+                onPressed: () {
+                  // Code to execute.
+                },
+              ),
+              content: const TextField(
+                  autofocus: true,
+                  decoration: InputDecoration(hintText: 'Search character'),
+                  showCursor: true),
+              // width: 100.0, // Width of the SnackBar.
+              backgroundColor: Colors.grey,
+              behavior: SnackBarBehavior.fixed,
+              duration: const Duration(minutes: 1),
+              padding: const EdgeInsets.symmetric(
+                horizontal: 8.0, // Inner padding for SnackBar content.
+              ),
+              shape: RoundedRectangleBorder(
+                borderRadius: BorderRadius.circular(6.0),
+              ),
+            ),
+          );
+        },
+        child: const Icon(Icons.search),
+      ),
       body: BlocProvider<HeroesBloc>(
-        create: (context) => HeroesBloc(context: context, getCharactersUseCase: getIt.get<GetCharactersUseCase>())
+        create: (context) => HeroesBloc(
+            context: context,
+            getCharactersUseCase: getIt.get<GetCharactersUseCase>())
           ..add(ReadyForDataEvent()),
         child: const ListCharacters(),
       ),
