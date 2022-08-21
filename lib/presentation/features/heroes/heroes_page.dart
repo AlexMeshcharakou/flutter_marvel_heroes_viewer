@@ -1,5 +1,3 @@
-import 'package:data/data_module.dart';
-import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:marvel/presentation/features/heroes/bloc/heroes_bloc.dart';
@@ -37,35 +35,6 @@ class _HeroesPageState extends State<HeroesPage> {
       floatingActionButton: FloatingActionButton(
         onPressed: () {
           Navigator.pushNamed(context, AppRoutes.searchPage);
-          // DefaultMarvelRepository(
-          //         remoteDataSource: DioDataSource(
-          //             marvelClient: MarvelApiClient(Dio(BaseOptions(connectTimeout: 8000, receiveTimeout: 8000)))),
-          //         localDataSource: HiveDataSource())
-          //     .searchCharacters('n');
-          // SearchCharactersUseCase(marvelRepository: DefaultMarvelRepository(remoteDataSource: DioDataSource(marvelClient: MarvelApiClient(Dio())), localDataSource: HiveDataSource()));
-          // ScaffoldMessenger.of(context).showSnackBar(
-          //   SnackBar(
-          //     action: SnackBarAction(
-          //       label: '\u2B05 Undo',
-          //       onPressed: () {
-          //         ScaffoldMessenger.of(context).hideCurrentSnackBar();
-          //       },
-          //     ),
-          //     content: const TextField(
-          //         autofocus: true,
-          //         decoration: InputDecoration(hintText: 'Search character'),
-          //         showCursor: true),
-          //     backgroundColor: Colors.grey,
-          //     behavior: SnackBarBehavior.fixed,
-          //     duration: const Duration(minutes: 1),
-          //     padding: const EdgeInsets.symmetric(
-          //       horizontal: 8.0,
-          //     ),
-          //     shape: RoundedRectangleBorder(
-          //       borderRadius: BorderRadius.circular(6.0),
-          //     ),
-          //   ),
-          // );
         },
         child: const Icon(Icons.search),
       ),
