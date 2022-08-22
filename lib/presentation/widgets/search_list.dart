@@ -49,7 +49,7 @@ class SearchList extends StatelessWidget {
         if (state.error != null) {
           return ErrorPage(
             onRetry: () {
-              BlocProvider.of<SearchBloc>(context).add(SearchedCharacterEvent('n'));
+              BlocProvider.of<SearchBloc>(context).add(SearchedCharacterEvent(nameStartsWith: ''));
             },
             error: state.error.toString(),
           );

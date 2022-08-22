@@ -9,30 +9,31 @@ import 'package:domain/domain_module.dart';
 
 class SearchBloc extends Bloc<SearchEvent, SearchState> {
   final SearchCharactersUseCase searchCharactersUseCase;
-  final BuildContext? context;
+  final BuildContext context;
 
-  SearchBloc({required this.searchCharactersUseCase, this.context})
+  SearchBloc({required this.searchCharactersUseCase, required this.context})
       : super(
           const SearchState(loading: false),
         ) {
     on<SearchedCharacterEvent>(
       (event, emit) async {
+        String name = event.nameStartsWith;
         emit(
           state.copyWith(loading: true),
         );
         try {
-          final List<Character> characters = await searchCharactersUseCase('n');
+          final List<Character> characters = await searchCharactersUseCase(name);
           final List<CharacterViewData> charactersViewData = _mapCharacters(characters);
           emit(
             state.copyWith(loading: false, characters: charactersViewData),
           );
         } on DataRetrievingException {
           emit(
-            state.copyWith(loading: false, error: AppLocalizations.of(context!)!.somethingWentWrong),
+            state.copyWith(loading: false, error: AppLocalizations.of(context)!.somethingWentWrong),
           );
         } on NoInternetException {
           emit(
-            state.copyWith(loading: false, error: AppLocalizations.of(context!)!.pleaseCheckInternetConnection),
+            state.copyWith(loading: false, error: AppLocalizations.of(context)!.pleaseCheckInternetConnection),
           );
         }
       },

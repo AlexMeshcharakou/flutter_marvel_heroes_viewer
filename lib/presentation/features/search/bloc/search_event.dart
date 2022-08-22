@@ -8,5 +8,5 @@ abstract class SearchEvent extends Equatable {
 class SearchedCharacterEvent extends SearchEvent {
   final String nameStartsWith;
 
-  SearchedCharacterEvent(this.nameStartsWith);
+  SearchedCharacterEvent({required this.nameStartsWith});
 }

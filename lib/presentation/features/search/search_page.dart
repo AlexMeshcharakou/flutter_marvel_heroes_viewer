@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:marvel/presentation/features/search/bloc/search_bloc.dart';
 import 'package:marvel/presentation/features/search/bloc/search_event.dart';
+import 'package:marvel/presentation/features/search/bloc/search_state.dart';
 import 'package:marvel/presentation/widgets/search_list.dart';
 import 'package:marvel/service_locator.dart';
 
@@ -11,18 +12,25 @@ class SearchPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        title: TextField(
-            onChanged: (text) {},
-            autofocus: true,
-            decoration: const InputDecoration(hintText: 'Search character'),
-            showCursor: true),
+    return BlocProvider<SearchBloc>(
+      create: (context) => SearchBloc(
+        searchCharactersUseCase: getIt.get<SearchCharactersUseCase>(), context: context,
       ),
-      body: BlocProvider<SearchBloc>(
-        create: (context) =>
-            SearchBloc(searchCharactersUseCase: getIt.get<SearchCharactersUseCase>())..add(SearchedCharacterEvent('n')),
-        child: const SearchList(),
+      child: BlocBuilder<SearchBloc, SearchState>(
+        builder: (context, state) {
+          return Scaffold(
+            appBar: AppBar(
+              title: TextField(
+                  onChanged: (text) {
+                    BlocProvider.of<SearchBloc>(context).add(SearchedCharacterEvent(nameStartsWith: text));
+                  },
+                  autofocus: true,
+                  decoration: const InputDecoration(hintText: 'Search character'),
+                  showCursor: true),
+            ),
+            body: const SearchList(),
+          );
+        },
       ),
     );
   }

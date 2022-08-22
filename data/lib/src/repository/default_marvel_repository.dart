@@ -65,16 +65,19 @@ class DefaultMarvelRepository implements MarvelRepository {
 
   @override
   Future<List<Character>> searchCharacters(String nameStartsWith) async {
-    final httpResponse = await remoteDataSource.searchCharacters(nameStartsWith);
-    print(httpResponse.toString());
-    if (httpResponse.response.statusCode != 200) {
-      throw DataRetrievingException();
+    try {
+      final httpResponse = await remoteDataSource.searchCharacters(nameStartsWith);
+      if (httpResponse.response.statusCode != 200) {
+        throw DataRetrievingException();
+      }
+      return httpResponse.data.data.results
+          .map(
+            (remoteCharacter) => remoteCharacter.characterToDomainModel(remoteCharacter),
+          )
+          .toList();
+    } on DioError {
+      throw NoInternetException();
     }
-    return httpResponse.data.data.results
-        .map(
-          (remoteCharacter) => remoteCharacter.characterToDomainModel(remoteCharacter),
-        )
-        .toList();
   }
 
   Future<List<Character>> _getRemote(int offset) async {
