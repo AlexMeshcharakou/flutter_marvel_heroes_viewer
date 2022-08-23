@@ -64,9 +64,9 @@ class DefaultMarvelRepository implements MarvelRepository {
   }
 
   @override
-  Future<List<Character>> searchCharacters(String nameStartsWith) async {
+  Future<List<Character>> searchCharacters(String nameStartsWith, int offset) async {
     try {
-      final httpResponse = await remoteDataSource.searchCharacters(nameStartsWith);
+      final httpResponse = await remoteDataSource.searchCharacters(nameStartsWith, offset);
       if (httpResponse.response.statusCode != 200) {
         throw DataRetrievingException();
       }

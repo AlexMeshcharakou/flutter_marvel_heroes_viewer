@@ -86,13 +86,14 @@ class _MarvelApiClient implements MarvelApiClient {
 
   @override
   Future<HttpResponse<ApiResponseModel>> searchCharacters(
-      nameStartsWith, ts, apiKey, hash) async {
+      nameStartsWith, ts, apiKey, hash, offset) async {
     const _extra = <String, dynamic>{};
     final queryParameters = <String, dynamic>{
       r'nameStartsWith': nameStartsWith,
       r'ts': ts,
       r'apikey': apiKey,
-      r'hash': hash
+      r'hash': hash,
+      r'offset': offset
     };
     final _headers = <String, dynamic>{};
     final _data = <String, dynamic>{};

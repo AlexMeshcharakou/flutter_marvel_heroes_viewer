@@ -13,7 +13,7 @@ class SearchBloc extends Bloc<SearchEvent, SearchState> {
 
   SearchBloc({required this.searchCharactersUseCase, required this.context})
       : super(
-          const SearchState(loading: false),
+          const SearchState(loading: false, hasReachedMax: false),
         ) {
     on<SearchedCharacterEvent>(
       (event, emit) async {
@@ -26,6 +26,35 @@ class SearchBloc extends Bloc<SearchEvent, SearchState> {
           final List<CharacterViewData> charactersViewData = _mapCharacters(characters);
           emit(
             state.copyWith(loading: false, characters: charactersViewData),
+          );
+        } on DataRetrievingException {
+          emit(
+            state.copyWith(loading: false, error: AppLocalizations.of(context)!.somethingWentWrong),
+          );
+        } on NoInternetException {
+          emit(
+            state.copyWith(loading: false, error: AppLocalizations.of(context)!.pleaseCheckInternetConnection),
+          );
+        }
+      },
+    );
+
+    on<ScrolledToEndSearchEvent>(
+      (event, emit) async {
+        String name = event.nameStartsWith;
+        if (state.loading || state.hasReachedMax) return;
+        emit(
+          state.copyWith(loading: true, hasReachedMax: false),
+        );
+        try {
+          final List<Character> characters = await searchCharactersUseCase(name, state.charactersViewData!.length);
+          if (characters.isEmpty) {
+            emit(state.copyWith(loading: false, hasReachedMax: true));
+            return;
+          }
+          final List<CharacterViewData> charactersViewData = _mapCharacters(characters);
+          emit(
+            state.copyWith(loading: false, characters: state.charactersViewData! + charactersViewData),
           );
         } on DataRetrievingException {
           emit(

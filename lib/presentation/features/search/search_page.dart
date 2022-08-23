@@ -12,9 +12,11 @@ class SearchPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    String name = '';
     return BlocProvider<SearchBloc>(
       create: (context) => SearchBloc(
-        searchCharactersUseCase: getIt.get<SearchCharactersUseCase>(), context: context,
+        searchCharactersUseCase: getIt.get<SearchCharactersUseCase>(),
+        context: context,
       ),
       child: BlocBuilder<SearchBloc, SearchState>(
         builder: (context, state) {
@@ -23,12 +25,13 @@ class SearchPage extends StatelessWidget {
               title: TextField(
                   onChanged: (text) {
                     BlocProvider.of<SearchBloc>(context).add(SearchedCharacterEvent(nameStartsWith: text));
+                    name = text;
                   },
                   autofocus: true,
                   decoration: const InputDecoration(hintText: 'Search character'),
                   showCursor: true),
             ),
-            body: const SearchList(),
+            body: SearchList(nameStartsWith: name),
           );
         },
       ),

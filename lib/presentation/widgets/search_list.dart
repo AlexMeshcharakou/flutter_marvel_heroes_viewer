@@ -9,11 +9,30 @@ import 'package:marvel/presentation/widgets/bottom_loader.dart';
 import 'package:marvel/presentation/widgets/character_card_widget.dart';
 import 'package:marvel/presentation/widgets/error_page.dart';
 
-class SearchList extends StatelessWidget {
-  const SearchList({Key? key}) : super(key: key);
+class SearchList extends StatefulWidget {
+  final String nameStartsWith;
+
+  const SearchList({Key? key, required this.nameStartsWith}) : super(key: key);
+
+  @override
+  State<SearchList> createState() => _SearchListState();
+}
+
+class _SearchListState extends State<SearchList> {
+  final ScrollController _scrollController = ScrollController();
+
+  @override
+  SearchList get widget => super.widget;
+
+  @override
+  void initState() {
+    super.initState();
+    _scrollController.addListener(_onScroll);
+  }
 
   @override
   Widget build(BuildContext context) {
+    String nameStartsWith = widget.nameStartsWith;
     return BlocBuilder<SearchBloc, SearchState>(
       builder: (context, state) {
         final characters = state.charactersViewData;
@@ -24,7 +43,8 @@ class SearchList extends StatelessWidget {
         }
         if (characters != null) {
           return ListView.builder(
-            itemCount: characters.length,
+            controller: _scrollController,
+            itemCount: state.hasReachedMax ? characters.length : characters.length + 1,
             itemBuilder: (BuildContext context, int index) {
               Widget endOfPage;
               if (state.error != null && !state.loading) {
@@ -49,7 +69,7 @@ class SearchList extends StatelessWidget {
         if (state.error != null) {
           return ErrorPage(
             onRetry: () {
-              BlocProvider.of<SearchBloc>(context).add(SearchedCharacterEvent(nameStartsWith: ''));
+              BlocProvider.of<SearchBloc>(context).add(SearchedCharacterEvent(nameStartsWith: nameStartsWith));
             },
             error: state.error.toString(),
           );
@@ -57,5 +77,24 @@ class SearchList extends StatelessWidget {
         return const SizedBox.shrink();
       },
     );
+  }
+
+  @override
+  void dispose() {
+    _scrollController
+      ..removeListener(_onScroll)
+      ..dispose();
+    super.dispose();
+  }
+
+  void _onScroll() {
+    if (_isBottom) context.read<SearchBloc>().add(ScrolledToEndSearchEvent(nameStartsWith: widget.nameStartsWith));
+  }
+
+  bool get _isBottom {
+    if (!_scrollController.hasClients) return false;
+    final maxScroll = _scrollController.position.maxScrollExtent;
+    final currentScroll = _scrollController.offset;
+    return currentScroll >= (maxScroll * 0.9);
   }
 }

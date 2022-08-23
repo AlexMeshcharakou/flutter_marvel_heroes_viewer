@@ -5,7 +5,7 @@ class SearchCharactersUseCase {
 
   SearchCharactersUseCase({required this.marvelRepository});
 
-  Future<List<Character>> call(String nameStartsWith) {
-    return marvelRepository.searchCharacters(nameStartsWith);
+  Future<List<Character>> call(String nameStartsWith, [int offset = 0]) {
+    return marvelRepository.searchCharacters(nameStartsWith, offset);
   }
 }

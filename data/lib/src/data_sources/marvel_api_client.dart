@@ -40,5 +40,6 @@ abstract class MarvelApiClient {
     @Query('ts') String ts,
     @Query('apikey') String apiKey,
     @Query('hash') String hash,
+    @Query('offset') int offset,
   );
 }
