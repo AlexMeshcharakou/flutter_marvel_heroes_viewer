@@ -1,12 +1,15 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:marvel/presentation/features/heroes/bloc/heroes_bloc.dart';
-import 'package:marvel/presentation/features/heroes/bloc/heroes_event.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
+import 'package:marvel/presentation/features/search/bloc/search_bloc.dart';
+import 'package:marvel/presentation/features/search/bloc/search_event.dart';
 
-class BottomError extends StatelessWidget {
-  const BottomError({
+class SearchBottomError extends StatelessWidget {
+  final String nameStartsWith;
+
+  const SearchBottomError({
     Key? key,
+    required this.nameStartsWith,
   }) : super(key: key);
 
   @override
@@ -33,7 +36,7 @@ class BottomError extends StatelessWidget {
           ],
         ),
         onPressed: () {
-          context.read<HeroesBloc>().add(ScrolledToEndEvent());
+          context.read<SearchBloc>().add(ScrolledToEndSearchEvent(nameStartsWith: nameStartsWith));
         },
       ),
     );

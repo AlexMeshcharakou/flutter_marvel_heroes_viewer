@@ -24,10 +24,15 @@ class SearchPage extends StatelessWidget {
             appBar: AppBar(
               title: TextField(
                   onChanged: (text) {
-                    BlocProvider.of<SearchBloc>(context).add(SearchedCharacterEvent(nameStartsWith: text));
-                    name = text;
+                    if (text.isNotEmpty) {
+                      BlocProvider.of<SearchBloc>(context).add(SearchedCharacterEvent(nameStartsWith: text));
+                      name = text;
+                    } else {
+                      BlocProvider.of<SearchBloc>(context).add(GotEmptySearchField());
+                    }
                   },
                   autofocus: true,
+                  cursorColor: Colors.black,
                   decoration: const InputDecoration(hintText: 'Search character'),
                   showCursor: true),
             ),

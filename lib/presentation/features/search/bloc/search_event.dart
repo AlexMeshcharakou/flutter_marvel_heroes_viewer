@@ -5,6 +5,8 @@ abstract class SearchEvent extends Equatable {
   List<Object?> get props => [];
 }
 
+class GotEmptySearchField extends SearchEvent {}
+
 class SearchedCharacterEvent extends SearchEvent {
   final String nameStartsWith;
 

@@ -6,5 +6,6 @@
   "tryAgain": "Try again",
   "checkInternetConnectionAndTap": "Check internet connection",
   "somethingWentWrong": "Something went wrong",
-  "pleaseCheckInternetConnection": "Please check internet connection"
+  "pleaseCheckInternetConnection": "Please check internet connection",
+  "searchCharacter": "Search character"
 }

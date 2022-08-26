@@ -13,20 +13,32 @@ class SearchBloc extends Bloc<SearchEvent, SearchState> {
 
   SearchBloc({required this.searchCharactersUseCase, required this.context})
       : super(
-          const SearchState(loading: false, hasReachedMax: false),
+          const SearchState(loading: false, hasReachedMax: false, afterScroll: false),
         ) {
     on<SearchedCharacterEvent>(
       (event, emit) async {
         String name = event.nameStartsWith;
         emit(
-          state.copyWith(loading: true),
+          state.copyWith(loading: true, hasReachedMax: false, emptySearchField: false),
         );
         try {
           final List<Character> characters = await searchCharactersUseCase(name);
           final List<CharacterViewData> charactersViewData = _mapCharacters(characters);
-          emit(
-            state.copyWith(loading: false, characters: charactersViewData),
-          );
+          if (characters.isEmpty) {
+            emit(
+              state.copyWith(loading: false, noResult: true),
+            );
+          }
+          if (characters.length < 20 && characters.isNotEmpty) {
+            emit(
+              state.copyWith(loading: false, hasReachedMax: true, charactersViewData: charactersViewData),
+            );
+          }
+          if (characters.isNotEmpty) {
+            emit(
+              state.copyWith(loading: false, charactersViewData: charactersViewData, noResult: false),
+            );
+          }
         } on DataRetrievingException {
           emit(
             state.copyWith(loading: false, error: AppLocalizations.of(context)!.somethingWentWrong),
@@ -38,24 +50,23 @@ class SearchBloc extends Bloc<SearchEvent, SearchState> {
         }
       },
     );
-
     on<ScrolledToEndSearchEvent>(
       (event, emit) async {
         String name = event.nameStartsWith;
         if (state.loading || state.hasReachedMax) return;
         emit(
-          state.copyWith(loading: true, hasReachedMax: false),
+          state.copyWith(loading: true, hasReachedMax: false, afterScroll: true),
         );
         try {
           final List<Character> characters = await searchCharactersUseCase(name, state.charactersViewData!.length);
           if (characters.isEmpty) {
             emit(state.copyWith(loading: false, hasReachedMax: true));
-            return;
+          } else {
+            final List<CharacterViewData> charactersViewData = _mapCharacters(characters);
+            emit(
+              state.copyWith(loading: false, charactersViewData: state.charactersViewData! + charactersViewData),
+            );
           }
-          final List<CharacterViewData> charactersViewData = _mapCharacters(characters);
-          emit(
-            state.copyWith(loading: false, characters: state.charactersViewData! + charactersViewData),
-          );
         } on DataRetrievingException {
           emit(
             state.copyWith(loading: false, error: AppLocalizations.of(context)!.somethingWentWrong),
@@ -65,6 +76,13 @@ class SearchBloc extends Bloc<SearchEvent, SearchState> {
             state.copyWith(loading: false, error: AppLocalizations.of(context)!.pleaseCheckInternetConnection),
           );
         }
+      },
+    );
+    on<GotEmptySearchField>(
+      (event, emit) {
+        emit(
+          state.copyWith(emptySearchField: true, afterScroll: false),
+        );
       },
     );
   }
