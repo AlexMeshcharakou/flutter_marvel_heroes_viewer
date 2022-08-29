@@ -6,6 +6,7 @@ import 'package:marvel/presentation/features/search/bloc/search_event.dart';
 import 'package:marvel/presentation/features/search/bloc/search_state.dart';
 import 'package:marvel/presentation/widgets/search_list.dart';
 import 'package:marvel/service_locator.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 class SearchPage extends StatelessWidget {
   const SearchPage({Key? key}) : super(key: key);
@@ -33,7 +34,7 @@ class SearchPage extends StatelessWidget {
                   },
                   autofocus: true,
                   cursorColor: Colors.black,
-                  decoration: const InputDecoration(hintText: 'Search character'),
+                  decoration: InputDecoration(hintText: AppLocalizations.of(context)!.searchCharacter),
                   showCursor: true),
             ),
             body: SearchList(nameStartsWith: name),

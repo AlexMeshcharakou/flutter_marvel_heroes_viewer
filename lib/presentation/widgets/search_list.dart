@@ -7,6 +7,7 @@ import 'package:marvel/presentation/widgets/bottom_loader.dart';
 import 'package:marvel/presentation/widgets/character_card_widget.dart';
 import 'package:marvel/presentation/widgets/error_page.dart';
 import 'package:marvel/presentation/widgets/search_bottom_error.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 class SearchList extends StatefulWidget {
   final String nameStartsWith;
@@ -80,10 +81,10 @@ class _SearchListState extends State<SearchList> {
         );
       }
       if (noResult == true) {
-        return const Center(
+        return Center(
           child: Text(
-            'No Results',
-            style: TextStyle(fontSize: 25),
+            AppLocalizations.of(context)!.noResults,
+            style: const TextStyle(fontSize: 25),
           ),
         );
       }

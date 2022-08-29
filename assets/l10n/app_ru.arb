@@ -7,5 +7,6 @@
   "checkInternetConnectionAndTap": "Проверьте интернет соединение",
   "somethingWentWrong": "Произошла ошибка",
   "pleaseCheckInternetConnection": "Проверьте интернет соединение",
-  "searchCharacter": "Поиск героя"
+  "searchCharacter": "Поиск героя",
+  "noResults": "Не найдено результатов"
 }

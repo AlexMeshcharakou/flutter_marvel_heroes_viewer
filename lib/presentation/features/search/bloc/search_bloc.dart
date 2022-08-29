@@ -52,13 +52,13 @@ class SearchBloc extends Bloc<SearchEvent, SearchState> {
     );
     on<ScrolledToEndSearchEvent>(
       (event, emit) async {
-        String name = event.nameStartsWith;
         if (state.loading || state.hasReachedMax) return;
         emit(
           state.copyWith(loading: true, hasReachedMax: false, afterScroll: true),
         );
         try {
-          final List<Character> characters = await searchCharactersUseCase(name, state.charactersViewData!.length);
+          final List<Character> characters =
+              await searchCharactersUseCase(event.nameStartsWith, state.charactersViewData!.length);
           if (characters.isEmpty) {
             emit(state.copyWith(loading: false, hasReachedMax: true));
           } else {
