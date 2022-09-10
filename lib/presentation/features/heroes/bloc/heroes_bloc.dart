@@ -1,17 +1,14 @@
-import 'package:flutter/material.dart';
+import 'package:domain/domain_module.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:marvel/presentation/converters/converter.dart';
 import 'package:marvel/presentation/features/heroes/bloc/heroes_event.dart';
 import 'package:marvel/presentation/features/heroes/bloc/heroes_state.dart';
 import 'package:marvel/presentation/view_data/character_view_data.dart';
-import 'package:flutter_gen/gen_l10n/app_localizations.dart';
-import 'package:domain/domain_module.dart';
 
 class HeroesBloc extends Bloc<HeroesEvent, HeroesState> {
   final GetCharactersUseCase getCharactersUseCase;
-  final BuildContext? context;
 
-  HeroesBloc({required this.getCharactersUseCase, this.context})
+  HeroesBloc({required this.getCharactersUseCase})
       : super(
           const HeroesState(loading: false, hasReachedMax: false),
         ) {
@@ -23,16 +20,20 @@ class HeroesBloc extends Bloc<HeroesEvent, HeroesState> {
         try {
           final List<Character> characters = await getCharactersUseCase();
           final List<CharacterViewData> charactersViewData = _mapCharacters(characters);
+          if (charactersViewData.isEmpty) {
+            emit(state.copyWith(loading: false, error: DataRetrievingException()));
+            return;
+          }
           emit(
             state.copyWith(loading: false, characters: charactersViewData),
           );
-        } on DataRetrievingException {
+        } on DataRetrievingException catch (exception) {
           emit(
-            state.copyWith(loading: false, error: AppLocalizations.of(context!)!.somethingWentWrong),
+            state.copyWith(loading: false, error: exception),
           );
-        } on NoInternetException {
+        } on NoInternetException catch (exception) {
           emit(
-            state.copyWith(loading: false, error: AppLocalizations.of(context!)!.pleaseCheckInternetConnection),
+            state.copyWith(loading: false, error: exception),
           );
         }
       },
@@ -53,13 +54,13 @@ class HeroesBloc extends Bloc<HeroesEvent, HeroesState> {
           emit(
             state.copyWith(loading: false, characters: state.charactersViewData! + charactersViewData),
           );
-        } on DataRetrievingException {
+        } on DataRetrievingException catch (exception) {
           emit(
-            state.copyWith(loading: false, error: AppLocalizations.of(context!)!.somethingWentWrong),
+            state.copyWith(loading: false, error: exception),
           );
-        } on NoInternetException {
+        } on NoInternetException catch (exception) {
           emit(
-            state.copyWith(loading: false, error: AppLocalizations.of(context!)!.pleaseCheckInternetConnection),
+            state.copyWith(loading: false, error: exception),
           );
         }
       },

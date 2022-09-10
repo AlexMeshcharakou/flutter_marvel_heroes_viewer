@@ -18,6 +18,9 @@ class DefaultMarvelRepository implements MarvelRepository {
         _saveCharactersToDB(characters);
       } on DioError {
         characters = _getLocal();
+        if (characters.isEmpty) {
+          throw DataRetrievingException();
+        }
       }
       return characters;
     }
@@ -93,11 +96,8 @@ class DefaultMarvelRepository implements MarvelRepository {
   }
 
   List<Character> _getLocal() {
-    if (localDataSource.getAll().isNotEmpty) {
-      List<LocalCharacter> localCharacters = localDataSource.getAll();
-      return localCharacters.map((hero) => hero.localCharacterToDomainModel(hero)).toList();
-    }
-    throw DataRetrievingException();
+    List<LocalCharacter> localCharacters = localDataSource.getAll();
+    return localCharacters.map((hero) => hero.localCharacterToDomainModel(hero)).toList();
   }
 
   void _saveCharactersToDB(List<Character> characters) {

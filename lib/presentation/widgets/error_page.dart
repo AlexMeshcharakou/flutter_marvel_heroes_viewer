@@ -1,20 +1,27 @@
+import 'package:domain/domain_module.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 class ErrorPage extends StatelessWidget {
   final Function onRetry;
-  final String error;
+  final Exception? error;
 
   const ErrorPage({Key? key, required this.onRetry, required this.error}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
+    String message = 'Error';
+    if (error is DataRetrievingException) {
+      message = AppLocalizations.of(context)!.somethingWentWrong;
+    } else if (error is NoInternetException) {
+      message = AppLocalizations.of(context)!.pleaseCheckInternetConnection;
+    }
     return Center(
       child: Column(
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
           Text(
-            error,
+            message,
             textAlign: TextAlign.center,
             style: const TextStyle(fontSize: 22, fontWeight: FontWeight.bold),
           ),

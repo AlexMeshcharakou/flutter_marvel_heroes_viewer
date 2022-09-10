@@ -7,31 +7,38 @@ class SearchState extends Equatable {
   final bool loading;
   final bool hasReachedMax;
   final List<CharacterViewData>? charactersViewData;
-  final String? error;
-  final bool? noResult;
   final bool? afterScroll;
   final bool? emptySearchField;
+  final Exception? error;
+  final bool? noResult;
 
   const SearchState(
       {required this.loading,
       required this.hasReachedMax,
       this.charactersViewData,
-      this.noResult,
-      this.error,
       this.afterScroll,
-      this.emptySearchField});
+      this.emptySearchField,
+      this.error,
+      this.noResult});
 
-  SearchState copyWith({loading, hasReachedMax, charactersViewData, error, noResult, afterScroll, emptySearchField}) =>
+  SearchState copyWith(
+          {bool? loading,
+          bool? hasReachedMax,
+          List<CharacterViewData>? charactersViewData,
+          bool? afterScroll,
+          bool? emptySearchField,
+          Exception? error,
+          bool? noResult}) =>
       SearchState(
           loading: loading ?? this.loading,
           hasReachedMax: hasReachedMax ?? this.hasReachedMax,
           charactersViewData: charactersViewData ?? this.charactersViewData,
-          error: error ?? this.error,
-          noResult: noResult ?? this.noResult,
           afterScroll: afterScroll ?? this.afterScroll,
-          emptySearchField: emptySearchField ?? this.emptySearchField);
+          emptySearchField: emptySearchField ?? this.emptySearchField,
+          error: error ?? this.error,
+          noResult: noResult ?? this.noResult);
 
   @override
   List<Object?> get props =>
-      [loading, hasReachedMax, charactersViewData, error, noResult, afterScroll, emptySearchField];
+      [loading, hasReachedMax, charactersViewData, afterScroll, emptySearchField, error, noResult];
 }

@@ -1,12 +1,12 @@
+import 'package:domain/domain_module.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:marvel/presentation/converters/converter.dart';
 import 'package:marvel/presentation/features/details/bloc/details_state.dart';
 import 'package:marvel/presentation/view_data/details_view_data.dart';
 import 'package:marvel/presentation/view_data/series_view_data.dart';
-import 'package:flutter_gen/gen_l10n/app_localizations.dart';
+
 import 'details_event.dart';
-import 'package:domain/domain_module.dart';
 
 class DetailsBloc extends Bloc<DetailsEvent, DetailsState> {
   final GetCharacterDetailsUseCase getCharacterDetailsUseCase;
@@ -35,13 +35,13 @@ class DetailsBloc extends Bloc<DetailsEvent, DetailsState> {
           emit(
             state.copyWith(loading: false, characterDetails: characterDetails, series: series),
           );
-        } on DataRetrievingException {
+        }  on DataRetrievingException catch (exception) {
           emit(
-            state.copyWith(loading: false, error: AppLocalizations.of(context!)!.somethingWentWrong),
+            state.copyWith(loading: false, error: exception),
           );
-        } on NoInternetException {
+        } on NoInternetException catch (exception) {
           emit(
-            state.copyWith(loading: false, error: AppLocalizations.of(context!)!.checkInternetConnectionAndTap),
+            state.copyWith(loading: false, error: exception),
           );
         }
       },

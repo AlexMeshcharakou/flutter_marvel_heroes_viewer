@@ -1,18 +1,38 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:marvel/presentation/features/search/bloc/search_bloc.dart';
 import 'package:marvel/presentation/features/search/bloc/search_event.dart';
+import 'package:marvel/presentation/features/search/widgets/search_bottom_error.dart';
 import 'package:marvel/presentation/navigation/app_routes.dart';
+import 'package:marvel/presentation/view_data/character_view_data.dart';
 import 'package:marvel/presentation/widgets/bottom_loader.dart';
 import 'package:marvel/presentation/widgets/character_card_widget.dart';
 import 'package:marvel/presentation/widgets/error_page.dart';
-import 'package:marvel/presentation/widgets/search_bottom_error.dart';
-import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 class SearchList extends StatefulWidget {
+  final bool loading;
   final String nameStartsWith;
+  final Function onScroll;
+  final bool hasReachedMax;
+  final bool? afterScroll;
+  final List<CharacterViewData>? characters;
+  final bool? emptySearchField;
+  final Exception? error;
+  final bool? noResult;
 
-  const SearchList({Key? key, required this.nameStartsWith}) : super(key: key);
+  const SearchList({
+    Key? key,
+    required this.loading,
+    required this.nameStartsWith,
+    required this.onScroll,
+    required this.hasReachedMax,
+    this.afterScroll,
+    this.characters,
+    this.emptySearchField,
+    this.error,
+    this.noResult,
+  }) : super(key: key);
 
   @override
   State<SearchList> createState() => _SearchListState();
@@ -20,24 +40,28 @@ class SearchList extends StatefulWidget {
 
 class _SearchListState extends State<SearchList> {
   final ScrollController _scrollController = ScrollController();
+  late VoidCallback listener;
 
   @override
   void initState() {
     super.initState();
-    _scrollController.addListener(_onScroll);
+    listener = () {
+      if (_isBottom) widget.onScroll();
+      FocusScope.of(context).unfocus();
+    };
+    _scrollController.addListener(listener);
   }
 
   @override
   Widget build(BuildContext context) {
-    final loading = BlocProvider.of<SearchBloc>(context).state.loading;
-    final characters = BlocProvider.of<SearchBloc>(context).state.charactersViewData;
-    final error = BlocProvider.of<SearchBloc>(context).state.error;
-    final noResult = BlocProvider.of<SearchBloc>(context).state.noResult;
-    final emptySearchField = BlocProvider.of<SearchBloc>(context).state.emptySearchField;
-    final hasReachedMax = BlocProvider.of<SearchBloc>(context).state.hasReachedMax;
-    final afterScroll = BlocProvider.of<SearchBloc>(context).state.afterScroll;
-
-    String nameStartsWith = widget.nameStartsWith;
+    final bool loading = widget.loading;
+    final String nameStartsWith = widget.nameStartsWith;
+    final bool hasReachedMax = widget.hasReachedMax;
+    final bool? afterScroll = widget.afterScroll;
+    final characters = widget.characters;
+    final bool? emptySearchField = widget.emptySearchField;
+    final Exception? error = widget.error;
+    final bool? noResult = widget.noResult;
     return Container(child: () {
       if (emptySearchField == true) {
         return Container();
@@ -77,7 +101,7 @@ class _SearchListState extends State<SearchList> {
           onRetry: () {
             BlocProvider.of<SearchBloc>(context).add(SearchedCharacterEvent(nameStartsWith: nameStartsWith));
           },
-          error: error.toString(),
+          error: error,
         );
       }
       if (noResult == true) {
@@ -95,14 +119,9 @@ class _SearchListState extends State<SearchList> {
   @override
   void dispose() {
     _scrollController
-      ..removeListener(_onScroll)
+      ..removeListener(listener)
       ..dispose();
     super.dispose();
-  }
-
-  void _onScroll() {
-    if (_isBottom) context.read<SearchBloc>().add(ScrolledToEndSearchEvent(nameStartsWith: widget.nameStartsWith));
-    FocusScope.of(context).unfocus();
   }
 
   bool get _isBottom {

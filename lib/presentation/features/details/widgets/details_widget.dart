@@ -1,13 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:marvel/presentation/features/details/bloc/details_bloc.dart';
 import 'package:marvel/presentation/features/details/bloc/details_event.dart';
 import 'package:marvel/presentation/features/details/bloc/details_state.dart';
+import 'package:marvel/presentation/features/details/widgets/description_widget.dart';
+import 'package:marvel/presentation/features/details/widgets/series_widget.dart';
 import 'package:marvel/presentation/widgets/character_image_widget.dart';
-import 'package:marvel/presentation/widgets/description_widget.dart';
-import 'package:marvel/presentation/widgets/series_widget.dart';
 import 'package:marvel/presentation/widgets/error_page.dart';
-import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 class DetailsWidget extends StatelessWidget {
   final int characterId;
@@ -59,10 +59,10 @@ class DetailsWidget extends StatelessWidget {
           return ErrorPage(
             onRetry: () {
               context.read<DetailsBloc>().add(
-                ReadyForDetailsEvent(characterId),
+                    ReadyForDetailsEvent(characterId),
                   );
             },
-            error: error.toString(),
+            error: error,
           );
         }
         return const SizedBox.shrink();
