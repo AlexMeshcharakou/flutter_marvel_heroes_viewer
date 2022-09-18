@@ -16,12 +16,9 @@ class DetailsPage extends StatelessWidget {
     return Scaffold(
       body: BlocProvider<DetailsBloc>(
         create: (context) => DetailsBloc(
-          context: context,
           getCharacterDetailsUseCase: getIt.get<GetCharacterDetailsUseCase>(),
           getAllSeriesUseCase: getIt.get<GetAllSeriesUseCase>(),
-        )..add(
-          ReadyForDetailsEvent(characterId),
-          ),
+        )..add(ReadyForDetailsEvent(characterId)),
         child: DetailsWidget(characterId),
       ),
     );

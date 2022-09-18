@@ -3,35 +3,23 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:marvel/presentation/features/search/bloc/search_bloc.dart';
 import 'package:marvel/presentation/features/search/bloc/search_event.dart';
+import 'package:marvel/presentation/features/search/bloc/search_state.dart';
 import 'package:marvel/presentation/features/search/widgets/search_bottom_error.dart';
 import 'package:marvel/presentation/navigation/app_routes.dart';
-import 'package:marvel/presentation/view_data/character_view_data.dart';
 import 'package:marvel/presentation/widgets/bottom_loader.dart';
 import 'package:marvel/presentation/widgets/character_card_widget.dart';
 import 'package:marvel/presentation/widgets/error_page.dart';
 
 class SearchList extends StatefulWidget {
-  final bool loading;
-  final String nameStartsWith;
+  final SearchState searchState;
   final Function onScroll;
-  final bool hasReachedMax;
-  final bool? afterScroll;
-  final List<CharacterViewData>? characters;
-  final bool? emptySearchField;
-  final Exception? error;
-  final bool? noResult;
+  final String nameStartsWith;
 
   const SearchList({
     Key? key,
-    required this.loading,
-    required this.nameStartsWith,
+    required this.searchState,
     required this.onScroll,
-    required this.hasReachedMax,
-    this.afterScroll,
-    this.characters,
-    this.emptySearchField,
-    this.error,
-    this.noResult,
+    required this.nameStartsWith,
   }) : super(key: key);
 
   @override
@@ -54,14 +42,14 @@ class _SearchListState extends State<SearchList> {
 
   @override
   Widget build(BuildContext context) {
-    final bool loading = widget.loading;
+    final bool loading = widget.searchState.loading;
     final String nameStartsWith = widget.nameStartsWith;
-    final bool hasReachedMax = widget.hasReachedMax;
-    final bool? afterScroll = widget.afterScroll;
-    final characters = widget.characters;
-    final bool? emptySearchField = widget.emptySearchField;
-    final Exception? error = widget.error;
-    final bool? noResult = widget.noResult;
+    final bool hasReachedMax = widget.searchState.hasReachedMax;
+    final bool? afterScroll = widget.searchState.afterScroll;
+    final characters = widget.searchState.charactersViewData;
+    final bool? emptySearchField = widget.searchState.emptySearchField;
+    final Exception? error = widget.searchState.error;
+    final bool? noResult = widget.searchState.noResult;
     return Container(child: () {
       if (emptySearchField == true) {
         return Container();

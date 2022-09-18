@@ -19,17 +19,10 @@ class HeroesBottomError extends StatelessWidget {
           children: [
             Text(
               AppLocalizations.of(context)!.checkInternetConnectionAndTap,
-              style: const TextStyle(
-                fontSize: 14,
-              ),
+              style: const TextStyle(fontSize: 14),
             ),
-            const SizedBox(
-              width: 20,
-            ),
-            const Icon(
-              Icons.refresh_rounded,
-              size: 35.0,
-            ),
+            const SizedBox(width: 20),
+            const Icon(Icons.refresh_rounded, size: 35.0),
           ],
         ),
         onPressed: () {

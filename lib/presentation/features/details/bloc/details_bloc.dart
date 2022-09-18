@@ -1,5 +1,4 @@
 import 'package:domain/domain_module.dart';
-import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:marvel/presentation/converters/converter.dart';
 import 'package:marvel/presentation/features/details/bloc/details_state.dart';
@@ -11,9 +10,8 @@ import 'details_event.dart';
 class DetailsBloc extends Bloc<DetailsEvent, DetailsState> {
   final GetCharacterDetailsUseCase getCharacterDetailsUseCase;
   final GetAllSeriesUseCase getAllSeriesUseCase;
-  final BuildContext? context;
 
-  DetailsBloc({required this.getCharacterDetailsUseCase, required this.getAllSeriesUseCase, this.context})
+  DetailsBloc({required this.getCharacterDetailsUseCase, required this.getAllSeriesUseCase})
       : super(
           const DetailsState(loading: true),
         ) {
@@ -35,7 +33,7 @@ class DetailsBloc extends Bloc<DetailsEvent, DetailsState> {
           emit(
             state.copyWith(loading: false, characterDetails: characterDetails, series: series),
           );
-        }  on DataRetrievingException catch (exception) {
+        } on DataRetrievingException catch (exception) {
           emit(
             state.copyWith(loading: false, error: exception),
           );

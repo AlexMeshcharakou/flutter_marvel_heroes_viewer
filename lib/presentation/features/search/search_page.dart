@@ -40,14 +40,8 @@ class SearchPage extends StatelessWidget {
                 onScroll: () {
                   context.read<SearchBloc>().add(ScrolledToEndSearchEvent(nameStartsWith: name));
                 },
-                nameStartsWith: name,
-                loading: state.loading,
-                characters: state.charactersViewData,
-                error: state.error,
-                noResult: state.noResult,
-                emptySearchField: state.emptySearchField,
-                hasReachedMax: state.hasReachedMax,
-                afterScroll: state.afterScroll),
+                searchState: state,
+                nameStartsWith: name),
           );
         },
       ),

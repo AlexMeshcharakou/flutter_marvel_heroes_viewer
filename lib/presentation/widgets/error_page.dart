@@ -25,26 +25,17 @@ class ErrorPage extends StatelessWidget {
             textAlign: TextAlign.center,
             style: const TextStyle(fontSize: 22, fontWeight: FontWeight.bold),
           ),
-          const SizedBox(
-            height: 25,
-          ),
+          const SizedBox(height: 25),
           ElevatedButton(
             child: Row(
               mainAxisSize: MainAxisSize.min,
               children: [
                 Text(
                   AppLocalizations.of(context)!.tryAgain,
-                  style: const TextStyle(
-                    fontSize: 16,
-                  ),
+                  style: const TextStyle(fontSize: 16),
                 ),
-                const SizedBox(
-                  width: 20,
-                ),
-                const Icon(
-                  Icons.refresh_rounded,
-                  size: 24.0,
-                ),
+                const SizedBox(width: 20),
+                const Icon(Icons.refresh_rounded, size: 24.0),
               ],
             ),
             onPressed: () {

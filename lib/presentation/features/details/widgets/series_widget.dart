@@ -48,9 +48,9 @@ class SeriesWidget extends StatelessWidget {
                     ),
                   ),
                   SizedBox(
-                    child: Text(item.title),
                     width: 115,
                     height: 79,
+                    child: Text(item.title),
                   ),
                 ],
               );
