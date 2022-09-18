@@ -5,7 +5,7 @@ class GetAllSeriesUseCase {
 
   GetAllSeriesUseCase({required this.marvelRepository});
 
-  Future<List<Series>> call(characterId) {
+  Future<List<Series>> call(int characterId) {
     return marvelRepository.getAllSeries(characterId);
   }
 }

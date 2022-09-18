@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:marvel/presentation/features/search/search_page.dart';
 import 'package:marvel/presentation/navigation/app_routes.dart';
 import 'package:marvel/presentation/features/details/details_page.dart';
 import 'package:marvel/presentation/features/heroes/heroes_page.dart';
@@ -16,6 +17,10 @@ class RouteGenerator {
           builder: (context) => DetailsPage(
             characterId: characterId,
           ),
+        );
+      case AppRoutes.searchPage:
+        return MaterialPageRoute(
+          builder: (context) => const SearchPage(),
         );
     }
     return null;

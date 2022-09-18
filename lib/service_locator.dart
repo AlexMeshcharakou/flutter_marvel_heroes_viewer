@@ -24,4 +24,7 @@ void setupGetIt() {
       () => GetCharacterDetailsUseCase(marvelRepository: getIt<MarvelRepository>()));
 
   getIt.registerFactory<GetAllSeriesUseCase>(() => GetAllSeriesUseCase(marvelRepository: getIt<MarvelRepository>()));
+
+  getIt.registerFactory<SearchCharactersUseCase>(
+      () => SearchCharactersUseCase(marvelRepository: getIt<MarvelRepository>()));
 }

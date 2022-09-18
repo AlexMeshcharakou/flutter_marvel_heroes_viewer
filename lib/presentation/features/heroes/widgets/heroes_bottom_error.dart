@@ -4,8 +4,8 @@ import 'package:marvel/presentation/features/heroes/bloc/heroes_bloc.dart';
 import 'package:marvel/presentation/features/heroes/bloc/heroes_event.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
-class BottomError extends StatelessWidget {
-  const BottomError({
+class HeroesBottomError extends StatelessWidget {
+  const HeroesBottomError({
     Key? key,
   }) : super(key: key);
 
@@ -19,17 +19,10 @@ class BottomError extends StatelessWidget {
           children: [
             Text(
               AppLocalizations.of(context)!.checkInternetConnectionAndTap,
-              style: const TextStyle(
-                fontSize: 14,
-              ),
+              style: const TextStyle(fontSize: 14),
             ),
-            const SizedBox(
-              width: 20,
-            ),
-            const Icon(
-              Icons.refresh_rounded,
-              size: 35.0,
-            ),
+            const SizedBox(width: 20),
+            const Icon(Icons.refresh_rounded, size: 35.0),
           ],
         ),
         onPressed: () {

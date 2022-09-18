@@ -33,4 +33,13 @@ abstract class MarvelApiClient {
     @Query("apikey") String apiKey,
     @Query("hash") String hash,
   );
+
+  @GET('/characters')
+  Future<HttpResponse<ApiResponseModel>> searchCharacters(
+    @Query('nameStartsWith') String nameStartsWith,
+    @Query('ts') String ts,
+    @Query('apikey') String apiKey,
+    @Query('hash') String hash,
+    @Query('offset') int offset,
+  );
 }

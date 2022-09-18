@@ -9,6 +9,8 @@ abstract class RemoteDataSource {
   Future<HttpResponse<ApiResponseModel>> getCharacterDetails(int characterId);
 
   Future<HttpResponse<SeriesResponseModel>> getAllSeries(int characterId);
+
+  Future<HttpResponse<ApiResponseModel>> searchCharacters(String nameStartsWith, int offset);
 }
 
 class DioDataSource implements RemoteDataSource {
@@ -32,5 +34,10 @@ class DioDataSource implements RemoteDataSource {
   @override
   Future<HttpResponse<SeriesResponseModel>> getAllSeries(int characterId) async {
     return await marvelClient.getAllSeries(characterId, ts, apiKey, hash);
+  }
+
+  @override
+  Future<HttpResponse<ApiResponseModel>> searchCharacters(String nameStartsWith, int offset) async {
+    return await marvelClient.searchCharacters(nameStartsWith, ts, apiKey, hash, offset);
   }
 }

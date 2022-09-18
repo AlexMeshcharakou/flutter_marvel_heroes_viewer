@@ -18,6 +18,9 @@ class DefaultMarvelRepository implements MarvelRepository {
         _saveCharactersToDB(characters);
       } on DioError {
         characters = _getLocal();
+        if (characters.isEmpty) {
+          throw DataRetrievingException();
+        }
       }
       return characters;
     }
@@ -63,6 +66,23 @@ class DefaultMarvelRepository implements MarvelRepository {
     }
   }
 
+  @override
+  Future<List<Character>> searchCharacters(String nameStartsWith, int offset) async {
+    try {
+      final httpResponse = await remoteDataSource.searchCharacters(nameStartsWith, offset);
+      if (httpResponse.response.statusCode != 200) {
+        throw DataRetrievingException();
+      }
+      return httpResponse.data.data.results
+          .map(
+            (remoteCharacter) => remoteCharacter.characterToDomainModel(remoteCharacter),
+          )
+          .toList();
+    } on DioError {
+      throw NoInternetException();
+    }
+  }
+
   Future<List<Character>> _getRemote(int offset) async {
     final httpResponse = await remoteDataSource.getCharacters(offset);
     if (httpResponse.response.statusCode != 200) {
@@ -76,11 +96,8 @@ class DefaultMarvelRepository implements MarvelRepository {
   }
 
   List<Character> _getLocal() {
-    if (localDataSource.getAll().isNotEmpty) {
-      List<LocalCharacter> localCharacters = localDataSource.getAll();
-      return localCharacters.map((hero) => hero.localCharacterToDomainModel(hero)).toList();
-    }
-    throw DataRetrievingException();
+    List<LocalCharacter> localCharacters = localDataSource.getAll();
+    return localCharacters.map((hero) => hero.localCharacterToDomainModel(hero)).toList();
   }
 
   void _saveCharactersToDB(List<Character> characters) {

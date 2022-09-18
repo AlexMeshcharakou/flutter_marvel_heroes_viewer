@@ -5,7 +5,7 @@ class GetCharacterDetailsUseCase {
 
   GetCharacterDetailsUseCase({required this.marvelRepository});
 
-  Future<Character> call(characterId) {
+  Future<Character> call(int characterId) {
     return marvelRepository.getCharacterDetails(characterId);
   }
 }

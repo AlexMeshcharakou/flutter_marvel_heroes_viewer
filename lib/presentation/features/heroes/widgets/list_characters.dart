@@ -3,8 +3,8 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:marvel/presentation/features/heroes/bloc/heroes_bloc.dart';
 import 'package:marvel/presentation/features/heroes/bloc/heroes_event.dart';
 import 'package:marvel/presentation/features/heroes/bloc/heroes_state.dart';
+import 'package:marvel/presentation/features/heroes/widgets/heroes_bottom_error.dart';
 import 'package:marvel/presentation/navigation/app_routes.dart';
-import 'package:marvel/presentation/widgets/bottom_error.dart';
 import 'package:marvel/presentation/widgets/bottom_loader.dart';
 import 'package:marvel/presentation/widgets/character_card_widget.dart';
 import 'package:marvel/presentation/widgets/error_page.dart';
@@ -42,7 +42,7 @@ class _ListCharactersState extends State<ListCharacters> {
             itemBuilder: (BuildContext context, int index) {
               Widget endOfPage;
               if (state.error != null && !state.loading) {
-                endOfPage = const BottomError();
+                endOfPage = const HeroesBottomError();
               } else {
                 endOfPage = const BottomLoader();
               }
@@ -65,7 +65,7 @@ class _ListCharactersState extends State<ListCharacters> {
             onRetry: () {
               BlocProvider.of<HeroesBloc>(context).add(ReadyForDataEvent());
             },
-            error: state.error.toString(),
+            error: state.error,
           );
         }
         return const SizedBox.shrink();

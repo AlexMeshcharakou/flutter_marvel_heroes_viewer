@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:marvel/presentation/features/details/bloc/details_bloc.dart';
 import 'package:marvel/presentation/features/details/bloc/details_event.dart';
-import 'package:marvel/presentation/widgets/details_widget.dart';
+import 'package:marvel/presentation/features/details/widgets/details_widget.dart';
 import 'package:marvel/service_locator.dart';
 import 'package:domain/domain_module.dart';
 
@@ -16,12 +16,9 @@ class DetailsPage extends StatelessWidget {
     return Scaffold(
       body: BlocProvider<DetailsBloc>(
         create: (context) => DetailsBloc(
-          context: context,
           getCharacterDetailsUseCase: getIt.get<GetCharacterDetailsUseCase>(),
           getAllSeriesUseCase: getIt.get<GetAllSeriesUseCase>(),
-        )..add(
-          ReadyForDetailsEvent(characterId),
-          ),
+        )..add(ReadyForDetailsEvent(characterId)),
         child: DetailsWidget(characterId),
       ),
     );
