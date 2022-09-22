@@ -28,14 +28,16 @@ class MainApp extends StatelessWidget {
             onGenerateRoute: RouteGenerator.generateRoute,
             home: HeroesPage(
               changeToDarkTheme: () {
-                BlocProvider.of<AppSettingsBloc>(context).add(
-                  ChangedToDarkTheme(),
-                );
+                BlocProvider.of<AppSettingsBloc>(context).add(ChangedToDarkTheme());
               },
               changeToLightTheme: () {
-                BlocProvider.of<AppSettingsBloc>(context).add(
-                  ChangedToLightTheme(),
-                );
+                BlocProvider.of<AppSettingsBloc>(context).add(ChangedToLightTheme());
+              },
+              changeToRussian: () {
+                BlocProvider.of<AppSettingsBloc>(context).add(ChangedToRussianEvent());
+              },
+              changeToEnglish: () {
+                BlocProvider.of<AppSettingsBloc>(context).add(ChangedToEnglishEvent());
               },
             ),
           );
