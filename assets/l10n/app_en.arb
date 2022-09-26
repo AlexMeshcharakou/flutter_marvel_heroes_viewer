@@ -8,6 +8,6 @@
   "somethingWentWrong": "Something went wrong",
   "pleaseCheckInternetConnection": "Please check internet connection",
   "searchCharacter": "Search character",
-  "noResults": "No Results"
-
+  "noResults": "No Results",
+  "settings": "Settings"
 }

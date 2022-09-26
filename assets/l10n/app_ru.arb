@@ -8,5 +8,6 @@
   "somethingWentWrong": "Произошла ошибка",
   "pleaseCheckInternetConnection": "Проверьте интернет соединение",
   "searchCharacter": "Поиск героя",
-  "noResults": "Не найдено результатов"
+  "noResults": "Не найдено результатов",
+  "settings": "Настройки"
 }
